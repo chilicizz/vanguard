@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.cyrilng";
+option java_outer_classname = "Vanguard";
+option objc_class_prefix = "HLW";
+
+package com.cyrilng;
+
+service VanguardService {
+  rpc send (VanguardRequest) returns (VanguardReply) {}
+}
+
+message VanguardRequest {
+  string name = 1;
+}
+
+message VanguardReply {
+  string message = 1;
+}
