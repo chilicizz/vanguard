@@ -56,4 +56,19 @@ micronaut {
 }
 
 
+tasks.named("dockerBuildNative") {
+    images = ["ghcr.io/chilicizz/vanguard:${project.version}"]
+    copy {
+        from "${rootProject.projectDir}/fly.toml"
+        into "build/docker"
+    }
+}
+
+tasks.named("dockerBuild") {
+    images = ["ghcr.io/chilicizz/vanguard:${project.version}"]
+    copy {
+        from "${rootProject.projectDir}/fly.toml"
+        into "build/docker"
+    }
+}
 
