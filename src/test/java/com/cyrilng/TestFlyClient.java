@@ -21,7 +21,7 @@ public class TestFlyClient {
         VanguardRequest request = VanguardRequest.newBuilder().setName("Tester").build();
         logger.info("Sending request " + request);
 
-        VanguardReply response =blockingStub.send(request);
+        VanguardReply response = blockingStub.send(request);
         logger.info("Received response " + response);
         assertEquals(
                 "Hello Tester",

@@ -13,12 +13,12 @@ repositories {
 
 dependencies {
     implementation(project(':protos'))
-    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
-    implementation("io.micronaut:micronaut-discovery-core")
-    implementation("io.micronaut.grpc:micronaut-grpc-runtime")
-    implementation("io.micronaut.serde:micronaut-serde-jackson")
-    implementation("javax.annotation:javax.annotation-api")
-    runtimeOnly("ch.qos.logback:logback-classic")
+    annotationProcessor('io.micronaut.serde:micronaut-serde-processor:2.4.0')
+    implementation('io.micronaut.serde:micronaut-serde-jackson:2.4.0')
+    implementation("io.micronaut:micronaut-discovery-core:4.0.6")
+    implementation('io.micronaut.grpc:micronaut-grpc-runtime:4.0.1')
+    implementation('javax.annotation:javax.annotation-api:1.3.2')
+    runtimeOnly('ch.qos.logback:logback-classic:1.4.11')
 }
 
 

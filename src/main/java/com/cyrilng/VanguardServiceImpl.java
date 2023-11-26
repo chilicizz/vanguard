@@ -18,7 +18,7 @@ public class VanguardServiceImpl extends VanguardServiceImplBase {
 
     @Override
     public void send(VanguardRequest request, StreamObserver<VanguardReply> responseObserver) {
-        logger.info("Received message " + request);
+        logger.info("Received message");
         String name = request.getName();
         VanguardReply vanguardReply = VanguardReply.newBuilder().setMessage("Hello " + name).build();
         responseObserver.onNext(vanguardReply);
