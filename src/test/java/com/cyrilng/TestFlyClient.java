@@ -12,7 +12,7 @@ public class TestFlyClient {
 
     public static void main(String[] args) {
         logger.info("Setting up channel");
-        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("vanguard.fly.dev", 443).usePlaintext().build();
+        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("vanguard.fly.dev", 443).useTransportSecurity().build();
 //        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("localhost", 8080).usePlaintext().build();
 
         logger.info("Creating grpc stub with " + managedChannel);
