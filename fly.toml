@@ -16,3 +16,6 @@ primary_region = "hkg"
     handlers = ["tls"]
     port = 443
     tls_options = { "alpn" = ["h2"] }
+
+  [services.ports.http_options]
+    h2_backend = true
