@@ -10,8 +10,16 @@ import io.micronaut.grpc.server.GrpcServerChannel;
 class Clients {
     @Bean
     VanguardServiceGrpc.VanguardServiceBlockingStub blockingStub(
-            @GrpcChannel(GrpcServerChannel.NAME) ManagedChannel channel) { 
-        return VanguardServiceGrpc.newBlockingStub( 
+            @GrpcChannel(GrpcServerChannel.NAME) ManagedChannel channel) {
+        return VanguardServiceGrpc.newBlockingStub(
+                channel
+        );
+    }
+
+    @Bean
+    VanguardServiceGrpc.VanguardServiceStub nonBlockingStub(
+            @GrpcChannel(GrpcServerChannel.NAME) ManagedChannel channel) {
+        return VanguardServiceGrpc.newStub(
                 channel
         );
     }

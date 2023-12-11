@@ -1,16 +1,13 @@
 package com.cyrilng;
 
+import com.cyrilng.VanguardServiceGrpc.VanguardServiceBlockingStub;
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import jakarta.inject.Inject;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.cyrilng.VanguardServiceGrpc.VanguardServiceBlockingStub;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Assertions;
-
-import jakarta.inject.Inject;
 
 @MicronautTest
 class VanguardTest {
@@ -29,9 +26,11 @@ class VanguardTest {
     @Test
     void testGrpc() {
         VanguardRequest request = VanguardRequest.newBuilder().setName("Tester").build();
-
+        VanguardReply reply = blockingStub.send(request);
         assertEquals(
                 "Hello Tester",
-                blockingStub.send(request).getMessage());
+                reply.getMessage());
     }
+
+
 }

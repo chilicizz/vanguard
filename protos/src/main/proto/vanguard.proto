@@ -3,12 +3,18 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "com.cyrilng";
 option java_outer_classname = "Vanguard";
-option objc_class_prefix = "HLW";
 
 package com.cyrilng;
 
 service VanguardService {
   rpc send (VanguardRequest) returns (VanguardReply) {}
+
+  rpc joinChat (stream VanguardMessage) returns (stream VanguardMessage) {}
+
+}
+
+message VanguardMessage {
+  string message = 1;
 }
 
 message VanguardRequest {
@@ -17,4 +23,18 @@ message VanguardRequest {
 
 message VanguardReply {
   string message = 1;
+}
+
+service RoshamboService {
+
+}
+
+message Act {
+  Action action = 1;
+}
+
+enum Action {
+  ROCK = 0;
+  PAPER = 1;
+  SCISSORS = 2;
 }
