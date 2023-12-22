@@ -3,10 +3,13 @@ package com.cyrilng;
 import io.grpc.stub.StreamObserver;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
+import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -19,11 +22,14 @@ public class MessageStreamTest {
 
     @Test
     void testGrpcStream() throws InterruptedException {
+        AtomicBoolean received = new AtomicBoolean(false);
+
         VanguardMessage message = VanguardMessage.newBuilder().setMessage("Test Message").build();
-        StreamObserver<VanguardMessage> messageStreamObserver = Mockito.spy(vanguardServiceStub.joinChat(new StreamObserver<>() {
+        StreamObserver<VanguardMessage> messageStreamObserver = Mockito.spy(new StreamObserver<>() {
             @Override
             public void onNext(VanguardMessage value) {
                 logger.info("Test observer received message " + value);
+                received.set(true);
             }
 
             @Override
@@ -35,16 +41,13 @@ public class MessageStreamTest {
             public void onCompleted() {
                 logger.info("Test observer onCompleted ");
             }
-        }));
+        });
 
         StreamObserver<VanguardMessage> messageSender = vanguardServiceStub.joinChat(messageStreamObserver);
         logger.info("Sending test message: " + message);
         messageSender.onNext(message);
-
-        Thread.sleep(1000);
-        Mockito.verify(messageStreamObserver, Mockito.atLeastOnce()).onNext(
-                any(VanguardMessage.class)
-        );
+        Awaitility.await().until(received::get);
         messageSender.onCompleted();
+        Mockito.verify(messageStreamObserver, Mockito.atLeastOnce()).onNext(any(VanguardMessage.class));
     }
 }

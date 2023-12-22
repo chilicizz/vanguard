@@ -64,7 +64,7 @@ public class VanguardServiceImpl extends VanguardServiceImplBase implements Auto
 
             @Override
             public void onNext(VanguardMessage message) {
-                logger.info("Publishing message: " + message);
+                logger.debug("Adding message to queue: " + message);
                 messageQueue.add(message);
             }
 

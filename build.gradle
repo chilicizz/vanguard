@@ -21,8 +21,8 @@ dependencies {
     runtimeOnly('ch.qos.logback:logback-classic:1.4.14')
 
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
-    testImplementation 'org.mockito:mockito-core:2.1.0'
-
+    testImplementation('org.mockito:mockito-core:2.1.0')
+    testImplementation('org.awaitility:awaitility:4.2.0')
     // https://mvnrepository.com/artifact/org.apache.commons/commons-pool2
     implementation('org.apache.commons:commons-pool2:2.12.0')
 }
