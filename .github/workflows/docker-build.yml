@@ -43,6 +43,11 @@ jobs:
 #        run: ./gradlew dockerPushNative
         run: ./gradlew dockerPush
 
+      - name: Publish protos
+        run: ./gradlew publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Print version information
         run: echo "VERSION_INFORMATION=$(${{github.workspace}}/gradlew -q printVersionInformation)" >> $GITHUB_ENV
 
