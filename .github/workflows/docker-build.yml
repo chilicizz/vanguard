@@ -36,15 +36,15 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Execute Gradle build
-#        run: ./gradlew dockerBuildNative
-        run: ./gradlew dockerBuild
+        run: ./gradlew dockerBuildNative
+#        run: ./gradlew dockerBuild
 
       - name: Publish Docker image to github cr
-#        run: ./gradlew dockerPushNative
-        run: ./gradlew dockerPush
+        run: ./gradlew dockerPushNative
+#        run: ./gradlew dockerPush
 
       - name: Publish protos
-        run: ./gradlew publish
+        run: ./gradlew :protos:publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
