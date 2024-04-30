@@ -30,14 +30,14 @@ public class TestFlyClient {
 
     @Test
     public void runBlockingMessageRequest() {
-        logger.info("Creating grpc stub with " + managedChannel);
+        logger.info("Creating grpc stub with {}", managedChannel);
         VanguardServiceGrpc.VanguardServiceBlockingStub blockingStub = VanguardServiceGrpc.newBlockingStub(managedChannel);
 
         VanguardRequest request = VanguardRequest.newBuilder().setName("Tester").build();
-        logger.info("Sending request " + request);
+        logger.info("Sending request {}", request);
 
         VanguardReply response = blockingStub.send(request);
-        logger.info("Received response " + response);
+        logger.info("Received response {}", response);
         assertEquals("Hello Tester", response.getMessage());
     }
 
@@ -51,13 +51,13 @@ public class TestFlyClient {
         StreamObserver<VanguardMessage> messageStreamObserver = Mockito.spy(new StreamObserver<>() {
             @Override
             public void onNext(VanguardMessage value) {
-                logger.info("Test observer received message " + value);
+                logger.info("Test observer received message {}", value);
                 received.set(true);
             }
 
             @Override
             public void onError(Throwable t) {
-                logger.info("Test observer received throwable " + t, t);
+                logger.info("Test observer received throwable {}", t, t);
             }
 
             @Override
@@ -67,7 +67,7 @@ public class TestFlyClient {
         });
 
         StreamObserver<VanguardMessage> messageSender = vanguardServiceStub.joinChat(messageStreamObserver);
-        logger.info("Sending test message: " + message);
+        logger.info("Sending test message: {}", message);
         messageSender.onNext(message);
 
         Awaitility.await().until(received::get);

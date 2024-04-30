@@ -28,15 +28,15 @@ public class VanguardServiceImpl extends VanguardServiceImplBase implements Auto
             try {
                 while (true) {
                     VanguardMessage message = messageQueue.take();
-                    logger.debug("Received message from queue: " + message);
+                    logger.debug("Received message from queue: {}", message);
                     subscribers.forEach((id, vanguardMessageStreamObserver) -> {
-                        logger.trace("Publishing message to subscriber " + id);
+                        logger.trace("Publishing message to subscriber {}", id);
 //                        CompletableFuture.runAsync(() -> vanguardMessageStreamObserver.onNext(message));
                         vanguardMessageStreamObserver.onNext(message);
                     });
                 }
             } catch (InterruptedException e) {
-                logger.error("Terminating thread: " + e.getMessage(), e);
+                logger.error("Terminating thread: {}", e.getMessage(), e);
             }
         });
         logger.info("Starting message handler thread");
@@ -46,7 +46,7 @@ public class VanguardServiceImpl extends VanguardServiceImplBase implements Auto
 
     @Override
     public void send(VanguardRequest request, StreamObserver<VanguardReply> responseObserver) {
-        logger.info("Received message: " + request);
+        logger.info("Received message: {}", request);
         String name = request.getName();
         VanguardReply vanguardReply = VanguardReply.newBuilder().setMessage("Hello " + name).build();
         responseObserver.onNext(vanguardReply);
@@ -57,26 +57,26 @@ public class VanguardServiceImpl extends VanguardServiceImplBase implements Auto
     @Override
     public StreamObserver<VanguardMessage> joinChat(StreamObserver<VanguardMessage> responseObserver) {
         final long subscriptionId = idProvider.getAndIncrement();
-        logger.info("Registering new subscriber: " + subscriptionId + " " + responseObserver);
+        logger.info("Registering new subscriber: {} {}", subscriptionId, responseObserver);
         subscribers.put(subscriptionId, responseObserver);
         return new StreamObserver<>() {
             final long id = subscriptionId;
 
             @Override
             public void onNext(VanguardMessage message) {
-                logger.debug("Adding message to queue: " + message);
+                logger.debug("Adding message to queue: {}", message);
                 messageQueue.add(message);
             }
 
             @Override
             public void onError(Throwable t) {
-                logger.error("Error " + t.getMessage(), t);
+                logger.error("Error {}", t.getMessage(), t);
                 subscribers.remove(id);
             }
 
             @Override
             public void onCompleted() {
-                logger.info("Removing subscriber: " + id);
+                logger.info("Removing subscriber: {}", id);
                 subscribers.remove(id);
             }
         };
@@ -88,7 +88,7 @@ public class VanguardServiceImpl extends VanguardServiceImplBase implements Auto
         messageHandlerThread.interrupt();
         messageQueue.clear();
         subscribers.forEach((integer, vanguardMessageStreamObserver) -> {
-            logger.debug("Closing subscription: " + integer);
+            logger.debug("Closing subscription: {}", integer);
             vanguardMessageStreamObserver.onCompleted();
         });
     }

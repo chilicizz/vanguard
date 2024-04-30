@@ -28,13 +28,13 @@ public class MessageStreamTest {
         StreamObserver<VanguardMessage> messageStreamObserver = Mockito.spy(new StreamObserver<>() {
             @Override
             public void onNext(VanguardMessage value) {
-                logger.info("Test observer received message " + value);
+                logger.info("Test observer received message {}", value);
                 received.set(true);
             }
 
             @Override
             public void onError(Throwable t) {
-                logger.info("Test observer received throwable " + t, t);
+                logger.info("Test observer received throwable {}", t, t);
             }
 
             @Override
@@ -44,7 +44,7 @@ public class MessageStreamTest {
         });
 
         StreamObserver<VanguardMessage> messageSender = vanguardServiceStub.joinChat(messageStreamObserver);
-        logger.info("Sending test message: " + message);
+        logger.info("Sending test message: {}", message);
         messageSender.onNext(message);
         Awaitility.await().until(received::get);
         messageSender.onCompleted();
