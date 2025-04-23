@@ -1,4 +1,5 @@
 
 rootProject.name="vanguard"
 include 'protos'
+include 'benchmarks'
 
