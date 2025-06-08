@@ -25,16 +25,21 @@ message VanguardReply {
   string message = 1;
 }
 
-service RoshamboService {
+message RSSSubscribeRequest {
+  string userId = 1;
+  string url = 2;
+}
+
+message RSSUnsubscribeRequest {
+  string userId = 1;
+  string url = 2;
+}
+
+service RSSService {
 
 }
 
-message Act {
-  Action action = 1;
-}
-
-enum Action {
-  ROCK = 0;
-  PAPER = 1;
-  SCISSORS = 2;
+enum RSSActionType {
+  SUBSCRIBE = 0;
+  UNSUBSCRIBE = 1;
 }

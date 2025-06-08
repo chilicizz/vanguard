@@ -1,4 +1,4 @@
-package com.cyrilng;
+package com.cyrilng.benchmarks.plan;
 
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;

@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation(project(':protos'))
+    implementation(project(':datex'))
     annotationProcessor('io.micronaut.serde:micronaut-serde-processor:2.9.0')
     implementation('io.micronaut.serde:micronaut-serde-jackson:2.9.0')
     implementation('io.micronaut:micronaut-discovery-core:4.4.7')

@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     version="2.0">
+    <channel>
+        <title>Ars Technica - All content</title>
+        <atom:link href="https://arstechnica.com/feed/" rel="self" type="application/rss+xml"/>
+        <link>https://arstechnica.com</link>
+        <description>All Ars Technica stories</description>
+        <lastBuildDate>Sat, 26 Oct 2024 06:12:25 +0000</lastBuildDate>
+        <language>en-US</language>
+        <sy:updatePeriod>
+            hourly
+        </sy:updatePeriod>
+        <sy:updateFrequency>
+            1
+        </sy:updateFrequency>
+
+        <image>
+            <url>https://cdn.arstechnica.net/wp-content/uploads/2016/10/cropped-ars-logo-512_480-60x60.png</url>
+            <title>Ars Technica</title>
+            <link>https://arstechnica.com</link>
+            <width>32</width>
+            <height>32</height>
+        </image>
+        <item>
+            <title>Are Boeing’s problems beyond fixable?</title>
+            <link>https://arstechnica.com/tech-policy/2024/10/are-boeings-problems-beyond-fixable/</link>
+            <comments>https://arstechnica.com/tech-policy/2024/10/are-boeings-problems-beyond-fixable/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Claire Bushey and Philip Georgiadis, Financial Times]]>
+            </dc:creator>
+            <pubDate>Sat, 26 Oct 2024 12:15:05 +0000</pubDate>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[aviation]]></category>
+            <category><![CDATA[Boeing]]></category>
+            <category><![CDATA[Boeing 737 MAX]]></category>
+            <category><![CDATA[syndication]]></category>
+            <guid isPermaLink="true">https://arstechnica.com/tech-policy/2024/10/are-boeings-problems-beyond-fixable/
+            </guid>
+
+            <description>
+                <![CDATA[A new CEO promises a culture change as the aerospace titan is struggling hard.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>As Boeing’s latest chief executive, Kelly Ortberg’s job was never going to be easy. On Wednesday, it got harder still.</p>
+<p>That morning, Ortberg had faced investors for the first time, telling them that ending a debilitating strike by Boeing’s largest union was the first step to stabilizing the plane maker’s business.</p>
+<p>But as the day wore on, it became clear that nearly two-thirds of the union members who voted on the company’s latest contract offer had rejected it. The six-week strike goes on, costing Boeing an estimated $50 million a day, pushing back the day it can resume production of most aircraft and further stressing its supply chain.</p><p><a href="https://arstechnica.com/tech-policy/2024/10/are-boeings-problems-beyond-fixable/">Read full article</a></p>
+<p><a href="https://arstechnica.com/tech-policy/2024/10/are-boeings-problems-beyond-fixable/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>39</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2021/11/getty-boeing-logo-1152x648.jpg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2021/11/getty-boeing-logo-500x500.jpg"
+                                 width="500"/>
+                <media:credit>Getty Images | Olivier Douliery</media:credit>
+            </media:content>
+        </item>
+        <item>
+            <title>A how-to for ethical geoengineering research</title>
+            <link>https://arstechnica.com/science/2024/10/a-how-to-for-ethical-geoengineering-research/</link>
+            <comments>https://arstechnica.com/science/2024/10/a-how-to-for-ethical-geoengineering-research/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[John Timmer]]>
+            </dc:creator>
+            <pubDate>Sat, 26 Oct 2024 11:21:18 +0000</pubDate>
+            <category><![CDATA[Science]]></category>
+            <category><![CDATA[carbon capture]]></category>
+            <category><![CDATA[carbon dioxide removal]]></category>
+            <category><![CDATA[climate change]]></category>
+            <category><![CDATA[Earth science]]></category>
+            <category><![CDATA[Geoengineering]]></category>
+            <category><![CDATA[research ethics]]></category>
+            <category><![CDATA[solar radiation management]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/science/2024/10/a-how-to-for-ethical-geoengineering-research/
+            </guid>
+
+            <description>
+                <![CDATA[The American Geophysical Union releases a framework for getting it right.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>Over the Northern Hemisphere's summer, the world's temperatures hovered near 1.5° C above pre-industrial temperatures, and the catastrophic weather events that ensued provided a preview of what might be expected to be the new normal before mid-century. And the warming won't stop there; currently, <a href="https://arstechnica.com/science/2024/10/with-four-more-years-like-2023-carbon-emissions-will-blow-past-1-5-limit/">our current emissions trajectory</a> is such that we will double that temperature increase by the time the century is out and continue beyond its end.</p>
+<p>All of this has led many people to argue that some form of geoengineering is necessary. If we know the effects of that much warming will be catastrophic, why not try canceling some of it out? Unfortunately, the list of "why nots" includes the fact that we don't know how well some of these techniques work or fully understand their unintended consequences. This means more research is required before we put them into practice.</p>
+<p>But how do we do that research if there's the risk of unintended consequences? To help guide the process, the American Geophysical Union (AGU) has <a href="https://www.agu.org/ethicalframeworkprinciples">just released</a> guidelines to guide people toward ensuring that geoengineering research is conducted ethically.</p><p><a href="https://arstechnica.com/science/2024/10/a-how-to-for-ethical-geoengineering-research/">Read full article</a></p>
+<p><a href="https://arstechnica.com/science/2024/10/a-how-to-for-ethical-geoengineering-research/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>9</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GettyImages-1818872305-1024x648.jpg"
+                           width="1024">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GettyImages-1818872305-500x500-1729891806.jpg"
+                                 width="500"/>
+                <media:credit>Handout / Getty Images</media:credit>
+            </media:content>
+        </item>
+        <item>
+            <title>40 years later, The Terminator still shapes our view of AI</title>
+            <link>https://arstechnica.com/ai/2024/10/40-years-later-the-terminator-still-shapes-our-view-of-ai/</link>
+            <comments>
+                https://arstechnica.com/ai/2024/10/40-years-later-the-terminator-still-shapes-our-view-of-ai/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Tom F.A Watts, The Conversation]]>
+            </dc:creator>
+            <pubDate>Sat, 26 Oct 2024 11:07:54 +0000</pubDate>
+            <category><![CDATA[AI]]></category>
+            <category><![CDATA[Culture]]></category>
+            <category><![CDATA[ethical ai]]></category>
+            <category><![CDATA[syndication]]></category>
+            <category><![CDATA[Terminator]]></category>
+            <category><![CDATA[Terminator franchise]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/ai/2024/10/40-years-later-the-terminator-still-shapes-our-view-of-ai/
+            </guid>
+
+            <description>
+                <![CDATA[The film has an outsize influence on the existential danger of AI.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>October 26, 2024, marks the 40th anniversary of director James Cameron’s science fiction classic, <a href="https://www.imdb.com/title/tt0088247/"><em>The Terminator</em></a>—a film that popularized society’s fear of machines that can’t be reasoned with, and that “absolutely will not stop… until you are dead,” as one character memorably puts it.</p>
+<p>The plot concerns a super-intelligent AI system called <a href="https://en.wikipedia.org/wiki/Skynet_(Terminator)">Skynet</a> that has taken over the world by initiating nuclear war. Amid the resulting devastation, human survivors stage a successful fightback under the leadership of the charismatic John Connor.</p>
+<p>In response, Skynet sends a cyborg assassin (played by Arnold Schwarzenegger) back in time to 1984—before Connor’s birth—to kill his future mother, Sarah. Such is John Connor’s importance to the war that Skynet banks on erasing him from history to preserve its existence.</p><p><a href="https://arstechnica.com/ai/2024/10/40-years-later-the-terminator-still-shapes-our-view-of-ai/">Read full article</a></p>
+<p><a href="https://arstechnica.com/ai/2024/10/40-years-later-the-terminator-still-shapes-our-view-of-ai/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>22</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2021/01/terminator-1024x648.jpg"
+                           width="1024">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2021/01/terminator-500x500.jpg"
+                                 width="500"/>
+                <media:credit>Carolco Pictures</media:credit>
+            </media:content>
+        </item>
+        <item>
+            <title>Astronaut hospitalized after returning from 235-day space mission</title>
+            <link>
+                https://arstechnica.com/space/2024/10/astronaut-hospitalized-after-returning-from-235-day-space-mission/
+            </link>
+            <comments>
+                https://arstechnica.com/space/2024/10/astronaut-hospitalized-after-returning-from-235-day-space-mission/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Stephen Clark]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 23:02:38 +0000</pubDate>
+            <category><![CDATA[Science]]></category>
+            <category><![CDATA[Space]]></category>
+            <category><![CDATA[crew dragon]]></category>
+            <category><![CDATA[Crew-8]]></category>
+            <category><![CDATA[dragon]]></category>
+            <category><![CDATA[human spaceflight]]></category>
+            <category><![CDATA[international space station]]></category>
+            <category><![CDATA[NASA]]></category>
+            <category><![CDATA[spacex]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/space/2024/10/astronaut-hospitalized-after-returning-from-235-day-space-mission/
+            </guid>
+
+            <description>
+                <![CDATA[NASA says the astronaut is in "stable condition under observation as a precautionary measure."]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>NASA said Friday one its astronauts is in a hospital in Florida for medical observation after a "normal" predawn splashdown in the Gulf of Mexico inside a SpaceX capsule.</p>
+<p>The mission's other three crew members were cleared to return to their home base at Johnson Space Center in Houston after their own medical evaluations, NASA said.</p>
+<p>The hospitalized astronaut "is in stable condition and under observation as a precautionary measure," a NASA spokesperson said in a statement. The agency did not identify the astronaut or provide any more details about their condition, citing medical privacy protections.</p><p><a href="https://arstechnica.com/space/2024/10/astronaut-hospitalized-after-returning-from-235-day-space-mission/">Read full article</a></p>
+<p><a href="https://arstechnica.com/space/2024/10/astronaut-hospitalized-after-returning-from-235-day-space-mission/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>43</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/54092322683_ed1cb57763_k-1152x648.jpg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/54092322683_ed1cb57763_k-500x500.jpg"
+                                 width="500"/>
+                <media:credit>NASA/Joel Kowsky</media:credit>
+                <media:text>Resembling a toasted marshmallow, SpaceX's Crew Dragon spacecraft floats in the Gulf of
+                    Mexico shortly after returning to Earth early Friday. A member of SpaceX's recovery team is standing
+                    on the side of the capsule.
+                </media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>Ars Live: What else can GLP-1 drugs do? Join us Tuesday for a discussion.</title>
+            <link>
+                https://arstechnica.com/health/2024/10/ars-live-join-us-tuesday-as-we-discuss-glp-1-drugs-insights-and-unknowns/
+            </link>
+            <comments>
+                https://arstechnica.com/health/2024/10/ars-live-join-us-tuesday-as-we-discuss-glp-1-drugs-insights-and-unknowns/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Beth Mole]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 21:18:12 +0000</pubDate>
+            <category><![CDATA[Health]]></category>
+            <category><![CDATA[Science]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/health/2024/10/ars-live-join-us-tuesday-as-we-discuss-glp-1-drugs-insights-and-unknowns/
+            </guid>
+
+            <description>
+                <![CDATA[Dr. Daniel Drucker will discuss what ahead for these blockbuster drugs.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>News and talk of GLP-1 drugs are everywhere these days—from their smash success in treating Type 2 diabetes and obesity to their astronomical pricing, drug shortages, compounding disputes, and what sometimes seems like an ever-growing list of other conditions the drugs could potentially treat. There are new headlines every day.</p>
+<p>However, while the drugs have abruptly stolen the spotlight in recent years, researchers have been toiling away at developing and understanding them for decades, stretching back to the 1970s. And even since they were developed, the drugs still have held mysteries and unknowns. For instance, researchers thought for years that they worked directly in the gut to decrease blood sugar levels and make people feel full. After all, the drugs mimic an incretin hormone, glucagon-like peptide-1, that does exactly that. But, instead, studies have since found that they work in the brain.</p>
+<p>In fact, the molecular receptors for GLP-1 are sprinkled in many places around the body. They're found in the central nervous system, the heart, blood vessels, liver, and kidney. Their presence in the brain even plays a role in inflammation. As such, research on GLP-1 continues to flourish as scientists work to understand the role it could play in treating a range of other chronic conditions.</p><p><a href="https://arstechnica.com/health/2024/10/ars-live-join-us-tuesday-as-we-discuss-glp-1-drugs-insights-and-unknowns/">Read full article</a></p>
+<p><a href="https://arstechnica.com/health/2024/10/ars-live-join-us-tuesday-as-we-discuss-glp-1-drugs-insights-and-unknowns/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>13</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2023/11/GettyImages-1692436787-1152x648.jpeg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2023/11/GettyImages-1692436787-500x500.jpeg"
+                                 width="500"/>
+                <media:credit>Getty | Michael Siluk</media:credit>
+                <media:text>Wegovy is an injectable prescription weight-loss medicine that has helped people with
+                    obesity.
+                </media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>For the first time, beloved IDE JetBrains Rider will be available for free</title>
+            <link>
+                https://arstechnica.com/gadgets/2024/10/for-the-first-time-beloved-ide-jetbrains-rider-will-be-available-for-free/
+            </link>
+            <comments>
+                https://arstechnica.com/gadgets/2024/10/for-the-first-time-beloved-ide-jetbrains-rider-will-be-available-for-free/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Samuel Axon]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 20:27:27 +0000</pubDate>
+            <category><![CDATA[Tech]]></category>
+            <category><![CDATA[development]]></category>
+            <category><![CDATA[IDE]]></category>
+            <category><![CDATA[Jetbrains]]></category>
+            <category><![CDATA[Jetbrains Rider]]></category>
+            <category><![CDATA[Rider]]></category>
+            <category><![CDATA[visual studio]]></category>
+            <category><![CDATA[WebStorm]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/gadgets/2024/10/for-the-first-time-beloved-ide-jetbrains-rider-will-be-available-for-free/
+            </guid>
+
+            <description>
+                <![CDATA[Among other things, it could fill a gap left when Visual Studio abandoned macOS.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>The integrated development environment (IDE) Rider by JetBrains is now available for free for the first time ever.</p>
+<p>After trialing non-commercial free licenses with other products like RustRover and Aqua, JetBrains has introduced a similar option for Rider. It also says this is a permanent situation, not a limited-time initiative.</p>
+<p>In a <a href="https://blog.jetbrains.com/blog/2024/10/24/webstorm-and-rider-are-now-free-for-non-commercial-use/">blog post</a> announcing the change, JetBrains' Ekaterina Ryabukha acknowledges that there are numerous cases where people use an IDE without any commercial intent—for example, hobbyists, open source developers, and educators or students. She also cites a Stack Overflow survey that 68 percent of professional developers "code outside of work as a hobby."</p><p><a href="https://arstechnica.com/gadgets/2024/10/for-the-first-time-beloved-ide-jetbrains-rider-will-be-available-for-free/">Read full article</a></p>
+<p><a href="https://arstechnica.com/gadgets/2024/10/for-the-first-time-beloved-ide-jetbrains-rider-will-be-available-for-free/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>50</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/png"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/jetbrainsrider-1152x648-1729887881.png"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/jetbrainsrider-500x500-1729887901.png"
+                                 width="500"/>
+                <media:credit>Samuel Axon</media:credit>
+                <media:text>The logo for Jetbrains Rider.</media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>Why is Elon Musk talking to Vladimir Putin, and what does it mean for SpaceX?</title>
+            <link>
+                https://arstechnica.com/space/2024/10/why-is-elon-musk-talking-to-vladimir-putin-and-what-does-it-mean-for-spacex/
+            </link>
+            <comments>
+                https://arstechnica.com/space/2024/10/why-is-elon-musk-talking-to-vladimir-putin-and-what-does-it-mean-for-spacex/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Eric Berger]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 19:47:08 +0000</pubDate>
+            <category><![CDATA[Science]]></category>
+            <category><![CDATA[Space]]></category>
+            <category><![CDATA[Elon Musk]]></category>
+            <category><![CDATA[Putin]]></category>
+            <category><![CDATA[space]]></category>
+            <category><![CDATA[spacex]]></category>
+            <category><![CDATA[Tesla]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/space/2024/10/why-is-elon-musk-talking-to-vladimir-putin-and-what-does-it-mean-for-spacex/
+            </guid>
+
+            <description>
+                <![CDATA[NASA chief says ties between SpaceX CEO and Putin should be investigated.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>In a blockbuster story <a href="https://www.wsj.com/world/russia/musk-putin-secret-conversations-37e1c187?mod=hp_lead_pos7">published Friday morning</a>, The Wall Street Journal reports that Elon Musk has been in regular contact with Russian President Vladimir Putin for about two years, with the discussions covering a range of issues from geopolitics to business to personal matters.</p>
+<p>There are no on-the-record sources confirming the regular conversations between Musk and Putin, and Musk did not comment to the news organization. A Putin spokesperson said the Russian leader and Musk have had just one telephone call. However, the report is plausibly true, and the Journal cites "several current and former US, European, and Russian officials." This is also not the first time <a href="https://www.bbc.com/news/world-europe-63225781">there have been reports</a> of contact between Musk and Putin.</p>
+<p>The new story about Musk's direct links to an avowed enemy of the United States immediately raised concerns among some prominent US officials who work with the billionaire entrepreneur, including NASA Administrator Bill Nelson.</p><p><a href="https://arstechnica.com/space/2024/10/why-is-elon-musk-talking-to-vladimir-putin-and-what-does-it-mean-for-spacex/">Read full article</a></p>
+<p><a href="https://arstechnica.com/space/2024/10/why-is-elon-musk-talking-to-vladimir-putin-and-what-does-it-mean-for-spacex/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>611</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GettyImages-2176995336-1024x648.jpg"
+                           width="1024">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GettyImages-2176995336-500x500-1729879645.jpg"
+                                 width="500"/>
+                <media:credit>Anna Moneymaker/Getty Images</media:credit>
+                <media:text>Elon Musk wears a black "Make America Great Again" ball cap while attending a campaign rally
+                    with Republican presidential nominee, former President Donald Trump, in October.
+                </media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>US Copyright Office “frees the McFlurry,” allowing repair of ice cream machines</title>
+            <link>
+                https://arstechnica.com/tech-policy/2024/10/us-copyright-office-frees-the-mcflurry-allowing-repair-of-ice-cream-machines/
+            </link>
+            <comments>
+                https://arstechnica.com/tech-policy/2024/10/us-copyright-office-frees-the-mcflurry-allowing-repair-of-ice-cream-machines/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Jon Brodkin]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 19:37:53 +0000</pubDate>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[mcflurry]]></category>
+            <category><![CDATA[soft serve ice cream machines]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/tech-policy/2024/10/us-copyright-office-frees-the-mcflurry-allowing-repair-of-ice-cream-machines/
+            </guid>
+
+            <description>
+                <![CDATA[Soft-serve machines get a not-quite-parfait exemption to DMCA circumvention rule.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>Consumer advocacy group Public Knowledge today <a href="https://publicknowledge.org/public-knowledge-ifixit-free-the-mcflurry-win-copyright-office-dmca-exemption-for-ice-cream-machines/">hailed a decision</a> by the US Copyright Office to "grant an exemption specifically allowing for repair of retail-level food preparation equipment—including soft serve ice cream machines similar to those available at McDonald's."</p>
+<p>The group, which <a href="https://arstechnica.com/gadgets/2023/08/mcdonalds-ice-cream-machine-teardown-shows-error-codes-dmca-keep-it-broken/">teamed with iFixit</a> to request the exemption last year, said the government ruling will "free the McFlurry." Public Knowledge Senior Policy Counsel Meredith Rose called the decision a victory for "franchise owners, independent repair shops, and anyone who's had to bribe their kids with a chilly treat on lengthy road trips."</p>
+<p>The change should "spark a flurry of third-party repair activity and enable businesses to better serve their customers," Rose said. "While we are disappointed that the Register recommended a narrower exemption than we had proposed, this does not soften our enthusiasm. We will continue to chip away at half-baked laws blocking the right to repair, sprinkling consumer victories as we go. Today's win may not be parfait, but it's still pretty sweet."</p><p><a href="https://arstechnica.com/tech-policy/2024/10/us-copyright-office-frees-the-mcflurry-allowing-repair-of-ice-cream-machines/">Read full article</a></p>
+<p><a href="https://arstechnica.com/tech-policy/2024/10/us-copyright-office-frees-the-mcflurry-allowing-repair-of-ice-cream-machines/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>71</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/mcdonalds-ice-cream-1152x648.jpg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/mcdonalds-ice-cream-500x500.jpg"
+                                 width="500"/>
+                <media:credit>Getty Images | IndiaPictures</media:credit>
+                <media:text>A child eating ice cream at a McDonald's restaurant in India.</media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>Video game libraries lose legal appeal to emulate physical game collections online</title>
+            <link>
+                https://arstechnica.com/gaming/2024/10/copyright-office-libraries-cant-share-remotely-emulated-versions-of-physical-games/
+            </link>
+            <comments>
+                https://arstechnica.com/gaming/2024/10/copyright-office-libraries-cant-share-remotely-emulated-versions-of-physical-games/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Kyle Orland]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 19:25:44 +0000</pubDate>
+            <category><![CDATA[Gaming]]></category>
+            <category><![CDATA[Policy]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/gaming/2024/10/copyright-office-libraries-cant-share-remotely-emulated-versions-of-physical-games/
+            </guid>
+
+            <description>
+                <![CDATA[Register of Copyrights sides with industry's "market harm" argument for rereleased games.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>Earlier this year, we <a href="https://arstechnica.com/gaming/2024/04/can-an-online-library-of-classic-video-games-ever-be-legal/">reported</a> on the video game archivists asking for a legal DMCA exemption to share Internet-accessible emulated versions of their physical game collections with researchers. Today, the US Copyright Office announced <a href="https://arstechnica.com/gaming/2015/06/gaming-trade-org-for-dmca-theres-no-such-thing-as-an-obsolete-game/">once again</a> that it was denying that request, forcing researchers to travel to far-flung collections for access to the often-rare physical copies of the games they're seeking.</p>
+<p>In <a href="https://www.copyright.gov/1201/2024/2024_Section_1201_Registers_Recommendation.pdf">announcing its decision</a>, the <a href="https://www.copyright.gov/newsnet/2020/857.html">Register of Copyrights for the Library of Congress</a> sided with the Entertainment Software Association and others who argued that the proposed remote access could serve as a legal loophole for a free-to-access "online arcade" that could harm the market for classic gaming re-releases. This argument resonated with the Copyright Office despite <a href="https://arstechnica.com/gaming/2023/07/87-of-classic-games-are-out-of-print-thats-a-problem-for-gaming-history/">a VGHF study that found 87 percent of those older game titles are currently out of print</a>.</p>
+<p>"While proponents are correct that some older games will not have a reissue market, they concede there is a 'healthy' market for other reissued games and that the industry has been making 'greater concerted efforts' to reissue games," the Register writes in her decision. "Further, while the Register appreciates that proponents have suggested broad safeguards that could deter recreational uses of video games in some cases, she believes that such requirements are not specific enough to conclude that they would prevent market harms."</p><p><a href="https://arstechnica.com/gaming/2024/10/copyright-office-libraries-cant-share-remotely-emulated-versions-of-physical-games/">Read full article</a></p>
+<p><a href="https://arstechnica.com/gaming/2024/10/copyright-office-libraries-cant-share-remotely-emulated-versions-of-physical-games/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>52</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/04/icheg-1152x648.jpg" width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/04/icheg-500x500.jpg"
+                                 width="500"/>
+                <media:credit>Strong Museum of Play</media:credit>
+                <media:text>Currently, the only way for researchers to access these games in the Strong Museum's
+                    collection is to visit Rochester, NY in person.
+                </media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>Annoyed Redditors tanking Google Search results illustrates perils of AI scrapers</title>
+            <link>
+                https://arstechnica.com/gadgets/2024/10/fake-restaurant-tips-on-reddit-a-reminder-of-google-ai-overviews-inherent-flaws/
+            </link>
+            <comments>
+                https://arstechnica.com/gadgets/2024/10/fake-restaurant-tips-on-reddit-a-reminder-of-google-ai-overviews-inherent-flaws/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Scharon Harding]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 18:29:10 +0000</pubDate>
+            <category><![CDATA[AI]]></category>
+            <category><![CDATA[Google]]></category>
+            <category><![CDATA[Tech]]></category>
+            <category><![CDATA[ai overview]]></category>
+            <category><![CDATA[google]]></category>
+            <category><![CDATA[reddit]]></category>
+            <category><![CDATA[social media]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/gadgets/2024/10/fake-restaurant-tips-on-reddit-a-reminder-of-google-ai-overviews-inherent-flaws/
+            </guid>
+
+            <description>
+                <![CDATA["Spreading misinformation suddenly becomes a noble goal," Redditor says. ]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>A trend on Reddit that sees Londoners giving false restaurant recommendations in order to keep their favorites clear of tourists and social media influencers highlights the inherent flaws of Google Search’s reliance on Reddit and Google's AI Overview.</p>
+<p>In May, Google launched AI Overviews in the US, an experimental feature that populates the top of Google Search results with a summarized answer based on an AI model built into Google’s web rankings. When Google first debuted AI Overview, it quickly became apparent that the feature <a href="https://arstechnica.com/information-technology/2024/05/googles-ai-overview-can-give-false-misleading-and-dangerous-answers/">needed work with accuracy</a> and its ability to properly summarize information from online sources. AI Overviews are “built to only show information that is backed up by top web results," Liz Reid, VP and head of Google Search, wrote in a May <a href="https://blog.google/products/search/ai-overviews-update-may-2024/">blog post</a>. But as my colleague Benj Edwards <a href="https://arstechnica.com/information-technology/2024/05/googles-ai-overview-is-flawed-by-design-and-a-new-company-blog-post-hints-at-why/">pointed out</a> at the time, that setup could contribute to inaccurate, misleading, or even dangerous results: “The design is based on the false assumption that Google's page-ranking algorithm favors accurate results and not SEO-gamed garbage."</p>
+<p>As Edwards alluded to, many have complained about Google Search results' quality declining in recent years, as <a href="https://arstechnica.com/gadgets/2024/01/google-search-is-losing-the-fight-with-seo-spam-study-says/">SEO spam</a> and, more recently, AI slop float to the top of searches. As a result, people often turn to the <a href="https://arstechnica.com/gadgets/2023/06/google-admits-reddit-protests-make-it-harder-to-find-helpful-search-results/">Reddit hack</a> to make Google results more helpful. By adding "site:reddit.com” to search results, users can hone their search to more easily find answers from real people. Google seems to understand the value of Reddit and signed an <a href="https://arstechnica.com/information-technology/2024/02/your-reddit-posts-may-train-ai-models-following-new-60-million-agreement/">AI training deal with </a>the company that’s reportedly worth $60 million per year.</p><p><a href="https://arstechnica.com/gadgets/2024/10/fake-restaurant-tips-on-reddit-a-reminder-of-google-ai-overviews-inherent-flaws/">Read full article</a></p>
+<p><a href="https://arstechnica.com/gadgets/2024/10/fake-restaurant-tips-on-reddit-a-reminder-of-google-ai-overviews-inherent-flaws/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>107</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GettyImages-1663544113-1024x648.jpg"
+                           width="1024">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GettyImages-1663544113-500x500.jpg"
+                                 width="500"/>
+                <media:credit>Peter Dazeley/Getty Images)</media:credit>
+                <media:text>An Angus Steakhouse in London's Leicester Square.</media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>McDonald’s E. coli outbreak grows by 50% in 3 days as lawsuits mount</title>
+            <link>
+                https://arstechnica.com/health/2024/10/mcdonalds-outbreak-rises-to-75-cases-12-new-hospitalizations-3-new-states/
+            </link>
+            <comments>
+                https://arstechnica.com/health/2024/10/mcdonalds-outbreak-rises-to-75-cases-12-new-hospitalizations-3-new-states/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Beth Mole]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 18:06:56 +0000</pubDate>
+            <category><![CDATA[Health]]></category>
+            <category><![CDATA[Uncategorized]]></category>
+            <category><![CDATA[burger]]></category>
+            <category><![CDATA[cases]]></category>
+            <category><![CDATA[CDC]]></category>
+            <category><![CDATA[E. coli]]></category>
+            <category><![CDATA[E. coli O157]]></category>
+            <category><![CDATA[food poisoning]]></category>
+            <category><![CDATA[infectious diseases]]></category>
+            <category><![CDATA[mcdonalds]]></category>
+            <category><![CDATA[onions]]></category>
+            <category><![CDATA[outbreak]]></category>
+            <category><![CDATA[quarter pounder]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/health/2024/10/mcdonalds-outbreak-rises-to-75-cases-12-new-hospitalizations-3-new-states/
+            </guid>
+
+            <description>
+                <![CDATA[The CDC believes the risk is now low, but cases could continue to rise.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>Twenty-six more cases have been identified in <a href="https://arstechnica.com/health/2024/10/mcdonalds-e-coli-outbreak-one-dead-49-sickened-across-10-states-so-far/">a multistate <em>E. coli </em>O157:H7 outbreak linked to McDonald's Quarter Pounder burgers</a>, the Centers for Disease Control and Prevention announced Friday.</p>
+<p>The 26 new cases represent a 50 percent increase in the case count from October 22, bringing the total to 75 cases. With the new cases, health officials also reported 12 more hospitalizations, including one new adult case of hemolytic uremic syndrome (HUS), a severe complication to an <em>E. coli </em>O157:H7 infection. Three more states are also newly affected: Michigan, New Mexico, and Washington.</p>
+<p>In all, the outbreak now stands at 75 cases, including 22 hospitalizations and two cases of HUS, across 13 states. The number of deaths linked to the outbreak remains at one. The most recent illness onset for the cases identified so far is October 10.</p><p><a href="https://arstechnica.com/health/2024/10/mcdonalds-outbreak-rises-to-75-cases-12-new-hospitalizations-3-new-states/">Read full article</a></p>
+<p><a href="https://arstechnica.com/health/2024/10/mcdonalds-outbreak-rises-to-75-cases-12-new-hospitalizations-3-new-states/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>40</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GettyImages-2180547337-1152x648.jpg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GettyImages-2180547337-500x500.jpg"
+                                 width="500"/>
+                <media:credit>Getty | Mario Tama</media:credit>
+                <media:text>The McDonald's logo is displayed at a McDonald’s restaurant on October 23, 2024 in Omaha,
+                    Nebraska.
+                </media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>X Payments delayed after Musk’s X weirdly withdrew application for NY license</title>
+            <link>
+                https://arstechnica.com/tech-policy/2024/10/x-payments-delayed-after-musks-x-weirdly-withdrew-application-for-ny-license/
+            </link>
+            <comments>
+                https://arstechnica.com/tech-policy/2024/10/x-payments-delayed-after-musks-x-weirdly-withdrew-application-for-ny-license/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Ashley Belanger]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 17:55:49 +0000</pubDate>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[consumer financial protection bureau]]></category>
+            <category><![CDATA[Elon Musk]]></category>
+            <category><![CDATA[fintech]]></category>
+            <category><![CDATA[Twitter]]></category>
+            <category><![CDATA[X]]></category>
+            <category><![CDATA[x corp]]></category>
+            <category><![CDATA[x payments]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/tech-policy/2024/10/x-payments-delayed-after-musks-x-weirdly-withdrew-application-for-ny-license/
+            </guid>
+
+            <description>
+                <![CDATA[Will X Payments launch this year? Outlook not so good.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>This October, many Elon Musk believers are wondering, where is X Payments?</p>
+<p>Last year, Musk claimed in a <a href="https://x.com/CathieDWood/status/1737890686425350576">Spaces conversation</a> that he "would be surprised" if it took longer than mid-2024 to roll out the payments feature that he believes is crucial to transforming the social media app formerly known as Twitter <a href="https://arstechnica.com/tech-policy/2024/03/elon-musks-improbable-path-to-making-x-an-everything-app/">into an everything app</a>.</p>
+<p>“It would blow my mind if we don’t have that rolled out by the end of next year,” Musk said <a href="https://arstechnica.com/tech-policy/2023/10/elon-musk-wants-your-entire-financial-life-on-x-by-2024/">around this time last year</a>, clarifying that "when I say payments, I actually mean someone’s entire financial life. If it involves money, it’ll be on our platform. Money or securities or whatever. So, it’s not just like 'send $20 to my friend.' I’m talking about, like, you won’t need a bank account."</p><p><a href="https://arstechnica.com/tech-policy/2024/10/x-payments-delayed-after-musks-x-weirdly-withdrew-application-for-ny-license/">Read full article</a></p>
+<p><a href="https://arstechnica.com/tech-policy/2024/10/x-payments-delayed-after-musks-x-weirdly-withdrew-application-for-ny-license/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>88</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/elon-musk-eightball-1152x648.jpg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/elon-musk-eightball-500x500.jpg"
+                                 width="500"/>
+                <media:credit>Aurich Lawson | Getty Images/Bloomberg</media:credit>
+            </media:content>
+        </item>
+        <item>
+            <title>Missouri AG claims Google censors Trump, demands info on search algorithm</title>
+            <link>
+                https://arstechnica.com/tech-policy/2024/10/missouri-ag-claims-google-censors-trump-demands-info-on-search-algorithm/
+            </link>
+            <comments>
+                https://arstechnica.com/tech-policy/2024/10/missouri-ag-claims-google-censors-trump-demands-info-on-search-algorithm/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Jon Brodkin]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 16:51:29 +0000</pubDate>
+            <category><![CDATA[Google]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[andrew bailey]]></category>
+            <category><![CDATA[google]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/tech-policy/2024/10/missouri-ag-claims-google-censors-trump-demands-info-on-search-algorithm/
+            </guid>
+
+            <description>
+                <![CDATA[Bailey to subpoena info on algorithms; Google says "claims are totally false."]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>Missouri Attorney General Andrew Bailey said he is investigating Google, claiming that the tech giant censors conservative speech and manipulated search results about Donald Trump.</p>
+<p>"BREAKING: I am launching an investigation into Google—the biggest search engine in America—for censoring conservative speech during the most consequential election in our nation's history. Google is waging war on the democratic process. It's time to fight back," Bailey <a href="https://x.com/AGAndrewBailey/status/1849605767722131717">wrote on X</a>, the social network owned by notable Trump supporter Elon Musk.</p>
+<p>The New York Post <a href="https://nypost.com/2024/10/25/business/google-manipulating-search-results-ahead-of-2024-election-missouri-ag/">quoted a Bailey spokesperson</a> saying that "evidence has come to light that Google is deemphasizing conservative speech or content—such as putting conservative reporting on Page 11 rather than Page 1—by manipulating search results." The spokesperson said Google "has an obligation to consumers to utilize fair business practice" and that "we will be subpoenaing information on Google's algorithms and other systems to determine whether they are censoring conservative speech."</p><p><a href="https://arstechnica.com/tech-policy/2024/10/missouri-ag-claims-google-censors-trump-demands-info-on-search-algorithm/">Read full article</a></p>
+<p><a href="https://arstechnica.com/tech-policy/2024/10/missouri-ag-claims-google-censors-trump-demands-info-on-search-algorithm/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>160</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/andrew-bailey-1152x648-1729873506.jpg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/andrew-bailey-500x500-1729873517.jpg"
+                                 width="500"/>
+                <media:credit>Getty Images | Bloomberg</media:credit>
+                <media:text>Missouri Attorney General Andrew Bailey during a House Judiciary Committee hearing in
+                    Washington, DC, on Thursday, June 13, 2024.
+                </media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>If you thought Astra was going to go away quietly, you were wrong</title>
+            <link>https://arstechnica.com/space/2024/10/wait-is-the-astra-rocket-company-really-back-from-the-dead/
+            </link>
+            <comments>
+                https://arstechnica.com/space/2024/10/wait-is-the-astra-rocket-company-really-back-from-the-dead/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Eric Berger]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 16:01:18 +0000</pubDate>
+            <category><![CDATA[Science]]></category>
+            <category><![CDATA[Space]]></category>
+            <category><![CDATA[astra]]></category>
+            <category><![CDATA[rocket 4]]></category>
+            <category><![CDATA[space]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/space/2024/10/wait-is-the-astra-rocket-company-really-back-from-the-dead/
+            </guid>
+
+            <description>
+                <![CDATA["If I have learned anything, it's that you just don't give up."]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>On Wednesday morning, a surprising email popped into my inbox with the following subject line: "Astra announces Department of Defense contract valued up to $44 Million."</p>
+<p>I had to read it a second time to make sure I got it right. Astra, the launch company? Astra, whose valuation went from $2.6 billion to $25 million after a series of launch failures? Astra, the company that <a href="https://astra.com/news/closing-private/">was taken private in July</a> at 50 cents a share?</p>
+<p>Yes, it was <em>that</em> Astra.</p><p><a href="https://arstechnica.com/space/2024/10/wait-is-the-astra-rocket-company-really-back-from-the-dead/">Read full article</a></p>
+<p><a href="https://arstechnica.com/space/2024/10/wait-is-the-astra-rocket-company-really-back-from-the-dead/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>65</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2023/08/astrarocket4-1-1152x648.jpg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2023/08/astrarocket4-1-500x500.jpg"
+                                 width="500"/>
+                <media:credit>Astra</media:credit>
+                <media:text>Astra reveals a prototype of its Rocket 4 launch vehicle.</media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>Study: DNA corroborates “Well-man” tale from Norse saga</title>
+            <link>https://arstechnica.com/science/2024/10/ancient-dna-sheds-light-on-well-man-from-norse-saga/</link>
+            <comments>
+                https://arstechnica.com/science/2024/10/ancient-dna-sheds-light-on-well-man-from-norse-saga/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Jennifer Ouellette]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 15:00:12 +0000</pubDate>
+            <category><![CDATA[Science]]></category>
+            <category><![CDATA[ancient DNA]]></category>
+            <category><![CDATA[Archaeology]]></category>
+            <category><![CDATA[forensic archaeology]]></category>
+            <category><![CDATA[Norse history]]></category>
+            <category><![CDATA[Norse mythology]]></category>
+            <category><![CDATA[Norse sagas]]></category>
+            <category><![CDATA[paleogenomics]]></category>
+            <category><![CDATA[science]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/science/2024/10/ancient-dna-sheds-light-on-well-man-from-norse-saga/
+            </guid>
+
+            <description>
+                <![CDATA[The "Well-man" likely had blue eyes, blond or light-brown hair, and hailed from southern Norway. ]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>A 12th-century Norse saga tells of an invading army from the south razing a castle stronghold and throwing a dead body into the well to render the water undrinkable. Human remains believed to be those of this so-called "Well-man" were discovered in the 1930s, providing valuable potential outside confirmation of the tale. Scientists have now sequenced the DNA of those remains, and while they could not prove once and for all that the remains are those of the Well-man, their findings are consistent with that identification, according to a <a href="https://www.cell.com/iscience/fulltext/S2589-0042(24)02301-0">new paper</a> published in the journal iScience.</p>
+<p>Much of what we know about early Norse and Icelandic history comes from the sagas, many of which were written by scholars centuries after the events described—most likely based on oral traditions or earlier now-lost manuscripts. One notable exception is the <a href="https://en.wikipedia.org/wiki/Sverris_saga"><em>Sverris Saga</em></a>, which covers the reign of <a href="https://en.wikipedia.org/wiki/Sverre_of_Norway">King Sverre Sigurdsson</a> (1151–1240 CE), a tumultuous period marked by warring factions all vying to claim the throne. Norse scholars think that at least part of this saga was written contemporaneously at the king's request, and it contains detailed descriptions of many battles and speeches and a large cast of characters.</p>
+<p>King Sverre's claim to the throne was that he was the son of King Sigurd Munn, killed in 1155 CE by his brother. Sverre's men were known as "Birkenbeiner" because their legwear and shoes were made of birch bark. Among the rival factions were the "Bagleres" from southern Norway. In 1197, King Sverre was spending the winter in Bergen in his stronghold, Sverresborg Castle. Bagler fighters snuck into the castle via a secret door and plundered the place, burning all the homes within the castle walls. That's when they threw a dead man down the local drinking well, subsequently filling the well with boulders.</p><p><a href="https://arstechnica.com/science/2024/10/ancient-dna-sheds-light-on-well-man-from-norse-saga/">Read full article</a></p>
+<p><a href="https://arstechnica.com/science/2024/10/ancient-dna-sheds-light-on-well-man-from-norse-saga/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>36</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/norse1CROP-A-1152x648.jpg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/norse1CROP-A-500x500-1729537564.jpg"
+                                 width="500"/>
+                <media:credit>Åge Hojem NTNU Vitenskapsmuseet/CC BY-SA</media:credit>
+                <media:text>The Well-man skeleton</media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>Google, Microsoft, and Perplexity promote scientific racism in AI search results</title>
+            <link>
+                https://arstechnica.com/ai/2024/10/google-microsoft-and-perplexity-promote-scientific-racism-in-ai-search-results/
+            </link>
+            <comments>
+                https://arstechnica.com/ai/2024/10/google-microsoft-and-perplexity-promote-scientific-racism-in-ai-search-results/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[David Gilbert, wired.com]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 13:22:35 +0000</pubDate>
+            <category><![CDATA[AI]]></category>
+            <category><![CDATA[google]]></category>
+            <category><![CDATA[microsoft]]></category>
+            <category><![CDATA[Perplexity]]></category>
+            <category><![CDATA[Racism]]></category>
+            <category><![CDATA[syndication]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/ai/2024/10/google-microsoft-and-perplexity-promote-scientific-racism-in-ai-search-results/
+            </guid>
+
+            <description>
+                <![CDATA[AI-powered search engines are surfacing deeply racist, debunked research.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>AI-infused search engines from <a href="https://www.wired.com/story/google-ai-overview-search-results-copied-my-original-work/">Google</a>, <a href="https://www.wired.com/story/microsoft-copilot-phishing-data-extraction/">Microsoft</a>, and <a href="https://www.wired.com/story/perplexity-is-a-bullshit-machine/">Perplexity</a> have been surfacing deeply racist and widely debunked research promoting race science and the idea that white people are genetically superior to nonwhite people.</p>
+<p>Patrik Hermansson, a researcher with UK-based anti-racism group Hope Not Hate, was in the middle of a monthslong investigation into <a href="https://investigations.hopenothate.org.uk/race-science-inc/?utm_source=main_website&amp;utm_medium=link&amp;utm_campaign=hub_page">the resurgent race science movement</a> when he needed to find out more information about a debunked dataset that claims IQ scores can be used to prove the superiority of the white race.</p>
+<p>He was investigating the Human Diversity Foundation, a race science company funded by Andrew Conru, the US tech billionaire who founded Adult Friend Finder. The group, founded in 2022, was the successor to the Pioneer Fund, a group founded by US Nazi sympathizers in 1937 with the aim of <a href="https://www.splcenter.org/fighting-hate/extremist-files/group/pioneer-fund">promoting “race betterment” and “race realism.”</a></p><p><a href="https://arstechnica.com/ai/2024/10/google-microsoft-and-perplexity-promote-scientific-racism-in-ai-search-results/">Read full article</a></p>
+<p><a href="https://arstechnica.com/ai/2024/10/google-microsoft-and-perplexity-promote-scientific-racism-in-ai-search-results/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>135</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/effoff-1024x648.jpg"
+                           width="1024">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/effoff-500x500.jpg"
+                                 width="500"/>
+                <media:credit>David McNew via Getty</media:credit>
+                <media:text>LOS ANGELES, CA - APRIL 17: Members of the National Socialist Movement (NSM) salute during a
+                    rally on near City Hall on April 17, 2010 in Los Angeles, California.
+                </media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>Fallout: London is a huge Fallout 4 mod that is now playable—and worth playing</title>
+            <link>
+                https://arstechnica.com/gaming/2024/10/fallout-london-is-a-huge-fallout-4-mod-that-is-now-playable-and-worth-playing/
+            </link>
+            <comments>
+                https://arstechnica.com/gaming/2024/10/fallout-london-is-a-huge-fallout-4-mod-that-is-now-playable-and-worth-playing/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Kevin Purdy]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 11:30:05 +0000</pubDate>
+            <category><![CDATA[Gaming]]></category>
+            <category><![CDATA[bethesda]]></category>
+            <category><![CDATA[Fallout]]></category>
+            <category><![CDATA[fallout 4]]></category>
+            <category><![CDATA[fallout london]]></category>
+            <category><![CDATA[gog]]></category>
+            <category><![CDATA[Mods]]></category>
+            <category><![CDATA[Steam]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/gaming/2024/10/fallout-london-is-a-huge-fallout-4-mod-that-is-now-playable-and-worth-playing/
+            </guid>
+
+            <description>
+                <![CDATA[Now is the time to check out this free total conversion of <em>Fallout 4</em>.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>It took a crew of more than 100 talented modders and another hundred voice actors nearly five years to make <a href="https://fallout4london.com/"><em>Fallout: London</em></a>. Just as they planned to release it, Bethesda <a href="https://arstechnica.com/gaming/2024/07/fallout-london-devs-will-downgrade-fallout-4-to-save-their-massive-mod/">came out with a "next-gen upgrade" of the mod's base game</a>, <em>Fallout 4</em>, forcing the team to scramble and ultimately find a way to downgrade the game. When they finally released <em>London</em>, they then dealt with game-stopping bugs and quality issues that their small QA team could not have caught. It's been a long, maybe even post-apocalyptic road for these modders.</p>
+<p>A few updates later, <em>Fallout: London</em> is in much better shape. I've been able to put about 12 hours into it, and that, in itself, is essentially my review: it is worth that kind of time and more. If you can still enjoy <em>Fallout 4</em>, of course.</p>
+<p>Any Fallout fan waits a long time between official releases, so it can be tempting to go easy on any new offering, however spit-and-bailing-wire it may seem. But <em>Fallout: London </em>is a game in its own right, with a distinct look, vision, and stories to tell. You can find evidence of its unofficial mod-ness if you look around, but you're better off doing the <em>Fallout</em> thing: wandering, wondering, fighting, and occasionally talking to some messed-up weirdo.</p><p><a href="https://arstechnica.com/gaming/2024/10/fallout-london-is-a-huge-fallout-4-mod-that-is-now-playable-and-worth-playing/">Read full article</a></p>
+<p><a href="https://arstechnica.com/gaming/2024/10/fallout-london-is-a-huge-fallout-4-mod-that-is-now-playable-and-worth-playing/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>75</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/fallout_london_featured-1152x648.jpg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/fallout_london_featured-scaled-500x500-1729811959.jpg"
+                                 width="500"/>
+                <media:credit>Team FOLON</media:credit>
+            </media:content>
+        </item>
+        <item>
+            <title>Rocket Report: Sneak peek at the business end of New Glenn; France to fly FROG</title>
+            <link>
+                https://arstechnica.com/space/2024/10/rocket-report-sneak-peek-at-the-business-end-of-new-glenn-france-to-fly-frog/
+            </link>
+            <comments>
+                https://arstechnica.com/space/2024/10/rocket-report-sneak-peek-at-the-business-end-of-new-glenn-france-to-fly-frog/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Stephen Clark]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 11:00:15 +0000</pubDate>
+            <category><![CDATA[Science]]></category>
+            <category><![CDATA[Space]]></category>
+            <category><![CDATA[astra]]></category>
+            <category><![CDATA[blue origin]]></category>
+            <category><![CDATA[china]]></category>
+            <category><![CDATA[Commercial space]]></category>
+            <category><![CDATA[launch]]></category>
+            <category><![CDATA[new glenn]]></category>
+            <category><![CDATA[new shepard]]></category>
+            <category><![CDATA[rocket report]]></category>
+            <category><![CDATA[starship]]></category>
+            <category><![CDATA[united launch alliance]]></category>
+            <category><![CDATA[vulcan]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/space/2024/10/rocket-report-sneak-peek-at-the-business-end-of-new-glenn-france-to-fly-frog/
+            </guid>
+
+            <description>
+                <![CDATA["The vehicle's max design gimbal condition is during ascent when it has to fight high-altitude winds."]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>Welcome to Edition 7.17 of the Rocket Report! Next week marks 10 years since one of the more spectacular launch failures of this century. On October 28, 2014, an Antares rocket, then operated by Orbital Sciences, suffered an engine failure six seconds after liftoff from Virginia and crashed back onto the pad in a fiery twilight explosion. I was there and won't forget seeing the rocket falter just above the pad, being shaken by the deafening blast, and then running for cover. The Antares rocket is often an afterthought in the space industry, but it has an interesting backstory touching on international geopolitics, space history, and novel engineering. Now, Northrop Grumman and Firefly Aerospace are developing a new version of Antares.</p>
+<p>As always, we <a href="https://arstechnica.wufoo.com/forms/launch-stories/">welcome reader submissions</a>. If you don't want to miss an issue, please subscribe using the box below (the form will not appear on AMP-enabled versions of the site). Each report will include information on small-, medium-, and heavy-lift rockets as well as a quick look ahead at the next three launches on the calendar.</p>
+<figure class="ars-img-shortcode id-1314289 align-center">
+    <div>
+                        <img loading="lazy" decoding="async" width="560" height="81" src="https://cdn.arstechnica.net/wp-content/uploads/2018/05/smalll.png" class="center full" alt="" srcset="https://cdn.arstechnica.net/wp-content/uploads/2018/05/smalll.png 560w, https://cdn.arstechnica.net/wp-content/uploads/2018/05/smalll-300x43.png 300w" sizes="(max-width: 560px) 100vw, 560px">
+                  </div>
+      </figure>
+
+<p><b>Astra gets a lifeline from DOD. </b>Astra, the launch startup that was taken private again earlier this year for a sliver of its former value, has landed a new contract with the Defense Innovation Unit (DIU) to support the development of a next-gen launch system for time-sensitive space missions, <a href="https://techcrunch.com/2024/10/24/embattled-astra-scores-dod-contract-to-develop-point-to-point-cargo-delivery-from-space/">TechCrunch reports</a>. The contract, which the DIU awarded under its Novel Responsive Space Delivery (NRSD) program, has a maximum value of $44 million. The money will go toward the continued development of Astra’s Launch System 2, designed to perform rapid, ultra-low-cost launches.</p><p><a href="https://arstechnica.com/space/2024/10/rocket-report-sneak-peek-at-the-business-end-of-new-glenn-france-to-fly-frog/">Read full article</a></p>
+<p><a href="https://arstechnica.com/space/2024/10/rocket-report-sneak-peek-at-the-business-end-of-new-glenn-france-to-fly-frog/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>145</slash:comments>
+
+
+            <media:content medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GaqSA8jXkAAwPMX.jpeg">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GaqSA8jXkAAwPMX-500x500.jpeg"
+                                 width="500"/>
+                <media:credit>Blue Origin</media:credit>
+                <media:text>Blue Origin's first New Glenn rocket, with seven BE-4 engines installed inside the company's
+                    production facility near NASA's Kennedy Space Center in Florida.
+                </media:text>
+            </media:content>
+        </item>
+        <item>
+            <title>What I learned from 3 years of running Windows 11 on “unsupported” PCs</title>
+            <link>
+                https://arstechnica.com/gadgets/2024/10/what-i-learned-from-3-years-of-running-windows-11-on-unsupported-pcs/
+            </link>
+            <comments>
+                https://arstechnica.com/gadgets/2024/10/what-i-learned-from-3-years-of-running-windows-11-on-unsupported-pcs/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Andrew Cunningham]]>
+            </dc:creator>
+            <pubDate>Fri, 25 Oct 2024 10:45:41 +0000</pubDate>
+            <category><![CDATA[Features]]></category>
+            <category><![CDATA[Tech]]></category>
+            <category><![CDATA[microsoft]]></category>
+            <category><![CDATA[Windows]]></category>
+            <category><![CDATA[windows 10]]></category>
+            <category><![CDATA[windows 10 22h2]]></category>
+            <category><![CDATA[windows 11]]></category>
+            <category><![CDATA[windows 11 23h2]]></category>
+            <category><![CDATA[windows 11 24h2]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/gadgets/2024/10/what-i-learned-from-3-years-of-running-windows-11-on-unsupported-pcs/
+            </guid>
+
+            <description>
+                <![CDATA[When your old PC goes over the Windows 10 update cliff, can Windows 11 save it?]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p><a href="https://arstechnica.com/gadgets/2024/10/lots-of-pcs-are-poised-to-fall-off-the-windows-10-update-cliff-one-year-from-today/">The Windows 10 update cliff is coming</a> in October 2025. We've explained why that's a big deal, and we have a <a href="https://arstechnica.com/gadgets/2024/10/how-to-upgrade-to-windows-11-whether-your-pc-is-supported-or-not/">comprehensive guide to updating to Windows 11</a> (recently updated to account for changes in Windows 11 24H2) so you can keep getting security updates, whether you're on an officially supported PC or not.</p>
+<p>But this is more than just a theoretical exercise; I've been using Windows 11 on some kind of "unsupported" system practically since it launched to stay abreast of what the experience is actually like and to keep tabs on whether Microsoft would make good on its threats to pull support from these systems at any time.</p>
+<p>Now that we're three years in, and since I've been using Windows 11 24H2 on a 2012-era desktop and laptop as my primary work machines on and off for a few months now, I can paint a pretty complete picture of what Windows 11 is like on these PCs. As the Windows 10 update cliff approaches, it's worth asking: Is running "unsupported" Windows 11 a good way to keep an older but still functional machine running, especially for non-technical users?</p><p><a href="https://arstechnica.com/gadgets/2024/10/what-i-learned-from-3-years-of-running-windows-11-on-unsupported-pcs/">Read full article</a></p>
+<p><a href="https://arstechnica.com/gadgets/2024/10/what-i-learned-from-3-years-of-running-windows-11-on-unsupported-pcs/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>129</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/IMG_2251-1-1152x648.jpeg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/IMG_2251-1-500x500.jpeg"
+                                 width="500"/>
+                <media:credit>Andrew Cunningham</media:credit>
+            </media:content>
+        </item>
+        <item>
+            <title>Google’s DeepMind is building an AI to keep us from hating each other</title>
+            <link>
+                https://arstechnica.com/ai/2024/10/googles-deepmind-is-building-an-ai-to-keep-us-from-hating-each-other/
+            </link>
+            <comments>
+                https://arstechnica.com/ai/2024/10/googles-deepmind-is-building-an-ai-to-keep-us-from-hating-each-other/#comments
+            </comments>
+
+            <dc:creator>
+                <![CDATA[Jacek Krywko]]>
+            </dc:creator>
+            <pubDate>Thu, 24 Oct 2024 23:36:34 +0000</pubDate>
+            <category><![CDATA[AI]]></category>
+            <category><![CDATA[Google]]></category>
+            <category><![CDATA[Science]]></category>
+            <category><![CDATA[consensus]]></category>
+            <category><![CDATA[DeepBrain]]></category>
+            <category><![CDATA[ethics]]></category>
+            <category><![CDATA[Habermas]]></category>
+            <category><![CDATA[politics]]></category>
+            <guid isPermaLink="true">
+                https://arstechnica.com/ai/2024/10/googles-deepmind-is-building-an-ai-to-keep-us-from-hating-each-other/
+            </guid>
+
+            <description>
+                <![CDATA[The AI did better than professional mediators at getting people to reach agreement.]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p style="font-weight: 400;">An unprecedented <a href="https://news.gallup.com/poll/650828/americans-agree-nation-divided-key-values.aspx">80 percent</a> of Americans, according to a recent Gallup poll, think the country is deeply divided over its most important values ahead of the November elections. The general public’s polarization now encompasses issues like immigration, health care, identity politics, transgender rights, or whether we should support Ukraine. Fly across the Atlantic and you’ll see the same thing happening in the European Union and the UK.</p>
+<p style="font-weight: 400;">To try to reverse this trend, Google’s DeepMind built an AI system designed to aid people in resolving conflicts. It’s called the Habermas Machine after Jürgen Habermas, a German philosopher who argued that an agreement in a public sphere can always be reached when rational people engage in discussions as equals, with mutual respect and perfect communication.</p>
+<p style="font-weight: 400;">But is DeepMind’s Nobel Prize-winning ingenuity really enough to solve our political conflicts the same way they solved <a href="https://arstechnica.com/gaming/2017/12/deepmind-ai-needs-mere-4-hours-of-self-training-to-become-a-chess-overlord/">chess</a> or <a href="https://arstechnica.com/science/2019/10/leveling-up-deepminds-alphastar-achieves-grandmaster-level-in-starcraft-ii/"><em>StarCraft</em></a> or <a href="https://arstechnica.com/science/2024/10/protein-structure-and-design-software-gets-the-chemistry-nobel/">predicting protein structures</a>? Is it even the right tool?</p><p><a href="https://arstechnica.com/ai/2024/10/googles-deepmind-is-building-an-ai-to-keep-us-from-hating-each-other/">Read full article</a></p>
+<p><a href="https://arstechnica.com/ai/2024/10/googles-deepmind-is-building-an-ai-to-keep-us-from-hating-each-other/#comments">Comments</a></p>
+]]>
+            </content:encoded>
+
+            <slash:comments>90</slash:comments>
+
+
+            <media:content height="648" medium="image" type="image/jpeg"
+                           url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GettyImages-91498609-1152x648.jpg"
+                           width="1152">
+                <media:thumbnail height="500"
+                                 url="https://cdn.arstechnica.net/wp-content/uploads/2024/10/GettyImages-91498609-500x500-1729811269.jpg"
+                                 width="500"/>
+                <media:credit>Jose Luis Pelaez Inc</media:credit>
+            </media:content>
+        </item>
+    </channel>
+</rss>

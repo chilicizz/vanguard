@@ -1,12 +1,14 @@
 plugins {
     id 'java'
-    id "com.google.protobuf" version "0.9.4"
+    id "com.google.protobuf" version "0.9.5"
     id 'maven-publish'
 }
 
 group = 'com.chilicizz.protos'
 version = '0.1'
 def grpcVersion = '1.62.2'
+def protobufVersion = '3.25.5'
+def protocVersion = protobufVersion
 
 repositories {
     mavenCentral()
@@ -37,7 +39,7 @@ sourceSets {
 }
 
 protobuf {
-    protoc { artifact = "com.google.protobuf:protoc:3.25.0" }
+    protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
     plugins {
         grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
     }

@@ -1,5 +1,6 @@
-package com.cyrilng;
+package com.cyrilng.benchmarks;
 
+import com.cyrilng.benchmarks.plan.ListPlan;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.List;

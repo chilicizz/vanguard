@@ -1,4 +1,4 @@
-package com.cyrilng;
+package com.cyrilng.benchmarks.plan;
 
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
@@ -26,7 +26,7 @@ public class ListPlan {
             this.constructor = constructor;
         }
 
-        List<Integer> get() {
+        public List<Integer> get() {
             return constructor.get();
         }
     }

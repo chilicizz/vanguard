@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.cyrilng.datex";
+option java_outer_classname = "RSS";
+
+package com.cyrilng;
+
+message RSSItem {
+  string guid = 1;
+  string title = 2;
+  string description = 3;
+  string pubDate = 4; // RFC-822 format
+  string link = 5;
+  map<string, string> customFields = 6; // Custom fields for additional metadata
+}
+
+message RSSSubscribeRequest {
+  string userId = 1;
+  string url = 2;
+}
+
+message RSSUnsubscribeRequest {
+  string userId = 1;
+  string url = 2;
+}
+
+message RSSResponse {
+  string message = 1;
+}
+
+service RSSService {
+  rpc subscribe (RSSSubscribeRequest) returns (RSSResponse) {}
+
+  rpc unsubscribe (stream RSSUnsubscribeRequest) returns (RSSResponse) {}
+}
+
+enum RSSActionType {
+  SUBSCRIBE = 0;
+  UNSUBSCRIBE = 1;
+}
