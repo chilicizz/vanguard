@@ -1,4 +1,4 @@
-package com.cyrilng.datex.rss;
+package com.cyrilng.vanguard.rss;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

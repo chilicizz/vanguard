@@ -1,0 +1,12 @@
+[Unit]
+Description=Vanguard Server
+After=network.target
+[Service]
+ExecStart=/opt/vanguard/bin/vanguard
+WorkingDirectory=/opt/vanguard/
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+[Install]
+WantedBy=multi-user.target

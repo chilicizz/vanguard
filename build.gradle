@@ -1,6 +1,8 @@
 plugins {
     id("com.gradleup.shadow") version "8.3.6"
     id("io.micronaut.application") version "4.5.3"
+    // https://gradle-ssh-plugin.github.io/
+    id('org.hidetake.ssh') version '2.12.0'
 }
 
 version = "0.1"
@@ -12,7 +14,7 @@ repositories {
 
 dependencies {
     implementation(project(':protos'))
-    implementation(project(':datex'))
+    implementation(project(':rss'))
     annotationProcessor('io.micronaut.serde:micronaut-serde-processor:2.9.0')
     implementation('io.micronaut.serde:micronaut-serde-jackson:2.9.0')
     implementation('io.micronaut:micronaut-discovery-core:4.4.7')
@@ -66,4 +68,25 @@ tasks.named("dockerBuild") {
 
 tasks.register('printVersionInformation') {
     println project.version
+}
+
+remotes {
+    piserver {
+        host = 'piserver'
+        user = 'pi'
+        identity = file('path/to/private_key')
+        knownHosts = allowAnyHosts
+    }
+}
+
+tasks.register('deployOverSsh') {
+    doLast {
+        ssh.run {
+            session(remotes.piserver) {
+                put from: "$layout.buildDirectory/distributions/vanguard-$version.tar", into: '~/'
+                execute 'sudo tar xf vanguard-$version.tar -C /opt/vanguard --strip-components=1'
+                execute 'sudo systemctl restart vanguard'
+            }
+        }
+    }
 }

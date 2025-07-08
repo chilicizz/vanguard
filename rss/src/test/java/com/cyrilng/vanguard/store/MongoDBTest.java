@@ -1,4 +1,4 @@
-package com.cyrilng.datex.store;
+package com.cyrilng.vanguard.store;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;

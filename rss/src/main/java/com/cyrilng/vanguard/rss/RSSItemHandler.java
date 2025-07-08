@@ -1,4 +1,4 @@
-package com.cyrilng.datex.rss;
+package com.cyrilng.vanguard.rss;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import static com.cyrilng.datex.rss.RSSChannelHandler.attributeString;
+import static com.cyrilng.vanguard.rss.RSSChannelHandler.attributeString;
 
 public class RSSItemHandler extends DefaultHandler {
     private static final Logger logger = LoggerFactory.getLogger(RSSItemHandler.class);

@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.cyrilng.datex";
+option java_package = "com.cyrilng.vanguard";
 option java_outer_classname = "RSS";
 
 package com.cyrilng;
@@ -29,10 +29,17 @@ message RSSResponse {
   string message = 1;
 }
 
+message RSSFeedRequest {
+  string channelId = 1;
+}
+
+
 service RSSService {
   rpc subscribe (RSSSubscribeRequest) returns (RSSResponse) {}
 
   rpc unsubscribe (stream RSSUnsubscribeRequest) returns (RSSResponse) {}
+
+  rpc getFeed(RSSFeedRequest) returns (stream RSSItem) {}
 }
 
 enum RSSActionType {

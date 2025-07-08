@@ -1,4 +1,4 @@
-package com.cyrilng.datex.rss;
+package com.cyrilng.vanguard.rss;
 
 import java.time.ZonedDateTime;
 
