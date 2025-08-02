@@ -70,22 +70,41 @@ tasks.register('printVersionInformation') {
     println project.version
 }
 
+// Deploying over ssh
 remotes {
-    piserver {
-        host = 'piserver'
-        user = 'pi'
-        identity = file('path/to/private_key')
+    pi4 {
+        host = System.getenv("VG_HOST")
+        user = System.getenv("VG_USER")
+        identity = file(System.getenv("VG_PK_FILE"))
         knownHosts = allowAnyHosts
+    }
+}
+
+tasks.register('installOverSsh') {
+    doLast {
+        ssh.run {
+            session(remotes.pi4) {
+                put from: "${layout.buildDirectory.get()}/distributions/vanguard-${version}.tar", into: '/tmp'
+                execute "sudo tar xf /tmp/vanguard-${version}.tar -C /opt/vanguard --strip-components=1"
+                put from: "${layout.buildDirectory.get()}/vanguard.service", into: '/tmp'
+                execute "sudo cp /tmp/vanguard.service /etc/systemd/system"
+                execute "sudo systemctl daemon-reload"
+                execute "sudo systemctl start vanguard.service"
+                execute "sudo systemctl enable vanguard.service"
+                execute "sudo rm /tmp/vanguard-${version}.tar /tmp/vanguard.service"
+            }
+        }
     }
 }
 
 tasks.register('deployOverSsh') {
     doLast {
         ssh.run {
-            session(remotes.piserver) {
-                put from: "$layout.buildDirectory/distributions/vanguard-$version.tar", into: '~/'
-                execute 'sudo tar xf vanguard-$version.tar -C /opt/vanguard --strip-components=1'
-                execute 'sudo systemctl restart vanguard'
+            session(remotes.pi4) {
+                put from: "${layout.buildDirectory.get()}/distributions/vanguard-${version}.tar", into: '/tmp'
+                execute "sudo tar xf /tmp/vanguard-${version}.tar -C /opt/vanguard --strip-components=1"
+                execute "sudo systemctl restart vanguard"
+                execute "sudo rm /tmp/vanguard-${version}.tar"
             }
         }
     }

@@ -24,22 +24,3 @@ message VanguardRequest {
 message VanguardReply {
   string message = 1;
 }
-
-message RSSSubscribeRequest {
-  string userId = 1;
-  string url = 2;
-}
-
-message RSSUnsubscribeRequest {
-  string userId = 1;
-  string url = 2;
-}
-
-service RSSService {
-
-}
-
-enum RSSActionType {
-  SUBSCRIBE = 0;
-  UNSUBSCRIBE = 1;
-}

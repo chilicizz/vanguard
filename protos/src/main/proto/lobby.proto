@@ -1,0 +1,85 @@
+// https://protobuf.dev/reference/java/java-generated/
+// https://micronaut-projects.github.io/micronaut-grpc/snapshot/guide/index.html
+syntax = "proto3";
+import "cards.proto";
+
+option java_multiple_files = true;
+option java_package = "com.cyrilng.game";
+option java_outer_classname = "GameLobby";
+package cards;
+
+message User {
+  int64   userId = 1;
+  string  username = 2;
+}
+
+message LobbyRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message LobbyResponse {
+  repeated Game games = 1;
+  string next_page_token = 2;
+}
+
+message Game {
+  int64 gameId = 1;
+}
+
+message Player {
+  User user = 1;
+  Hand hand = 2;
+}
+
+message GameState {
+  Game game = 1;
+  repeated Player players = 2;
+  Deck deck = 3;
+  repeated Card discard = 4;
+}
+
+message JoinGameRequest {
+  User user = 1;
+  Game game = 2;
+}
+
+service UserService {
+  // if the user id exists then you can return
+  rpc LoginUser(User) returns (User);
+}
+
+service LobbyService {
+  rpc GetGames(LobbyRequest) returns (LobbyResponse);
+
+  rpc JoinGame(JoinGameRequest) returns (stream GameState);
+}
+
+service GameService {
+
+
+  // Returns a stream of the available games
+  rpc JoinLobby(LobbyRequest) returns (stream LobbyResponse);
+
+  rpc ViewGame(Game) returns (stream Game);
+
+}
+
+
+message PlayerAction {
+  int64     playerId    = 1;
+  int64     gameId      = 2;
+  int64     gameState   = 3;
+  Actions   action      = 4;
+}
+
+enum Actions {
+  QUIT        = 0;
+  JOIN        = 1;
+
+  HIT         = 10;
+  STAND       = 11;
+  SPLIT       = 12;
+  DOUBLE_DOWN = 13;
+  SURRENDER   = 14;
+}

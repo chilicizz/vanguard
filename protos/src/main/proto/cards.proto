@@ -9,31 +9,31 @@ option java_outer_classname = "Cards";
 package cards;
 
 enum Suit {
-  SPADES = 0;
-  HEARTS = 1;
-  DIAMONDS = 2;
-  CLUBS = 3;
+  SPADES    = 0;
+  HEARTS    = 1;
+  DIAMONDS  = 2;
+  CLUBS     = 3;
 }
 
 enum Value {
-  JOKER = 0;
-  ACE = 1;
-  TWO = 2;
-  THREE = 3;
-  FOUR = 4;
-  FIVE = 5;
-  SIX = 6;
-  SEVEN = 7;
-  EIGHT = 8;
-  NINE = 9;
-  TEN = 10;
-  JACK = 11;
-  QUEEN = 12;
-  KING = 13;
+  JOKER   = 0;
+  ACE     = 1;
+  TWO     = 2;
+  THREE   = 3;
+  FOUR    = 4;
+  FIVE    = 5;
+  SIX     = 6;
+  SEVEN   = 7;
+  EIGHT   = 8;
+  NINE    = 9;
+  TEN     = 10;
+  JACK    = 11;
+  QUEEN   = 12;
+  KING    = 13;
 }
 
 message Card {
-  Suit suit = 1;
+  Suit  suit  = 1;
   Value value = 2;
 }
 
@@ -43,62 +43,4 @@ message Deck {
 
 message Hand {
   repeated Card cards = 1;
-}
-
-message Player {
-  int64 playerId = 1;
-  string playerName = 2;
-  Hand hand = 3;
-  repeated Actions actions = 4; // Available actions for the player
-}
-
-message Game {
-  int64 gameId = 1;
-  int64 gameState = 2;
-
-  repeated Player players = 10;
-  Deck deck = 11;
-}
-
-message PlayerAction {
-  int64 playerId = 1;
-  int64 gameId = 2;
-  int64 gameState = 3;
-  Actions action = 4;
-}
-
-/**
- * The request message containing the user's name.
- */
-message LobbyRequest {
-  string name = 1;
-}
-
-/**
- * The response message containing the registered player details and the list of games.
- */
-message LobbyResponse {
-  Player player = 1;
-  repeated Game games = 2;
-}
-
-service BlackJackService {
-  // Returns a stream of the available games
-  rpc JoinLobby(LobbyRequest) returns (stream LobbyResponse);
-
-  rpc ViewGame(Game) returns (stream Game);
-
-  // Returns a stream of the game state
-  rpc JoinGame(stream PlayerAction) returns (stream Game);
-}
-
-enum Actions {
-  QUIT = 0;
-  JOIN = 1;
-
-  HIT = 10;
-  STAND = 11;
-  SPLIT = 12;
-  DOUBLE_DOWN = 13;
-  SURRENDER = 14;
 }
