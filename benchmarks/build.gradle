@@ -16,6 +16,9 @@ dependencies {
 
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    // https://lmax-exchange.github.io/disruptor/user-guide/index.html
+    implementation('com.lmax:disruptor:4.0.0')
 }
 
 test {

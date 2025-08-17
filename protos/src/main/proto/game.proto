@@ -1,0 +1,93 @@
+// https://protobuf.dev/reference/java/java-generated/
+// https://micronaut-projects.github.io/micronaut-grpc/snapshot/guide/index.html
+syntax = "proto3";
+import "cards.proto";
+
+option java_multiple_files = true;
+option java_package = "com.cyrilng.game";
+option java_outer_classname = "PokerGame";
+
+package cards;
+
+message Game {
+  uint64 gameId = 1;
+}
+
+message Player {
+  uint64 id = 10;
+  Hand hand = 20;
+  PlayerScore score = 30;
+
+  uint32 chips = 40;
+  uint32 bet = 50;
+}
+
+message PlayerScore {
+  int64 wins = 1;
+  int64 losses = 2;
+  int64 draw = 3;
+}
+
+message GameState {
+  Game game = 10;
+  uint64 gameStateId = 11;
+
+  Deck deck = 20;
+  repeated Player players = 30;
+  repeated Card discarded = 40;
+
+  repeated GameAction playerActions = 50;
+
+  uint32 betPool = 60;
+}
+
+message JoinGameRequest {
+  Game game = 10;
+}
+
+message JoinGameResponse {
+  Game game = 10;
+  uint64 playerId = 20;
+}
+
+service GameService {
+  rpc JoinGame(Game) returns (JoinGameResponse);
+
+  rpc ViewGame(Game) returns (stream GameState);
+
+  rpc StreamGame(stream GameAction) returns (stream GameState);
+}
+
+message PlayerActions {
+  repeated GameAction actions = 1;
+}
+
+message GameAction {
+  int64         playerId = 10;
+  int64         gameId = 20;
+  int64         gameState = 30;
+  ActionType    type = 40;
+}
+
+enum ActionType {
+  JOIN = 0;
+  QUIT = 1;
+
+  HIT = 10;
+  STAND = 11;
+  SPLIT = 12;
+  DOUBLE_DOWN = 13;
+  SURRENDER = 14;
+}
+
+enum PokerHandType {
+  STRAIGHT_FLUSH = 0;
+  FOUR_OF_A_KIND = 1;
+  FULL_HOUSE = 2;
+  FLUSH = 3;
+  STRAIGHT = 4;
+  THREE_OF_A_KIND = 5;
+  TWO_PAIR = 6;
+  ONE_PAIR = 7;
+  HIGH_CARD = 8;
+}
