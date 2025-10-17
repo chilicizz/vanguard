@@ -1,4 +1,3 @@
 rootProject.name = "vanguard"
 include 'protos'
-include 'benchmarks'
 include 'rss'
