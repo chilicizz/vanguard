@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import reactor.test.StepVerifier;
 
-public class MongoDBTest {
+public class MongoDBIntegrationTest {
 
     public static MongoClient mongoClient;
 
