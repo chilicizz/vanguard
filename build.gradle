@@ -77,18 +77,17 @@ tasks.register('printVersionInformation') {
     println project.version
 }
 
-// Deploying over ssh
-remotes {
-    pi4 {
-        host = System.getenv("VG_HOST")
-        user = System.getenv("VG_USER")
-        identity = file(System.getenv("VG_PK_FILE"))
-        knownHosts = allowAnyHosts
-    }
-}
-
 tasks.register('installOverSsh') {
     doLast {
+        // Deploying over ssh
+        remotes {
+            pi4 {
+                host = System.getenv("VG_HOST")
+                user = System.getenv("VG_USER")
+                identity = file(System.getenv("VG_PK_FILE"))
+                knownHosts = allowAnyHosts
+            }
+        }
         ssh.run {
             session(remotes.pi4) {
                 put from: "${layout.buildDirectory.get()}/distributions/vanguard-${version}.tar", into: '/tmp'
@@ -106,6 +105,15 @@ tasks.register('installOverSsh') {
 
 tasks.register('deployOverSsh') {
     doLast {
+        // Deploying over ssh
+        remotes {
+            pi4 {
+                host = System.getenv("VG_HOST")
+                user = System.getenv("VG_USER")
+                identity = file(System.getenv("VG_PK_FILE"))
+                knownHosts = allowAnyHosts
+            }
+        }
         ssh.run {
             session(remotes.pi4) {
                 put from: "${layout.buildDirectory.get()}/distributions/vanguard-${version}.tar", into: '/tmp'
