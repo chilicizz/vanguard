@@ -70,8 +70,13 @@ public class PokerHandRules {
         // check for straights
         getStraight(sortedCards).ifPresent(straight -> hands.put(PokerHandType.STRAIGHT, new RankedHand(PokerHandType.STRAIGHT, straight)));
         // get the rest
-        getMatchedSet(rankMap).ifPresent(rankedHand -> hands.put(rankedHand.type, rankedHand));
-        return hands.entrySet().stream().findFirst().get().getValue();
+        getMatchedSet(rankMap).ifPresent(rankedHand -> hands.put(rankedHand.type(), rankedHand));
+        var res = hands.entrySet().stream().findFirst();
+        if (res.isPresent()) {
+            return res.get().getValue();
+        } else {
+            throw new IllegalStateException("Should always return a hand: " + Arrays.toString(cards));
+        }
     }
 
     public static Optional<RankedHand> getMatchedSet(Map<Rank, List<Card>> rankMap) {
@@ -135,11 +140,4 @@ public class PokerHandRules {
         return Optional.empty();
     }
 
-    public record RankedHand(PokerHandType type, Card[] cards) implements Comparable<RankedHand> {
-
-        @Override
-        public int compareTo(RankedHand o) {
-            return this.type().compareTo(o.type());
-        }
-    }
 }

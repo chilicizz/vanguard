@@ -55,15 +55,22 @@ protobuf {
     }
 }
 
+// https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#publishing-a-package
+// https://docs.github.com/en/actions/tutorials/publish-packages/publish-java-packages-with-gradle#publishing-packages-to-github-packages
 publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = "https://maven.pkg.github.com/chilicizz/vanguard"
+            url = uri("https://maven.pkg.github.com/chilicizz/vanguard")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
             }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
         }
     }
 }

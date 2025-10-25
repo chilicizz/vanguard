@@ -5,6 +5,7 @@ import com.cyrilng.cards.Rank;
 import com.cyrilng.cards.Suit;
 import com.cyrilng.game.PokerHandType;
 import com.cyrilng.poker.PokerHandRules;
+import com.cyrilng.poker.RankedHand;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PokerHandRulesTest {
     static Map<Suit, Map<Rank, Card>> deck;
-    PokerHandRules pokerHandRules;
 
     @BeforeAll
     public static void setUpAll() {
@@ -37,7 +37,6 @@ public class PokerHandRulesTest {
 
     @BeforeEach
     public void setUp() {
-        pokerHandRules = new PokerHandRules();
     }
 
     @Test
@@ -109,7 +108,7 @@ public class PokerHandRulesTest {
 
     @Test
     public void testHandsAre5Cards() {
-        PokerHandRules.RankedHand hand = PokerHandRules.getRankedHand(
+        RankedHand hand = PokerHandRules.getRankedHand(
                 deck.get(Suit.CLUBS).get(Rank.TWO),
                 deck.get(Suit.CLUBS).get(Rank.THREE),
                 deck.get(Suit.CLUBS).get(Rank.FOUR),
