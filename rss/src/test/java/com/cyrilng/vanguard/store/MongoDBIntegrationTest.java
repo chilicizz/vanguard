@@ -1,5 +1,6 @@
 package com.cyrilng.vanguard.store;
 
+import com.cyrilng.vanguard.rss.domain.RssFeed;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -7,12 +8,15 @@ import com.mongodb.ServerApiVersion;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
+import com.mongodb.reactivestreams.client.MongoCollection;
 import com.mongodb.reactivestreams.client.MongoDatabase;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import reactor.test.StepVerifier;
+
+import java.net.URI;
 
 public class MongoDBIntegrationTest {
 
@@ -47,7 +51,7 @@ public class MongoDBIntegrationTest {
     }
 
     @Test
-    public void testMongoDBConnection() {
+    public void mongoDBConnectionTest() {
         // Send a ping to confirm a successful connection
         MongoDatabase database = mongoClient.getDatabase("admin");
         StepVerifier.create(database.runCommand(new Document("ping", 1))).expectNextMatches(
@@ -57,7 +61,7 @@ public class MongoDBIntegrationTest {
     }
 
     @Test
-    public void testMongoDBInsert() {
+    public void mongoDBCrudTest() {
         // https://www.baeldung.com/reactive-streams-step-verifier-test-publisher
         MongoDatabase database = mongoClient.getDatabase("temp");
         Document doc = new Document("name", "testDocument").append("value", 123);
@@ -81,11 +85,39 @@ public class MongoDBIntegrationTest {
                 .verify();
 
         // Clean up the inserted document
-        StepVerifier.create(database.getCollection("test").deleteOne(doc))
-                .expectNextMatches(result -> result.getDeletedCount() == 1)
+        StepVerifier.create(database.getCollection("test").deleteMany(doc))
+                .expectNextMatches(result -> result.getDeletedCount() > 0)
+                .expectComplete()
+                .verify();
+    }
+
+    @Test
+    public void testUsingRecord() {
+        MongoDatabase database = mongoClient.getDatabase("temp");
+        MongoCollection<RssFeed> collection = database.getCollection("test-feed", RssFeed.class);
+        RssFeed rssFeed = new RssFeed(URI.create("https://dummy.com/feed"), "Test Title", "Test Description", "linkString", "https://dummy.com/feed.png");
+        StepVerifier.create(collection.insertOne(rssFeed))
+                .expectNextMatches(InsertOneResult::wasAcknowledged)
                 .expectComplete()
                 .verify();
 
-    }
+        // Verify that the document was inserted
+        StepVerifier.create(collection.find(new Document().append("link", "https://dummy.com/feed")))
+                .expectNextMatches(document -> document.title().equals("Test Title") &&
+                        document.description().equals("Test Description"))
+                .expectComplete()
+                .verify();
 
+        // Try update
+        StepVerifier.create(collection.updateOne(new Document().append("link", "https://dummy.com/feed"), new Document("$set", new Document("link", "http://dummy.com/feed"))))
+                .expectNextMatches(result -> result.getModifiedCount() == 1)
+                .expectComplete()
+                .verify();
+
+        // Clean up the inserted document
+        StepVerifier.create(collection.deleteMany(new Document().append("link", "http://dummy.com/feed")))
+                .expectNextMatches(result -> result.getDeletedCount() > 0)
+                .expectComplete()
+                .verify();
+    }
 }

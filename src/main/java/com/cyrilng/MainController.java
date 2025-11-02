@@ -1,0 +1,86 @@
+package com.cyrilng;
+
+import io.micronaut.context.annotation.Parameter;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.cookie.Cookie;
+import io.micronaut.http.cookie.Cookies;
+import io.micronaut.views.ModelAndView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.util.Map;
+import java.util.UUID;
+
+import static io.micronaut.http.MediaType.*;
+
+@Controller
+public class MainController {
+    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+
+    private final HttpClient httpClient;
+
+    public MainController() {
+        this.httpClient = HttpClient.newBuilder().build();
+    }
+
+    @Get(value = "/", produces = TEXT_HTML)
+    public ModelAndView index(HttpRequest<Void> request) {
+        Cookies cookies = request.getCookies();
+        if (cookies.contains("userId")) {
+            return new ModelAndView("home", Map.of("userId", cookies.get("userId").getValue()));
+        }
+        return new ModelAndView("index", Map.of("message", "notLoggedIn"));
+    }
+
+    @Get(value = "/feeds", produces = TEXT_HTML)
+    public ModelAndView feeds(HttpRequest<Void> request) {
+        Cookies cookies = request.getCookies();
+        if (cookies.contains("userId")) {
+            return new ModelAndView("user_feeds", Map.of("userId", cookies.get("userId").getValue()));
+        }
+        return new ModelAndView("index", Map.of("message", "notLoggedIn"));
+    }
+
+    @Post(value = "/feed/validate", consumes = APPLICATION_FORM_URLENCODED, produces = APPLICATION_JSON)
+    public String validateFeed(@Parameter("feedURL") String feedUrl) {
+        logger.info("Validating: {}", feedUrl);
+        URI feed = URI.create(feedUrl);
+        // fetch the feed
+        logger.info(String.valueOf(feed));
+        java.net.http.HttpRequest httpRequest = java.net.http.HttpRequest.newBuilder(feed).GET().build();
+        try {
+            java.net.http.HttpResponse<String> response = httpClient.send(httpRequest, java.net.http.HttpResponse.BodyHandlers.ofString());
+            logger.info(response.body());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    @Post(value = "/login")
+    public HttpResponse<String> authenticate(@Parameter("username") String username, @Parameter("password") String password) {
+        return HttpResponse.ok("").cookie(Cookie.of("userId", UUID.randomUUID().toString()));
+    }
+
+    @Post(value = "/login")
+    public HttpResponse<String> authenticate() {
+        return HttpResponse.ok("").cookie(Cookie.of("userId", UUID.randomUUID().toString()));
+    }
+
+    @Get(value = "/cookie/{value}")
+    public String getCookie(@PathVariable("value") String value, HttpRequest<Void> request) {
+        Cookies cookies = request.getCookies();
+        if (cookies.contains(value)) {
+            return cookies.get(value).getValue();
+        }
+        return value;
+    }
+}

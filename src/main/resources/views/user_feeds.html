@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/general.html :: head}">
+</head>
+<body>
+<header th:insert="~{fragments/general.html :: header}"></header>
+<section>
+    <h1>Update Feeds</h1>
+    <p>UserId = <span th:text="${userId}"></span></p>
+    <table>
+        <thead>
+        <tr>
+            <th>Feed</th>
+        </tr>
+        </thead>
+        <tbody id="rssFeedBody">
+        <tr>
+            <td>
+                <label for="urlInput">Feed URL</label>
+                <input type="text" id="urlInput">
+                <button id="submitUrlInput" type="button">Validate</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- simple feedback area for auth/validation messages -->
+    <p id="message" aria-live="polite" style="margin-top:8px;color:#c00;"></p>
+</section>
+
+<footer th:insert="~{fragments/general.html :: footer}"></footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const msgEl = document.getElementById('message');
+
+      function setMessage(text, isError) {
+        if (!msgEl) return;
+        msgEl.textContent = text || '';
+        msgEl.style.color = isError ? '#c00' : '#080';
+      }
+
+      async function callAuth() {
+        try {
+          const res = await fetch('/login', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.status === 401) {
+            // Not authenticated => redirect to login page
+            window.location.href = '/';
+            return;
+          }
+
+          if (!res.ok) {
+            const text = await res.text();
+            console.error('Auth endpoint error', res.status, text);
+            setMessage('Auth check failed', true);
+            return;
+          }
+
+          // Try to read JSON response (if any) and display a message
+          const data = await res.json().catch(() => null);
+          if (data && data.message) setMessage(data.message, false);
+          else setMessage('Authenticated', false);
+        } catch (err) {
+          console.error('Auth request failed', err);
+          setMessage('Auth request failed', true);
+        }
+      }
+
+      // Handle validate button click: POST feedURL to /feed/validate
+      const submitBtn = document.getElementById('submitUrlInput');
+      if (submitBtn) {
+        submitBtn.addEventListener('click', async function () {
+          const btn = this;
+          const input = document.getElementById('urlInput');
+          const url = input ? input.value.trim() : '';
+          if (!url) {
+            setMessage('Please enter a URL to validate', true);
+            return;
+          }
+
+          btn.disabled = true;
+          setMessage('Validating...', false);
+          try {
+            const res = await fetch('/feed/validate', {
+              method: 'POST',
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+              },
+              body: new URLSearchParams({ feedURL: url })
+            });
+
+            if (!res.ok) {
+              const text = await res.text().catch(() => '');
+              console.error('Validation endpoint error', res.status, text);
+              setMessage('Validation failed: ' + (text || res.status), true);
+              return;
+            }
+
+            // Expecting JSON like { valid: true, message: '...' }
+            const data = await res.json().catch(() => null);
+            if (data && typeof data.valid !== 'undefined') {
+              if (data.valid) setMessage(data.message || 'Feed is valid', false);
+              else setMessage(data.message || 'Feed is not valid', true);
+            } else if (data && data.message) {
+              // Fallback if API only returns a message
+              setMessage(data.message, false);
+            } else {
+              setMessage('Validation succeeded', false);
+            }
+          } catch (err) {
+            console.error('Validation request failed', err);
+            setMessage('Validation request failed', true);
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      }
+
+      callAuth();
+    });
+</script>
+</body>
+</html>

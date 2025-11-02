@@ -1,0 +1,24 @@
+<rss version="2.0">
+    <channel>
+        <title>Weather Warning Summary</title>
+        <description>Weather Warning Summary provided by the Hong Kong Observatory</description>
+        <link>http://www.weather.gov.hk/textonly/warning/warn.htm</link>
+        <language>en-us</language>
+        <webMaster>mailbox@hko.gov.hk (Hong Kong Observatory)</webMaster>
+        <copyright>The content available in this file, including but not limited to all text, graphics, drawings, diagrams, photographs and compilation of data or other materials are protected by copyright. The Government of the Hong Kong Special Administrative Region is the owner of all copyright works contained in this website.</copyright>
+        <pubDate>Sun, 26 Oct 2025 06:00:46 +0800</pubDate>
+        <image>
+            <title>Hong Kong Observatory</title>
+            <url>http://rss.weather.gov.hk/img/logo_dblue.gif</url>
+            <link>https://www.weather.gov.hk/</link>
+        </image>
+        <item>
+            <title><![CDATA[Red Fire Danger Warning issued (06:00 HKT 26/10/2025) ]]></title>
+            <link>http://www.weather.gov.hk/textonly/warning/warn.htm</link>
+            <author>hkowm@hko.gov.hk (Hong Kong Observatory)</author>
+            <description><![CDATA[Red Fire Danger Warning was issued at 06:00 HKT (26 Oct 2025) <br/><br/>]]></description>
+            <pubDate>Sun, 26 Oct 2025 06:00:00 +0800</pubDate>
+            <guid isPermaLink="false">http://rss.weather.gov.hk/rss/202510260600/Red Fire Danger Warning issued</guid>
+        </item>
+    </channel>
+</rss>

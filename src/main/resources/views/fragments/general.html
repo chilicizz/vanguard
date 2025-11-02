@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <title>CyRSS - RSS Feed reader</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <link rel="stylesheet" href="/css/style.css">-->
+</head>
+<body>
+<header th:fragment="header">
+    <nav>
+        <ul>
+            <li>CyRss</li>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/feeds}">Update Feeds</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section>
+
+</section>
+
+<footer th:fragment="footer">
+    <ul>
+        <li>Cyril Ng Lung Kit <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span></li>
+    </ul>
+</footer>
+</body>
+</html>

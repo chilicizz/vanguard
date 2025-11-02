@@ -14,9 +14,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-engine'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation('org.awaitility:awaitility:4.3.0')
 
     // https://github.com/rometools/rome
-    // implementation('com.rometools:rome:2.1.0')
+    implementation('com.rometools:rome:2.1.0')
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation("org.slf4j:slf4j-api:2.0.17")
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
@@ -33,5 +34,5 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    exclude '**/**IntegrationTest.class'
+//    exclude '**/**IntegrationTest.class'
 }

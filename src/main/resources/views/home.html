@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/general.html :: head}"></head>
+<body>
+<header th:insert="~{fragments/general.html :: header}"></header>
+<section id="main">
+
+</section>
+<section>
+    <h1></h1>
+    <p>UserId = <span th:text="${userId}"></span></p>
+</section>
+<footer th:insert="~{fragments/general.html :: footer}"></footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const msgEl = document.getElementById('message');
+
+      async function callAuth() {
+        try {
+          const res = await fetch('/login', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.status === 401) {
+            // Not authenticated => redirect to login page
+            window.location.href = '/';
+            return;
+          }
+
+          if (!res.ok) {
+            const text = await res.text();
+            console.error('Auth endpoint error', res.status, text);
+            if (msgEl) msgEl.textContent = 'Auth check failed';
+            return;
+          }
+
+          // Try to read JSON response (if any) and display a message
+          const data = await res.json().catch(() => null);
+          if (msgEl) {
+            if (data && data.message) msgEl.textContent = data.message;
+            else msgEl.textContent = 'Authenticated';
+          }
+        } catch (err) {
+          console.error('Auth request failed', err);
+          if (msgEl) msgEl.textContent = 'Auth request failed';
+        }
+      }
+
+      callAuth();
+    });
+</script>
+</body>
+</html>
