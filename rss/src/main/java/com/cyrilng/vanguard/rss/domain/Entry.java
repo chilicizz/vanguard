@@ -20,7 +20,7 @@ import java.util.List;
  * @param categories
  * @param imageUrl
  */
-public record FeedEntry(
+public record Entry(
         @BsonId()
         @BsonRepresentation(BsonType.OBJECT_ID) String id,
         String feedId,

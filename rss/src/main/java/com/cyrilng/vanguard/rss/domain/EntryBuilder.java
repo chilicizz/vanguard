@@ -3,7 +3,7 @@ package com.cyrilng.vanguard.rss.domain;
 import java.util.Date;
 import java.util.List;
 
-public class FeedEntryBuilder {
+public class EntryBuilder {
     private String id;
     private String feedId;
     private String title;
@@ -15,57 +15,57 @@ public class FeedEntryBuilder {
     private List<String> categories;
     private String imageUrl;
 
-    public FeedEntryBuilder setId(String id) {
+    public EntryBuilder setId(String id) {
         this.id = id;
         return this;
     }
 
-    public FeedEntryBuilder setFeedId(String feedId) {
+    public EntryBuilder setFeedId(String feedId) {
         this.feedId = feedId;
         return this;
     }
 
-    public FeedEntryBuilder setTitle(String title) {
+    public EntryBuilder setTitle(String title) {
         this.title = title;
         return this;
     }
 
-    public FeedEntryBuilder setDescription(String description) {
+    public EntryBuilder setDescription(String description) {
         this.description = description;
         return this;
     }
 
-    public FeedEntryBuilder setAuthors(List<String> authors) {
+    public EntryBuilder setAuthors(List<String> authors) {
         this.authors = authors;
         return this;
     }
 
-    public FeedEntryBuilder setPubDate(Date pubDate) {
+    public EntryBuilder setPubDate(Date pubDate) {
         this.pubDate = pubDate;
         return this;
     }
 
-    public FeedEntryBuilder setLink(String link) {
+    public EntryBuilder setLink(String link) {
         this.link = link;
         return this;
     }
 
-    public FeedEntryBuilder setContent(String content) {
+    public EntryBuilder setContent(String content) {
         this.content = content;
         return this;
     }
 
-    public FeedEntryBuilder setCategories(List<String> categories) {
+    public EntryBuilder setCategories(List<String> categories) {
         this.categories = categories;
         return this;
     }
 
-    public FeedEntryBuilder setImageUrl(String imageUrl) {
+    public EntryBuilder setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
         return this;
     }
 
-    public FeedEntry createRssFeedEntry() {
-        return new FeedEntry(id, feedId, title, description, authors, pubDate, link, content, categories, imageUrl);
+    public Entry createRssFeedEntry() {
+        return new Entry(id, feedId, title, description, authors, pubDate, link, content, categories, imageUrl);
     }
 }

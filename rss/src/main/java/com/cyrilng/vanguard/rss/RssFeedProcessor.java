@@ -1,7 +1,7 @@
 package com.cyrilng.vanguard.rss;
 
-import com.cyrilng.vanguard.rss.domain.FeedEntry;
-import com.cyrilng.vanguard.rss.domain.FeedEntryBuilder;
+import com.cyrilng.vanguard.rss.domain.Entry;
+import com.cyrilng.vanguard.rss.domain.EntryBuilder;
 import com.cyrilng.vanguard.rss.domain.RssFeed;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -16,9 +16,9 @@ import java.util.function.Consumer;
 
 public class RssFeedProcessor {
     private final Consumer<RssFeed> feedConsumer;
-    private final Consumer<FeedEntry[]> itemConsumer;
+    private final Consumer<Entry[]> itemConsumer;
 
-    public RssFeedProcessor(Consumer<RssFeed> feedConsumer, Consumer<FeedEntry[]> itemConsumer) {
+    public RssFeedProcessor(Consumer<RssFeed> feedConsumer, Consumer<Entry[]> itemConsumer) {
         this.feedConsumer = feedConsumer;
         this.itemConsumer = itemConsumer;
     }
@@ -28,8 +28,8 @@ public class RssFeedProcessor {
         return new FeedResult(null, null);
     }
 
-    public static FeedEntry processItem(SyndEntry entry) {
-        FeedEntryBuilder builder = new FeedEntryBuilder();
+    public static Entry processItem(SyndEntry entry) {
+        EntryBuilder builder = new EntryBuilder();
 
         String uri = entry.getUri();
         List<String> authors = new ArrayList<>();

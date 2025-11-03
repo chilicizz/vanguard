@@ -6,24 +6,28 @@
 <header th:insert="~{fragments/general.html :: header}"></header>
 <section>
     <h1>Update Feeds</h1>
-    <p>UserId = <span th:text="${userId}"></span></p>
+    <p><span th:text="${username}"></span><span th:text="${userId}"></span></p>
     <table>
         <thead>
         <tr>
-            <th>Feed</th>
+            <th><!-- IMAGE --></th>
+            <th>Title</th>
+            <th>RSS Feed URL</th>
+            <th>Description</th>
+            <th>Link</th>
+            <th></th>
         </tr>
         </thead>
-        <tbody id="rssFeedBody">
+        <tbody id="rss_feed_body">
         <tr>
             <td>
-                <label for="urlInput">Feed URL</label>
-                <input type="text" id="urlInput">
-                <button id="submitUrlInput" type="button">Validate</button>
             </td>
         </tr>
         </tbody>
     </table>
-
+    <label for="rss_feed_input_1">Feed URL</label>
+    <input type="url" id="rss_feed_input_1">
+    <button id="submitUrlInput" type="button">Validate</button>
     <!-- simple feedback area for auth/validation messages -->
     <p id="message" aria-live="polite" style="margin-top:8px;color:#c00;"></p>
 </section>
@@ -70,12 +74,12 @@
         }
       }
 
-      // Handle validate button click: POST feedURL to /feed/validate
+      // Handle validate button click: POST feedURL to /validate/feed
       const submitBtn = document.getElementById('submitUrlInput');
       if (submitBtn) {
         submitBtn.addEventListener('click', async function () {
           const btn = this;
-          const input = document.getElementById('urlInput');
+          const input = document.getElementById('rss_feed_input_1');
           const url = input ? input.value.trim() : '';
           if (!url) {
             setMessage('Please enter a URL to validate', true);
@@ -85,7 +89,7 @@
           btn.disabled = true;
           setMessage('Validating...', false);
           try {
-            const res = await fetch('/feed/validate', {
+            const res = await fetch('/validate/feed', {
               method: 'POST',
               credentials: 'include',
               headers: {

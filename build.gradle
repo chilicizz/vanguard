@@ -33,6 +33,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
     implementation("org.apache.commons:commons-math3:3.6.1")
 
+    // https://www.mongodb.com/docs/languages/java/reactive-streams-driver/current/
+    implementation(platform("org.mongodb:mongodb-driver-bom:5.6.1"))
+    implementation('org.mongodb:mongodb-driver-reactivestreams')
+
     testImplementation platform('org.junit:junit-bom:5.14.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-engine'

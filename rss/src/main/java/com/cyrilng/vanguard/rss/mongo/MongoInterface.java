@@ -1,6 +1,6 @@
 package com.cyrilng.vanguard.rss.mongo;
 
-import com.cyrilng.vanguard.rss.domain.FeedEntry;
+import com.cyrilng.vanguard.rss.domain.Entry;
 import com.cyrilng.vanguard.rss.domain.RssFeed;
 import com.cyrilng.vanguard.rss.domain.RssUser;
 import com.mongodb.client.model.Filters;
@@ -38,33 +38,28 @@ public class MongoInterface {
     private static final Logger logger = LoggerFactory.getLogger(MongoInterface.class);
     private final MongoClient mongoClient;
     private final String databaseName;
+    private final MongoDatabase database;
 
-    MongoInterface(MongoClient mongoClient, String databaseName) {
+    public MongoInterface(MongoClient mongoClient, String databaseName) {
         this.mongoClient = mongoClient;
         this.databaseName = databaseName;
+        this.database = mongoClient.getDatabase(databaseName);
         logger.info("Initialised");
     }
 
-    public MongoInterface() {
-        this(MongoUtils.createClient(System.getenv("MONGO_CONNECTION_STRING")), "cyrss");
-    }
-
     public CompletableFuture<RssUser> fetchUserById(String userId) {
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
         FindPublisher<RssUser> response = collection.find(eq(new ObjectId(userId)));
         return MongoUtils.singleResultFrom(response);
     }
 
     public CompletableFuture<RssUser> fetchUserByUsername(String username) {
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
         FindPublisher<RssUser> response = collection.find(eq("username", username));
         return MongoUtils.singleResultFrom(response);
     }
 
     public CompletableFuture<String> createNewUser(String username) {
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
         Publisher<InsertOneResult> response = collection.insertOne(new RssUser(null, username, null));
         return MongoUtils.singleResultFrom(response).thenApply(insertOneResult -> {
@@ -76,27 +71,23 @@ public class MongoInterface {
     }
 
     public CompletableFuture<Boolean> updateUserRssFeeds(String userId, List<String> feedUrls) {
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
         Publisher<UpdateResult> response = collection.updateOne(eq(new ObjectId(userId)), Updates.set("rssFeedUrls", feedUrls));
         return MongoUtils.singleResultFrom(response).thenApply(UpdateResult::wasAcknowledged);
     }
 
     public CompletableFuture<Boolean> deleteUser(String userId) {
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
         return MongoUtils.singleResultFrom(collection.deleteOne(eq(new ObjectId(userId)))).thenApply(DeleteResult::wasAcknowledged);
     }
 
     public CompletableFuture<List<RssFeed>> fetchFeeds(String... feedUrls) {
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<RssFeed> collection = database.getCollection(FEEDS_COLLECTION, RssFeed.class);
         FindPublisher<RssFeed> response = collection.find(Filters.or(Arrays.stream(feedUrls).map(feedUrl -> eq("feedUrl", feedUrl)).toArray(Bson[]::new)));
         return MongoUtils.multipleResultsFrom(response);
     }
 
     public CompletableFuture<Map<Integer, String>> createNewFeeds(RssFeed... rssFeeds) {
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<RssFeed> collection = database.getCollection(FEEDS_COLLECTION, RssFeed.class);
         Publisher<InsertManyResult> response = collection.insertMany(List.of(rssFeeds));
         return MongoUtils.singleResultFrom(response).thenApply(insertManyResult -> {
@@ -110,9 +101,8 @@ public class MongoInterface {
         });
     }
 
-    public CompletableFuture<Map<Integer, String>> createNewEntries(FeedEntry... feedEntries) {
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
-        MongoCollection<FeedEntry> collection = database.getCollection(FEEDS_COLLECTION, FeedEntry.class);
+    public CompletableFuture<Map<Integer, String>> createNewEntries(Entry... feedEntries) {
+        MongoCollection<Entry> collection = database.getCollection(FEEDS_COLLECTION, Entry.class);
         Publisher<InsertManyResult> response = collection.insertMany(List.of(feedEntries));
         return MongoUtils.singleResultFrom(response).thenApply(insertManyResult -> {
             if (insertManyResult.wasAcknowledged()) {
@@ -126,14 +116,20 @@ public class MongoInterface {
     }
 
     public void createIndexes() {
-        MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<RssUser> users = database.getCollection(USER_COLLECTION, RssUser.class);
         users.createIndex(Indexes.ascending("username"), new IndexOptions().unique(true));
 
         MongoCollection<RssFeed> feeds = database.getCollection(FEEDS_COLLECTION, RssFeed.class);
         feeds.createIndex(Indexes.ascending("feedURL"), new IndexOptions().unique(true));
 
-        MongoCollection<FeedEntry> entries = database.getCollection(ENTRIES_COLLECTION, FeedEntry.class);
+        MongoCollection<Entry> entries = database.getCollection(ENTRIES_COLLECTION, Entry.class);
         entries.createIndex(Indexes.descending("feedId", "pubDate"));
+    }
+
+    @Override
+    public String toString() {
+        return "MongoInterface{" +
+                "databaseName='" + databaseName + '\'' +
+                '}';
     }
 }

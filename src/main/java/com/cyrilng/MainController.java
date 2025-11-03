@@ -35,6 +35,7 @@ public class MainController {
     public ModelAndView index(HttpRequest<Void> request) {
         Cookies cookies = request.getCookies();
         if (cookies.contains("userId")) {
+            // fetch user detail
             return new ModelAndView("home", Map.of("userId", cookies.get("userId").getValue()));
         }
         return new ModelAndView("index", Map.of("message", "notLoggedIn"));
@@ -44,12 +45,27 @@ public class MainController {
     public ModelAndView feeds(HttpRequest<Void> request) {
         Cookies cookies = request.getCookies();
         if (cookies.contains("userId")) {
-            return new ModelAndView("user_feeds", Map.of("userId", cookies.get("userId").getValue()));
+            // fetch user detail
+            return new ModelAndView("update_feeds", Map.of("userId", cookies.get("userId").getValue()));
         }
         return new ModelAndView("index", Map.of("message", "notLoggedIn"));
     }
 
-    @Post(value = "/feed/validate", consumes = APPLICATION_FORM_URLENCODED, produces = APPLICATION_JSON)
+    @Get(value = "/view", produces = TEXT_HTML)
+    public ModelAndView viewFeed(@Parameter("entryId") String entryId, HttpRequest<Void> request) {
+        Cookies cookies = request.getCookies();
+        if (cookies.contains("userId")) {
+            // fetch entry id
+            return new ModelAndView("article", Map.of(
+                    "id", entryId,
+                    "title", entryId,
+                    "description", "description"
+            ));
+        }
+        return new ModelAndView("index", Map.of("message", "notLoggedIn"));
+    }
+
+    @Post(value = "/validate/feed", consumes = APPLICATION_FORM_URLENCODED, produces = APPLICATION_JSON)
     public String validateFeed(@Parameter("feedURL") String feedUrl) {
         logger.info("Validating: {}", feedUrl);
         URI feed = URI.create(feedUrl);
@@ -65,13 +81,14 @@ public class MainController {
         return null;
     }
 
-    @Post(value = "/login")
+    @Post(value = "/register")
     public HttpResponse<String> authenticate(@Parameter("username") String username, @Parameter("password") String password) {
+        // Fetch User Information From DB
         return HttpResponse.ok("").cookie(Cookie.of("userId", UUID.randomUUID().toString()));
     }
 
     @Post(value = "/login")
-    public HttpResponse<String> authenticate() {
+    public HttpResponse<String> authenticate(@Parameter("username") String username) {
         return HttpResponse.ok("").cookie(Cookie.of("userId", UUID.randomUUID().toString()));
     }
 

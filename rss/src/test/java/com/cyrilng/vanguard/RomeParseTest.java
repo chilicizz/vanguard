@@ -1,7 +1,7 @@
 package com.cyrilng.vanguard;
 
 import com.cyrilng.vanguard.rss.RssFeedProcessor;
-import com.cyrilng.vanguard.rss.domain.FeedEntry;
+import com.cyrilng.vanguard.rss.domain.Entry;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndImage;
@@ -53,7 +53,7 @@ public class RomeParseTest {
     @Test
     public void testParseFeed() {
         List<SyndEntry> entryList = arsFeed.getEntries();
-        FeedEntry entry = RssFeedProcessor.processItem(entryList.getFirst());
+        Entry entry = RssFeedProcessor.processItem(entryList.getFirst());
         assertNotNull(entry);
     }
 }
