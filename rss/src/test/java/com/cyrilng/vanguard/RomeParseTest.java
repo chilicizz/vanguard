@@ -1,12 +1,17 @@
 package com.cyrilng.vanguard;
 
+import com.cyrilng.vanguard.rss.OPMLProcessor;
 import com.cyrilng.vanguard.rss.RssFeedProcessor;
 import com.cyrilng.vanguard.rss.domain.Entry;
+import com.rometools.opml.feed.opml.Opml;
+import com.rometools.opml.feed.opml.Outline;
+import com.rometools.rome.feed.WireFeed;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndImage;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.WireFeedInput;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -18,26 +23,27 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RomeParseTest {
     private static final Logger logger = LoggerFactory.getLogger(RomeParseTest.class);
 
     static SyndFeed arsFeed;
     static SyndFeed hkoWarnings;
+    static WireFeed parsedOpml;
 
     @BeforeAll
     public static void setUp() throws IOException, FeedException {
         try (
                 InputStream fileInputStreamARS = RomeParseTest.class.getClassLoader().getResourceAsStream("rss/ars_rss.xml");
-                InputStream fileInputStreamHKO = RomeParseTest.class.getClassLoader().getResourceAsStream("rss/hko_warnings.xml")
+                InputStream fileInputStreamHKO = RomeParseTest.class.getClassLoader().getResourceAsStream("rss/hko_warnings.xml");
+                InputStream opmlInputStream = RomeParseTest.class.getClassLoader().getResourceAsStream("opml/feedly-2025-11-02.opml")
         ) {
             arsFeed = new SyndFeedInput().build(new InputStreamReader(fileInputStreamARS, StandardCharsets.UTF_8));
             hkoWarnings = new SyndFeedInput().build(new InputStreamReader(fileInputStreamHKO, StandardCharsets.UTF_8));
+            parsedOpml = new WireFeedInput().build(new InputStreamReader(opmlInputStream, StandardCharsets.UTF_8));
         }
     }
-
 
     @Test
     public void parseArsXml() {
@@ -56,4 +62,23 @@ public class RomeParseTest {
         Entry entry = RssFeedProcessor.processItem(entryList.getFirst());
         assertNotNull(entry);
     }
+
+    @Test
+    public void handleOPML() {
+        assertNotNull(parsedOpml);
+        assertInstanceOf(Opml.class, parsedOpml);
+        Opml opml = (Opml) parsedOpml;
+        List<Outline> outlines = opml.getOutlines();
+        assertNotNull(outlines);
+        assertNotNull(outlines.getFirst());
+        List<Outline> feeds = outlines.getFirst().getChildren();
+        assertNotNull(feeds.getFirst());
+        String type = feeds.getFirst().getType();
+        assertEquals("rss", type);
+
+        List<OPMLProcessor.OpmlEntry> extracted = OPMLProcessor.extractFeeds(opml);
+        assertNotNull(extracted);
+        assertFalse(extracted.isEmpty());
+    }
+
 }

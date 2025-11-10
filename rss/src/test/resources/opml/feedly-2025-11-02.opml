@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<opml version="1.0">
+    <head>
+        <title>Cyril subscriptions in feedly Cloud</title>
+    </head>
+    <body>
+        <outline text="Discover - Tech News" title="Discover - Tech News">
+            <outline type="rss" text="Our World in Data" title="Our World in Data" xmlUrl="https://ourworldindata.org/atom.xml" htmlUrl="https://ourworldindata.org"/>
+            <outline type="rss" text="Ars Technica" title="Ars Technica" xmlUrl="http://feeds.arstechnica.com/arstechnica/index" htmlUrl="https://arstechnica.com"/>
+            <outline type="rss" text="University of Cambridge - Research" title="University of Cambridge - Research" xmlUrl="http://www.admin.cam.ac.uk/news/newsfeeds/all.xml" htmlUrl="https://www.cam.ac.uk/taxonomy/section/research"/>
+            <outline type="rss" text="Pi-hole" title="Pi-hole" xmlUrl="https://pi-hole.net/feed/" htmlUrl="https://pi-hole.net"/>
+            <outline type="rss" text="Our World in Data - Data Insights" title="Our World in Data - Data Insights" xmlUrl="https://ourworldindata.org/atom-data-insights.xml" htmlUrl="https://ourworldindata.org/data-insights"/>
+            <outline type="rss" text="ReadWrite" title="ReadWrite" xmlUrl="http://www.readwriteweb.com/rss.xml" htmlUrl="https://readwrite.com/"/>
+        </outline>
+        <outline text="Hong Kong" title="Hong Kong">
+            <outline type="rss" text="MakerBay Foundation" title="MakerBay Foundation" xmlUrl="https://makerbay.net/feed/" htmlUrl="https://makerbay.net/"/>
+            <outline type="rss" text="HKSAR Government Press Releases" title="HKSAR Government Press Releases" xmlUrl="http://www.info.gov.hk/gia/rss/general_en.xml" htmlUrl="https://www.info.gov.hk/gia/general/today.htm"/>
+            <outline type="rss" text="Dim Sum Labs" title="Dim Sum Labs" xmlUrl="http://www.dimsumlabs.com/feed/" htmlUrl="https://www.dimsumlabs.com"/>
+            <outline type="rss" text="Hong Kong Free Press HKFP" title="Hong Kong Free Press HKFP" xmlUrl="http://www.hongkongfp.com/feed/" htmlUrl="https://hongkongfp.com/"/>
+            <outline type="rss" text="HKFP Newsletter Archive Feed" title="HKFP Newsletter Archive Feed" xmlUrl="https://us10.campaign-archive.com/feed?u=ac7ed6e8b325fff94168a1db2&amp;id=f460c06092" htmlUrl="https://us10.campaign-archive.com/feed?u=ac7ed6e8b325fff94168a1db2&amp;id=f460c06092"/>
+        </outline>
+        <outline text="Alerts" title="Alerts">
+            <outline type="rss" text="Weather Warning Summary" title="Weather Warning Summary" xmlUrl="https://rss.weather.gov.hk/rss/WeatherWarningSummaryv2.xml" htmlUrl="http://www.weather.gov.hk/textonly/warning/warn.htm"/>
+        </outline>
+        <outline text="Refresh - Take a break" title="Refresh - Take a break">
+            <outline type="rss" text="I'll Explain Later" title="I'll Explain Later" xmlUrl="http://culturalafterthoughts.wordpress.com/feed/" htmlUrl="https://culturalafterthoughts.wordpress.com"/>
+            <outline type="rss" text="99% Invisible" title="99% Invisible" xmlUrl="http://99percentinvisible.org/rss" htmlUrl="https://99percentinvisible.org/"/>
+            <outline type="rss" text="News - Raspberry Pi" title="News - Raspberry Pi" xmlUrl="https://www.raspberrypi.com/news/feed/" htmlUrl="https://www.raspberrypi.com/news/"/>
+            <outline type="rss" text="xkcd" title="xkcd" xmlUrl="http://xkcd.com/rss.xml" htmlUrl="https://xkcd.com/"/>
+            <outline type="rss" text="Garbage Day" title="Garbage Day" xmlUrl="https://rss.beehiiv.com/feeds/99VTTjt0N1.xml?utm_source=www.garbageday.email&amp;utm_medium=newsletter&amp;utm_campaign=mrbeast-screwed-up-elon-s-pyramid-scheme" htmlUrl="https://www.garbageday.email/"/>
+            <outline type="rss" text="what if?" title="what if?" xmlUrl="http://what-if.xkcd.com/feed.atom" htmlUrl="https://what-if.xkcd.com/145/"/>
+        </outline>
+        <outline text="Informed - News and Analysis" title="Informed - News and Analysis">
+            <outline type="rss" text="The world this week" title="The world this week" xmlUrl="http://www.economist.com/rss/the_world_this_week_rss.xml" htmlUrl="https://www.economist.com/the-world-this-week"/>
+            <outline type="rss" text="Science &amp; technology" title="Science &amp; technology" xmlUrl="http://www.economist.com/rss/science_and_technology_rss.xml" htmlUrl="https://www.economist.com/science-and-technology"/>
+            <outline type="rss" text="Business" title="Business" xmlUrl="http://www.economist.com/rss/business_rss.xml" htmlUrl="https://www.economist.com/business"/>
+            <outline type="rss" text="Briefing" title="Briefing" xmlUrl="https://www.economist.com/briefing/rss.xml" htmlUrl="https://www.economist.com/briefing"/>
+            <outline type="rss" text="Leaders" title="Leaders" xmlUrl="http://www.economist.com/rss/leaders_rss.xml" htmlUrl="https://www.economist.com/leaders"/>
+            <outline type="rss" text="Finance" title="Finance" xmlUrl="http://www.economist.com/rss/finance_and_economics_rss.xml" htmlUrl="https://www.economist.com/finance-and-economics"/>
+            <outline type="rss" text="International" title="International" xmlUrl="https://www.economist.com/international/rss.xml" htmlUrl="https://www.economist.com/international"/>
+        </outline>
+        <outline text="Engage - Stay updated" title="Engage - Stay updated">
+            <outline type="rss" text="Scott Hanselman's Blog" title="Scott Hanselman's Blog" xmlUrl="http://feeds.feedburner.com/ScottHanselman" htmlUrl="https://www.hanselman.com/blog/"/>
+            <outline type="rss" text="Boxes and Arrows" title="Boxes and Arrows" xmlUrl="http://boxesandarrows.com/feed/" htmlUrl="https://boxesandarrows.com/"/>
+            <outline type="rss" text="Martin Fowler" title="Martin Fowler" xmlUrl="http://martinfowler.com/bliki/bliki.atom" htmlUrl="https://martinfowler.com"/>
+            <outline type="rss" text="Microsoft Research" title="Microsoft Research" xmlUrl="https://www.microsoft.com/en-us/research/feed/" htmlUrl="https://www.microsoft.com/en-us/research/"/>
+            <outline type="rss" text="Alex Ellis' Blog" title="Alex Ellis' Blog" xmlUrl="https://blog.alexellis.io/rss/" htmlUrl="https://blog.alexellis.io/"/>
+        </outline>
+    </body>
+</opml>
