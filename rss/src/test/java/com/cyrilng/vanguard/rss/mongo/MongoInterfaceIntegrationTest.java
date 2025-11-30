@@ -15,13 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MongoInterfaceIntegrationTest {
 
-    public static MongoInterface mongoInterface;
+    public static MongoStorage mongoInterface;
 
     @BeforeAll
     public static void setUpClient() {
         MongoClient mongoClient = createClient(System.getenv("MONGO_CONNECTION_STRING"));
         MongoUtils.singleResultFrom(mongoClient.getDatabase("test").drop()).join();
-        mongoInterface = new MongoInterface(mongoClient, "test");
+        mongoInterface = new MongoStorage(mongoClient, "test");
     }
 
     @Test

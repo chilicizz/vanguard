@@ -1,8 +1,9 @@
 package com.cyrilng.vanguard;
 
-import com.cyrilng.vanguard.rss.OPMLProcessor;
+import com.cyrilng.vanguard.rss.opml.OPMLProcessor;
 import com.cyrilng.vanguard.rss.RssFeedProcessor;
 import com.cyrilng.vanguard.rss.domain.Entry;
+import com.cyrilng.vanguard.rss.opml.OpmlEntry;
 import com.rometools.opml.feed.opml.Opml;
 import com.rometools.opml.feed.opml.Outline;
 import com.rometools.rome.feed.WireFeed;
@@ -64,7 +65,7 @@ public class RomeParseTest {
     }
 
     @Test
-    public void handleOPML() {
+    public void handleOPML() throws FeedException {
         assertNotNull(parsedOpml);
         assertInstanceOf(Opml.class, parsedOpml);
         Opml opml = (Opml) parsedOpml;
@@ -76,9 +77,13 @@ public class RomeParseTest {
         String type = feeds.getFirst().getType();
         assertEquals("rss", type);
 
-        List<OPMLProcessor.OpmlEntry> extracted = OPMLProcessor.extractFeeds(opml);
+        List<OpmlEntry> extracted = OPMLProcessor.extractFeeds(opml);
         assertNotNull(extracted);
         assertFalse(extracted.isEmpty());
+
+        List<OpmlEntry> entryList = OPMLProcessor.parseOpml(RomeParseTest.class.getClassLoader().getResourceAsStream("opml/feedly-2025-11-02.opml"));
+        assertNotNull(entryList);
+        assertFalse(entryList.isEmpty());
     }
 
 }

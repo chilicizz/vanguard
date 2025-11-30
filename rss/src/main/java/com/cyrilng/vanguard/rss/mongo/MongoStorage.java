@@ -31,34 +31,37 @@ import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.eq;
 
-public class MongoInterface {
+public class MongoStorage implements StorageInterface {
     public static final String USER_COLLECTION = "user";
     public static final String FEEDS_COLLECTION = "feeds";
     public static final String ENTRIES_COLLECTION = "entries";
-    private static final Logger logger = LoggerFactory.getLogger(MongoInterface.class);
+    private static final Logger logger = LoggerFactory.getLogger(MongoStorage.class);
     private final MongoClient mongoClient;
     private final String databaseName;
     private final MongoDatabase database;
 
-    public MongoInterface(MongoClient mongoClient, String databaseName) {
+    public MongoStorage(MongoClient mongoClient, String databaseName) {
         this.mongoClient = mongoClient;
         this.databaseName = databaseName;
         this.database = mongoClient.getDatabase(databaseName);
         logger.info("Initialised");
     }
 
+    @Override
     public CompletableFuture<RssUser> fetchUserById(String userId) {
         MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
         FindPublisher<RssUser> response = collection.find(eq(new ObjectId(userId)));
         return MongoUtils.singleResultFrom(response);
     }
 
+    @Override
     public CompletableFuture<RssUser> fetchUserByUsername(String username) {
         MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
         FindPublisher<RssUser> response = collection.find(eq("username", username));
         return MongoUtils.singleResultFrom(response);
     }
 
+    @Override
     public CompletableFuture<String> createNewUser(String username) {
         MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
         Publisher<InsertOneResult> response = collection.insertOne(new RssUser(null, username, null));
@@ -70,23 +73,27 @@ public class MongoInterface {
         });
     }
 
+    @Override
     public CompletableFuture<Boolean> updateUserRssFeeds(String userId, List<String> feedUrls) {
         MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
         Publisher<UpdateResult> response = collection.updateOne(eq(new ObjectId(userId)), Updates.set("rssFeedUrls", feedUrls));
         return MongoUtils.singleResultFrom(response).thenApply(UpdateResult::wasAcknowledged);
     }
 
+    @Override
     public CompletableFuture<Boolean> deleteUser(String userId) {
         MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
         return MongoUtils.singleResultFrom(collection.deleteOne(eq(new ObjectId(userId)))).thenApply(DeleteResult::wasAcknowledged);
     }
 
+    @Override
     public CompletableFuture<List<RssFeed>> fetchFeeds(String... feedUrls) {
         MongoCollection<RssFeed> collection = database.getCollection(FEEDS_COLLECTION, RssFeed.class);
         FindPublisher<RssFeed> response = collection.find(Filters.or(Arrays.stream(feedUrls).map(feedUrl -> eq("feedUrl", feedUrl)).toArray(Bson[]::new)));
         return MongoUtils.multipleResultsFrom(response);
     }
 
+    @Override
     public CompletableFuture<Map<Integer, String>> createNewFeeds(RssFeed... rssFeeds) {
         MongoCollection<RssFeed> collection = database.getCollection(FEEDS_COLLECTION, RssFeed.class);
         Publisher<InsertManyResult> response = collection.insertMany(List.of(rssFeeds));
@@ -101,6 +108,7 @@ public class MongoInterface {
         });
     }
 
+    @Override
     public CompletableFuture<Map<Integer, String>> createNewEntries(Entry... feedEntries) {
         MongoCollection<Entry> collection = database.getCollection(FEEDS_COLLECTION, Entry.class);
         Publisher<InsertManyResult> response = collection.insertMany(List.of(feedEntries));
@@ -115,6 +123,7 @@ public class MongoInterface {
         });
     }
 
+    @Override
     public void createIndexes() {
         MongoCollection<RssUser> users = database.getCollection(USER_COLLECTION, RssUser.class);
         users.createIndex(Indexes.ascending("username"), new IndexOptions().unique(true));
@@ -128,7 +137,7 @@ public class MongoInterface {
 
     @Override
     public String toString() {
-        return "MongoInterface{" +
+        return getClass().getSimpleName() + "{" +
                 "databaseName='" + databaseName + '\'' +
                 '}';
     }

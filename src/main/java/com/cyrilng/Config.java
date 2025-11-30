@@ -1,6 +1,6 @@
 package com.cyrilng;
 
-import com.cyrilng.vanguard.rss.mongo.MongoInterface;
+import com.cyrilng.vanguard.rss.mongo.MongoStorage;
 import com.cyrilng.vanguard.rss.mongo.MongoUtils;
 import com.mongodb.reactivestreams.client.MongoClient;
 import io.micronaut.context.annotation.Bean;
@@ -18,7 +18,7 @@ public class Config {
 
     @Bean
     @Singleton
-    public MongoInterface createMongoInterface(MongoClient mongoClient) {
-        return new MongoInterface(mongoClient, "cyrss");
+    public MongoStorage createMongoInterface(MongoClient mongoClient) {
+        return new MongoStorage(mongoClient, "cyrss");
     }
 }
