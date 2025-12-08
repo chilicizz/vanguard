@@ -1,7 +1,7 @@
 plugins {
     id("com.gradleup.shadow") version "9.3.0"
     // https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/
-    id("io.micronaut.application") version "4.5.5"
+    id("io.micronaut.application") version "4.6.1"
     // https://gradle-ssh-plugin.github.io/
     id('org.hidetake.ssh') version '2.12.0'
 }
