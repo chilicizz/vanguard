@@ -30,8 +30,8 @@ dependencies {
     implementation('org.mongodb:mongodb-driver-reactivestreams')
 
     // https://mvnrepository.com/artifact/io.projectreactor/reactor-test
-    testImplementation("io.projectreactor:reactor-core:3.8.0")
-    testImplementation("io.projectreactor:reactor-test:3.8.0")
+    testImplementation("io.projectreactor:reactor-core:3.8.1")
+    testImplementation("io.projectreactor:reactor-test:3.8.1")
 }
 
 test {
