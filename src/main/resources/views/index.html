@@ -1,22 +1,57 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:fb="http://www.facebook.com/2008/fbml">
 <head th:insert="~{fragments/general.html :: head}"></head>
 <body>
 <header th:insert="~{fragments/general.html :: header}"></header>
-
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v24.0&appId=1752622202074532"></script>
 <section>
     <h1 th:text="${message}"></h1>
     <label for="username">Username</label>
     <input type="text" id="username">
     <button id="submit_username" type="button">Submit</button>
-</section>
+    <br/>
+    <div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout="" data-auto-logout-link="false" data-use-continue-as="false"></div>
 
+    <fb:login-button
+            scope="public_profile,email"
+            onlogin="checkLoginState();">
+    </fb:login-button>
+</section>
+<script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '1752622202074532',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v24.0'
+      });
+
+      FB.AppEvents.logPageView();
+
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+</script>
 <script>
     // Call the auth endpoint on page load and update the UI accordingly.
     document.addEventListener('DOMContentLoaded', function() {
       const msgEl = document.getElementById('message');
 
-      async function callAuth() {
+
+      FB.getLoginStatus(function(response) {
+          statusChangeCallback(response);
+      });
+
+      async function  () {
         try {
           const res = await fetch('/login', {
             method: 'POST',

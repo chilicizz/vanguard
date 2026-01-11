@@ -9,12 +9,18 @@ plugins {
 version = "0.1"
 group = "com.cyrilng"
 
+ext {
+    junitBomVersion = '6.0.2'
+    slf4jVersion = '2.0.17'
+    awaitilityVersion = '4.3.0'
+    mongoDriverVersion = '5.6.2'
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation(project(':protos'))
     implementation(project(':rss'))
     // https://guides.micronaut.io/latest/micronaut-static-resources-gradle-java.html
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
@@ -29,15 +35,15 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
     testImplementation('org.mockito:mockito-core:5.21.0')
-    testImplementation('org.awaitility:awaitility:4.3.0')
+    testImplementation("org.awaitility:awaitility:${awaitilityVersion}")
     // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
     implementation("org.apache.commons:commons-math3:3.6.1")
 
     // https://www.mongodb.com/docs/languages/java/reactive-streams-driver/current/
-    implementation(platform("org.mongodb:mongodb-driver-bom:5.6.2"))
+    implementation(platform("org.mongodb:mongodb-driver-bom:${mongoDriverVersion}"))
     implementation('org.mongodb:mongodb-driver-reactivestreams')
 
-    testImplementation platform('org.junit:junit-bom:6.0.2')
+    testImplementation platform("org.junit:junit-bom:${junitBomVersion}")
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-engine'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

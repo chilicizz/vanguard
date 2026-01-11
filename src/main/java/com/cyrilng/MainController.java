@@ -1,5 +1,8 @@
 package com.cyrilng;
 
+import com.cyrilng.vanguard.rss.domain.RssFeed;
+import com.cyrilng.vanguard.rss.domain.RssUser;
+import com.cyrilng.vanguard.rss.mongo.StorageInterface;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -16,8 +19,10 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 import static io.micronaut.http.MediaType.*;
 
@@ -26,8 +31,10 @@ public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     private final HttpClient httpClient;
+    private final StorageInterface storage;
 
-    public MainController() {
+    public MainController(StorageInterface storage) {
+        this.storage = storage;
         this.httpClient = HttpClient.newBuilder().build();
     }
 
@@ -49,6 +56,27 @@ public class MainController {
             return new ModelAndView("update_feeds", Map.of("userId", cookies.get("userId").getValue()));
         }
         return new ModelAndView("index", Map.of("message", "notLoggedIn"));
+    }
+
+    @Post(value = "/getUser", produces = APPLICATION_JSON)
+    public CompletableFuture<RssUser> getUser(HttpRequest<Void> request) {
+        Cookies cookies = request.getCookies();
+        if (cookies.contains("userId")) {
+            // fetch user detail
+            CompletableFuture<RssUser> user = storage.fetchUserById(cookies.get("userId").getValue());
+            return user;
+        }
+        return CompletableFuture.failedFuture(new RuntimeException("not logged in"));
+    }
+
+    @Post(value = "/getFeed", produces = APPLICATION_JSON)
+    public CompletableFuture<List<RssFeed>> getFeeds(@Parameter("feedId") String feedId, HttpRequest<Void> request) {
+        Cookies cookies = request.getCookies();
+        if (cookies.contains("userId")) {
+            CompletableFuture<List<RssFeed>> feeds = storage.fetchFeeds(feedId);
+            return feeds;
+        }
+        return CompletableFuture.failedFuture(new RuntimeException("not logged in"));
     }
 
     @Get(value = "/view", produces = TEXT_HTML)

@@ -10,6 +10,8 @@ import jakarta.inject.Singleton;
 @Factory
 public class Config {
 
+    public static final String CYRSS = "cyrss";
+
     @Bean
     @Singleton
     public MongoClient createMongoClient() {
@@ -19,6 +21,6 @@ public class Config {
     @Bean
     @Singleton
     public MongoStorage createMongoInterface(MongoClient mongoClient) {
-        return new MongoStorage(mongoClient, "cyrss");
+        return new MongoStorage(mongoClient, CYRSS);
     }
 }
