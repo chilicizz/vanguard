@@ -1,7 +1,7 @@
 package com.cyrilng.vanguard.store;
 
 import com.cyrilng.vanguard.rss.domain.RssFeed;
-import com.cyrilng.vanguard.rss.mongo.MongoUtils;
+import com.cyrilng.vanguard.rss.mongo.Constants;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -29,7 +29,7 @@ public class MongoDBAsyncIntegrationTest {
         System.out.println("Testing MongoDB connection...");
         // Add your MongoDB connection test code here
         // For example, you could check if you can retrieve a collection or document
-        String connectionString = System.getenv(MongoUtils.MONGO_CONNECTION_STRING);
+        String connectionString = System.getenv(Constants.MONGO_CONNECTION_STRING);
         assert connectionString != null && !connectionString.isEmpty() : "MONGO_CONNECTION_STRING environment variable is not set";
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
@@ -54,7 +54,7 @@ public class MongoDBAsyncIntegrationTest {
     @Test
     public void mongoDBConnectionTest() {
         // Send a ping to confirm a successful connection
-        MongoDatabase database = mongoClient.getDatabase(MongoUtils.ADMIN_DB);
+        MongoDatabase database = mongoClient.getDatabase(Constants.ADMIN_DB);
         StepVerifier.create(database.runCommand(new Document("ping", 1))).expectNextMatches(
                 result -> result.getInteger("ok") == 1
         ).expectComplete().verify();
@@ -64,7 +64,7 @@ public class MongoDBAsyncIntegrationTest {
     @Test
     public void mongoDBCrudTest() {
         // https://www.baeldung.com/reactive-streams-step-verifier-test-publisher
-        MongoDatabase database = mongoClient.getDatabase(MongoUtils.TEMP_DB);
+        MongoDatabase database = mongoClient.getDatabase(Constants.TEMP_DB);
         Document doc = new Document("name", "testDocument").append("value", 123);
         StepVerifier.create(database.getCollection("test").insertOne(doc))
                 .expectNextMatches(InsertOneResult::wasAcknowledged)
@@ -94,7 +94,7 @@ public class MongoDBAsyncIntegrationTest {
 
     @Test
     public void testUsingRecord() {
-        MongoDatabase database = mongoClient.getDatabase(MongoUtils.TEMP_DB);
+        MongoDatabase database = mongoClient.getDatabase(Constants.TEMP_DB);
         MongoCollection<RssFeed> collection = database.getCollection("test-feed", RssFeed.class);
         RssFeed rssFeed = new RssFeed(URI.create("https://dummy.com/feed"), "Test Title", "Test Description", "linkString", "https://dummy.com/feed.png");
         StepVerifier.create(collection.insertOne(rssFeed))

@@ -32,9 +32,6 @@ import java.util.stream.Collectors;
 import static com.mongodb.client.model.Filters.eq;
 
 public class MongoStorage implements StorageInterface {
-    public static final String USER_COLLECTION = "user";
-    public static final String FEEDS_COLLECTION = "feeds";
-    public static final String ENTRIES_COLLECTION = "entries";
     private static final Logger logger = LoggerFactory.getLogger(MongoStorage.class);
     private final MongoClient mongoClient;
     private final String databaseName;
@@ -49,23 +46,23 @@ public class MongoStorage implements StorageInterface {
 
     @Override
     public CompletableFuture<RssUser> fetchUserById(String userId) {
-        MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
+        MongoCollection<RssUser> collection = database.getCollection(Constants.USER_COLLECTION, RssUser.class);
         FindPublisher<RssUser> response = collection.find(eq(new ObjectId(userId)));
-        return MongoUtils.singleResultFrom(response);
+        return AsyncUtils.singleResultFrom(response);
     }
 
     @Override
     public CompletableFuture<RssUser> fetchUserByUsername(String username) {
-        MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
+        MongoCollection<RssUser> collection = database.getCollection(Constants.USER_COLLECTION, RssUser.class);
         FindPublisher<RssUser> response = collection.find(eq("username", username));
-        return MongoUtils.singleResultFrom(response);
+        return AsyncUtils.singleResultFrom(response);
     }
 
     @Override
     public CompletableFuture<String> createNewUser(String username) {
-        MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
+        MongoCollection<RssUser> collection = database.getCollection(Constants.USER_COLLECTION, RssUser.class);
         Publisher<InsertOneResult> response = collection.insertOne(new RssUser(null, username, null));
-        return MongoUtils.singleResultFrom(response).thenApply(insertOneResult -> {
+        return AsyncUtils.singleResultFrom(response).thenApply(insertOneResult -> {
             if (insertOneResult.getInsertedId() != null && BsonType.OBJECT_ID.equals(insertOneResult.getInsertedId().getBsonType())) {
                 return String.valueOf(insertOneResult.getInsertedId().asObjectId().getValue());
             }
@@ -75,29 +72,29 @@ public class MongoStorage implements StorageInterface {
 
     @Override
     public CompletableFuture<Boolean> updateUserRssFeeds(String userId, List<String> feedUrls) {
-        MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
+        MongoCollection<RssUser> collection = database.getCollection(Constants.USER_COLLECTION, RssUser.class);
         Publisher<UpdateResult> response = collection.updateOne(eq(new ObjectId(userId)), Updates.set("rssFeedUrls", feedUrls));
-        return MongoUtils.singleResultFrom(response).thenApply(UpdateResult::wasAcknowledged);
+        return AsyncUtils.singleResultFrom(response).thenApply(UpdateResult::wasAcknowledged);
     }
 
     @Override
     public CompletableFuture<Boolean> deleteUser(String userId) {
-        MongoCollection<RssUser> collection = database.getCollection(USER_COLLECTION, RssUser.class);
-        return MongoUtils.singleResultFrom(collection.deleteOne(eq(new ObjectId(userId)))).thenApply(DeleteResult::wasAcknowledged);
+        MongoCollection<RssUser> collection = database.getCollection(Constants.USER_COLLECTION, RssUser.class);
+        return AsyncUtils.singleResultFrom(collection.deleteOne(eq(new ObjectId(userId)))).thenApply(DeleteResult::wasAcknowledged);
     }
 
     @Override
     public CompletableFuture<List<RssFeed>> fetchFeeds(String... feedUrls) {
-        MongoCollection<RssFeed> collection = database.getCollection(FEEDS_COLLECTION, RssFeed.class);
+        MongoCollection<RssFeed> collection = database.getCollection(Constants.FEEDS_COLLECTION, RssFeed.class);
         FindPublisher<RssFeed> response = collection.find(Filters.or(Arrays.stream(feedUrls).map(feedUrl -> eq("feedUrl", feedUrl)).toArray(Bson[]::new)));
-        return MongoUtils.multipleResultsFrom(response);
+        return AsyncUtils.multipleResultsFrom(response);
     }
 
     @Override
     public CompletableFuture<Map<Integer, String>> createNewFeeds(RssFeed... rssFeeds) {
-        MongoCollection<RssFeed> collection = database.getCollection(FEEDS_COLLECTION, RssFeed.class);
+        MongoCollection<RssFeed> collection = database.getCollection(Constants.FEEDS_COLLECTION, RssFeed.class);
         Publisher<InsertManyResult> response = collection.insertMany(List.of(rssFeeds));
-        return MongoUtils.singleResultFrom(response).thenApply(insertManyResult -> {
+        return AsyncUtils.singleResultFrom(response).thenApply(insertManyResult -> {
             if (insertManyResult.wasAcknowledged()) {
                 return insertManyResult.getInsertedIds().entrySet().stream().collect(Collectors.toMap(
                         Map.Entry::getKey, integerBsonValueEntry -> String.valueOf(integerBsonValueEntry.getValue().asObjectId().getValue())
@@ -110,9 +107,9 @@ public class MongoStorage implements StorageInterface {
 
     @Override
     public CompletableFuture<Map<Integer, String>> createNewEntries(Entry... feedEntries) {
-        MongoCollection<Entry> collection = database.getCollection(FEEDS_COLLECTION, Entry.class);
+        MongoCollection<Entry> collection = database.getCollection(Constants.FEEDS_COLLECTION, Entry.class);
         Publisher<InsertManyResult> response = collection.insertMany(List.of(feedEntries));
-        return MongoUtils.singleResultFrom(response).thenApply(insertManyResult -> {
+        return AsyncUtils.singleResultFrom(response).thenApply(insertManyResult -> {
             if (insertManyResult.wasAcknowledged()) {
                 return insertManyResult.getInsertedIds().entrySet().stream().collect(Collectors.toMap(
                         Map.Entry::getKey, integerBsonValueEntry -> String.valueOf(integerBsonValueEntry.getValue().asObjectId().getValue())
@@ -125,13 +122,13 @@ public class MongoStorage implements StorageInterface {
 
     @Override
     public void createIndexes() {
-        MongoCollection<RssUser> users = database.getCollection(USER_COLLECTION, RssUser.class);
+        MongoCollection<RssUser> users = database.getCollection(Constants.USER_COLLECTION, RssUser.class);
         users.createIndex(Indexes.ascending("username"), new IndexOptions().unique(true));
 
-        MongoCollection<RssFeed> feeds = database.getCollection(FEEDS_COLLECTION, RssFeed.class);
+        MongoCollection<RssFeed> feeds = database.getCollection(Constants.FEEDS_COLLECTION, RssFeed.class);
         feeds.createIndex(Indexes.ascending("feedURL"), new IndexOptions().unique(true));
 
-        MongoCollection<Entry> entries = database.getCollection(ENTRIES_COLLECTION, Entry.class);
+        MongoCollection<Entry> entries = database.getCollection(Constants.ENTRIES_COLLECTION, Entry.class);
         entries.createIndex(Indexes.descending("feedId", "pubDate"));
     }
 

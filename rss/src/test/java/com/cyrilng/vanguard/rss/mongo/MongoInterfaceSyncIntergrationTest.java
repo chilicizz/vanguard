@@ -1,7 +1,8 @@
 package com.cyrilng.vanguard.rss.mongo;
 
 import com.cyrilng.vanguard.rss.domain.RssUser;
-import com.mongodb.reactivestreams.client.MongoClient;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,18 +11,16 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static com.cyrilng.vanguard.rss.mongo.AsyncUtils.createClient;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MongoInterfaceIntegrationTest {
+public class MongoInterfaceSyncIntergrationTest {
 
-    public static MongoStorage mongoInterface;
+    public static StorageInterface mongoInterface;
 
     @BeforeAll
     public static void setUpClient() {
-        MongoClient mongoClient = createClient(System.getenv(Constants.MONGO_CONNECTION_STRING));
-        AsyncUtils.singleResultFrom(mongoClient.getDatabase(Constants.TEST_DB).drop()).join();
-        mongoInterface = new MongoStorage(mongoClient, Constants.TEST_DB);
+        MongoClient mongoClient = MongoClients.create(System.getenv(Constants.MONGO_CONNECTION_STRING));
+        mongoInterface = new MongoStorageSync(mongoClient, Constants.TEST_DB);
     }
 
     @Test

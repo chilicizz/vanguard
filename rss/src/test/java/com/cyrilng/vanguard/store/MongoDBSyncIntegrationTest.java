@@ -1,7 +1,7 @@
 package com.cyrilng.vanguard.store;
 
 import com.cyrilng.vanguard.rss.domain.RssFeed;
-import com.cyrilng.vanguard.rss.mongo.MongoUtils;
+import com.cyrilng.vanguard.rss.mongo.Constants;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -29,7 +29,7 @@ public class MongoDBSyncIntegrationTest {
     @BeforeAll
     public static void setUp() {
         System.out.println("Setting up synchronous MongoDB client...");
-        String connectionString = System.getenv(MongoUtils.MONGO_CONNECTION_STRING);
+        String connectionString = System.getenv(Constants.MONGO_CONNECTION_STRING);
         assertNotNull(connectionString, "MONGO_CONNECTION_STRING environment variable is not set");
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
@@ -51,7 +51,7 @@ public class MongoDBSyncIntegrationTest {
 
     @Test
     public void mongoDBConnectionTest() {
-        MongoDatabase database = mongoClient.getDatabase(MongoUtils.ADMIN_DB);
+        MongoDatabase database = mongoClient.getDatabase(Constants.ADMIN_DB);
         Document result = database.runCommand(new Document("ping", 1));
         assertNotNull(result);
         Object okObj = result.get("ok");
@@ -64,7 +64,7 @@ public class MongoDBSyncIntegrationTest {
 
     @Test
     public void mongoDBCrudTest() {
-        MongoDatabase database = mongoClient.getDatabase(MongoUtils.TEMP_DB);
+        MongoDatabase database = mongoClient.getDatabase(Constants.TEMP_DB);
         Document doc = new Document("name", "testDocument").append("value", 123);
 
         // Insert
@@ -89,7 +89,7 @@ public class MongoDBSyncIntegrationTest {
 
     @Test
     public void testUsingRecord() {
-        MongoDatabase database = mongoClient.getDatabase(MongoUtils.TEMP_DB);
+        MongoDatabase database = mongoClient.getDatabase(Constants.TEMP_DB);
         MongoCollection<RssFeed> collection = database.getCollection("test-feed", RssFeed.class);
         RssFeed rssFeed = new RssFeed(URI.create("https://dummy.com/feed"), "Test Title", "Test Description", "linkString", "https://dummy.com/feed.png");
 
