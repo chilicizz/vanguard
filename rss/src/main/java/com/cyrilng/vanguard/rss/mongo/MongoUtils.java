@@ -15,6 +15,11 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class MongoUtils {
+    public static final String ADMIN_DB = "admin";
+    public static final String TEMP_DB = "temp";
+    public static final String TEST_DB = "test";
+    public static final String MONGO_CONNECTION_STRING = "MONGO_CONNECTION_STRING";
+
     public static MongoClient createClient(String connectionString) {
         assert connectionString != null && !connectionString.isEmpty() : "MONGO_CONNECTION_STRING environment variable is not set";
         ServerApi serverApi = ServerApi.builder()

@@ -19,9 +19,9 @@ class MongoInterfaceIntegrationTest {
 
     @BeforeAll
     public static void setUpClient() {
-        MongoClient mongoClient = createClient(System.getenv("MONGO_CONNECTION_STRING"));
-        MongoUtils.singleResultFrom(mongoClient.getDatabase("test").drop()).join();
-        mongoInterface = new MongoStorage(mongoClient, "test");
+        MongoClient mongoClient = createClient(System.getenv(MongoUtils.MONGO_CONNECTION_STRING));
+        MongoUtils.singleResultFrom(mongoClient.getDatabase(MongoUtils.TEST_DB).drop()).join();
+        mongoInterface = new MongoStorage(mongoClient, MongoUtils.TEST_DB);
     }
 
     @Test

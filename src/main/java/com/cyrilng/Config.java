@@ -10,17 +10,17 @@ import jakarta.inject.Singleton;
 @Factory
 public class Config {
 
-    public static final String CYRSS = "cyrss";
+    public static final String CYRSS_DB = "cyrss";
 
     @Bean
     @Singleton
     public MongoClient createMongoClient() {
-        return MongoUtils.createClient(System.getenv("MONGO_CONNECTION_STRING"));
+        return MongoUtils.createClient(System.getenv(MongoUtils.MONGO_CONNECTION_STRING));
     }
 
     @Bean
     @Singleton
     public MongoStorage createMongoInterface(MongoClient mongoClient) {
-        return new MongoStorage(mongoClient, CYRSS);
+        return new MongoStorage(mongoClient, CYRSS_DB);
     }
 }

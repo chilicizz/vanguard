@@ -1,6 +1,7 @@
 package com.cyrilng.vanguard.store;
 
 import com.cyrilng.vanguard.rss.domain.RssFeed;
+import com.cyrilng.vanguard.rss.mongo.MongoUtils;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -18,7 +19,7 @@ import reactor.test.StepVerifier;
 
 import java.net.URI;
 
-public class MongoDBIntegrationTest {
+public class MongoDBAsyncIntegrationTest {
 
     public static MongoClient mongoClient;
 
@@ -28,7 +29,7 @@ public class MongoDBIntegrationTest {
         System.out.println("Testing MongoDB connection...");
         // Add your MongoDB connection test code here
         // For example, you could check if you can retrieve a collection or document
-        String connectionString = System.getenv("MONGO_CONNECTION_STRING");
+        String connectionString = System.getenv(MongoUtils.MONGO_CONNECTION_STRING);
         assert connectionString != null && !connectionString.isEmpty() : "MONGO_CONNECTION_STRING environment variable is not set";
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
@@ -53,7 +54,7 @@ public class MongoDBIntegrationTest {
     @Test
     public void mongoDBConnectionTest() {
         // Send a ping to confirm a successful connection
-        MongoDatabase database = mongoClient.getDatabase("admin");
+        MongoDatabase database = mongoClient.getDatabase(MongoUtils.ADMIN_DB);
         StepVerifier.create(database.runCommand(new Document("ping", 1))).expectNextMatches(
                 result -> result.getInteger("ok") == 1
         ).expectComplete().verify();
@@ -63,7 +64,7 @@ public class MongoDBIntegrationTest {
     @Test
     public void mongoDBCrudTest() {
         // https://www.baeldung.com/reactive-streams-step-verifier-test-publisher
-        MongoDatabase database = mongoClient.getDatabase("temp");
+        MongoDatabase database = mongoClient.getDatabase(MongoUtils.TEMP_DB);
         Document doc = new Document("name", "testDocument").append("value", 123);
         StepVerifier.create(database.getCollection("test").insertOne(doc))
                 .expectNextMatches(InsertOneResult::wasAcknowledged)
@@ -85,7 +86,7 @@ public class MongoDBIntegrationTest {
                 .verify();
 
         // Clean up the inserted document
-        StepVerifier.create(database.getCollection("test").deleteMany(doc))
+        StepVerifier.create(database.getCollection("test").deleteMany(new Document("value", 456)))
                 .expectNextMatches(result -> result.getDeletedCount() > 0)
                 .expectComplete()
                 .verify();
@@ -93,7 +94,7 @@ public class MongoDBIntegrationTest {
 
     @Test
     public void testUsingRecord() {
-        MongoDatabase database = mongoClient.getDatabase("temp");
+        MongoDatabase database = mongoClient.getDatabase(MongoUtils.TEMP_DB);
         MongoCollection<RssFeed> collection = database.getCollection("test-feed", RssFeed.class);
         RssFeed rssFeed = new RssFeed(URI.create("https://dummy.com/feed"), "Test Title", "Test Description", "linkString", "https://dummy.com/feed.png");
         StepVerifier.create(collection.insertOne(rssFeed))
@@ -102,20 +103,20 @@ public class MongoDBIntegrationTest {
                 .verify();
 
         // Verify that the document was inserted
-        StepVerifier.create(collection.find(new Document().append("link", "https://dummy.com/feed")))
+        StepVerifier.create(collection.find(new Document().append("feedURL", "https://dummy.com/feed")))
                 .expectNextMatches(document -> document.title().equals("Test Title") &&
                         document.description().equals("Test Description"))
                 .expectComplete()
                 .verify();
 
         // Try update
-        StepVerifier.create(collection.updateOne(new Document().append("link", "https://dummy.com/feed"), new Document("$set", new Document("link", "http://dummy.com/feed"))))
+        StepVerifier.create(collection.updateOne(new Document().append("feedURL", "https://dummy.com/feed"), new Document("$set", new Document("feedURL", "http://dummy.com/feed"))))
                 .expectNextMatches(result -> result.getModifiedCount() == 1)
                 .expectComplete()
                 .verify();
 
         // Clean up the inserted document
-        StepVerifier.create(collection.deleteMany(new Document().append("link", "http://dummy.com/feed")))
+        StepVerifier.create(collection.deleteMany(new Document().append("title", "Test Title")))
                 .expectNextMatches(result -> result.getDeletedCount() > 0)
                 .expectComplete()
                 .verify();
