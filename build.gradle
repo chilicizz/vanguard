@@ -13,7 +13,7 @@ ext {
     junitBomVersion = '6.0.2'
     slf4jVersion = '2.0.17'
     awaitilityVersion = '4.3.0'
-    mongoDriverVersion = '5.6.2'
+    mongoDriverVersion = '5.6.3'
 }
 
 repositories {
