@@ -11,7 +11,7 @@ repositories {
 
 def romeVersion = '2.1.0'
 def slf4jVersion = '2.0.17'
-def reactorVersion = '3.8.2'
+def reactorVersion = '3.8.3'
 
 dependencies {
     testImplementation platform("org.junit:junit-bom:${rootProject.ext.junitBomVersion}")
