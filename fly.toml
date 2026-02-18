@@ -1,7 +1,4 @@
-# fly.toml app configuration file generated for vanguard on 2023-11-12T19:40:33+08:00
-#
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
 app = "vanguard"
 primary_region = "sin"
 
@@ -13,7 +10,7 @@ primary_region = "sin"
   min_machines_running = 0
 
   [[services.ports]]
-    handlers = ["tls"]
+    handlers = ["tls", "http"]
     port = 443
     tls_options = { "alpn" = ["h2"] }
 
