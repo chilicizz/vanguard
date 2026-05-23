@@ -10,7 +10,7 @@ repositories {
 }
 
 def romeVersion = '2.1.0'
-def slf4jVersion = '2.0.17'
+def slf4jVersion = '2.0.18'
 def reactorVersion = '3.8.5'
 
 dependencies {
