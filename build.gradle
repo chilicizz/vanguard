@@ -10,7 +10,7 @@ version = "0.1"
 group = "com.cyrilng"
 
 ext {
-    junitBomVersion = '6.1.0'
+    junitBomVersion = '6.1.1'
     slf4jVersion = '2.0.17'
     awaitilityVersion = '4.3.0'
     mongoDriverVersion = '5.8.0'
