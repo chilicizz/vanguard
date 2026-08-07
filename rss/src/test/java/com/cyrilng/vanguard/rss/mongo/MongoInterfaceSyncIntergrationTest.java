@@ -1,6 +1,10 @@
 package com.cyrilng.vanguard.rss.mongo;
 
 import com.cyrilng.vanguard.rss.domain.RssUser;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.ServerApi;
+import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import org.awaitility.Awaitility;
@@ -19,7 +23,24 @@ public class MongoInterfaceSyncIntergrationTest {
 
     @BeforeAll
     public static void setUpClient() {
-        MongoClient mongoClient = MongoClients.create(System.getenv(Constants.MONGO_CONNECTION_STRING));
+        String connectionString = System.getenv(Constants.MONGO_CONNECTION_STRING);
+        assertNotNull(connectionString, "MONGO_CONNECTION_STRING environment variable is not set");
+        ServerApi serverApi = ServerApi.builder()
+                .version(ServerApiVersion.V1)
+                .build();
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString(connectionString))
+                .serverApi(serverApi)
+                .build();
+        MongoClient mongoClient = MongoClients.create(settings);
+
+        try {
+            Object okObj = mongoClient.getDatabase(Constants.ADMIN_DB).runCommand(new org.bson.Document("ping", 1)).get("ok");
+            org.junit.jupiter.api.Assumptions.assumeTrue(okObj != null, "Skipping Mongo tests: ping failed");
+        } catch (Throwable t) {
+            org.junit.jupiter.api.Assumptions.assumeTrue(false, "Skipping Mongo tests: " + t.getMessage());
+        }
+
         mongoInterface = new MongoStorageSync(mongoClient, Constants.TEST_DB);
     }
 

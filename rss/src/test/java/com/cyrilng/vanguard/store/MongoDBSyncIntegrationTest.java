@@ -39,6 +39,14 @@ public class MongoDBSyncIntegrationTest {
                 .serverApi(serverApi)
                 .build();
         mongoClient = MongoClients.create(settings);
+
+        try {
+            MongoDatabase database = mongoClient.getDatabase(Constants.ADMIN_DB);
+            Object okObj = database.runCommand(new org.bson.Document("ping", 1)).get("ok");
+            org.junit.jupiter.api.Assumptions.assumeTrue(okObj != null, "Skipping MongoDB integration tests: ping failed");
+        } catch (Throwable t) {
+            org.junit.jupiter.api.Assumptions.assumeTrue(false, "Skipping MongoDB integration tests: " + t.getMessage());
+        }
     }
 
     @AfterAll

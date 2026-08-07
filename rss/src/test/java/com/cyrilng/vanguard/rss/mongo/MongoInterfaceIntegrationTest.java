@@ -19,7 +19,14 @@ class MongoInterfaceIntegrationTest {
 
     @BeforeAll
     public static void setUpClient() {
-        MongoClient mongoClient = createClient(System.getenv(Constants.MONGO_CONNECTION_STRING));
+        String connectionString = System.getenv(Constants.MONGO_CONNECTION_STRING);
+        org.junit.jupiter.api.Assumptions.assumeTrue(connectionString != null && !connectionString.isEmpty(), "MONGO_CONNECTION_STRING environment variable is not set");
+        com.mongodb.reactivestreams.client.MongoClient mongoClient = createClient(connectionString);
+        try {
+            AsyncUtils.singleResultFrom(mongoClient.getDatabase(Constants.ADMIN_DB).runCommand(new org.bson.Document("ping", 1))).join();
+        } catch (Throwable t) {
+            org.junit.jupiter.api.Assumptions.assumeTrue(false, "Skipping Mongo tests: " + t.getMessage());
+        }
         AsyncUtils.singleResultFrom(mongoClient.getDatabase(Constants.TEST_DB).drop()).join();
         mongoInterface = new MongoStorage(mongoClient, Constants.TEST_DB);
     }
