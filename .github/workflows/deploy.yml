@@ -16,10 +16,15 @@ jobs:
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Ensure persistent volume exists
+      - name: Ensure an unattached persistent volume exists
         run: |
           volumes="$(flyctl volumes list --config fly.toml --json)"
-          exists="$(jq 'any(.[]; .name == "pihole_data" and .region == "sin")' <<< "$volumes")"
+          exists="$(jq '
+            any(.[]; .name == "pihole_data"
+              and .region == "sin"
+              and (.attached_machine_id == null or .attached_machine_id == "")
+              and (.attached_alloc_id == null or .attached_alloc_id == ""))
+          ' <<< "$volumes")"
           if [ "$exists" = "false" ]; then
             flyctl volumes create pihole_data --config fly.toml --region sin --size 1 --yes
           fi
