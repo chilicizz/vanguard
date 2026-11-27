@@ -1,14 +1,10 @@
 FROM pihole/pihole:latest
 
-# Install unbound, dns-root-data, and tailscale
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        unbound \
-        dns-root-data \
-        curl \
-        ca-certificates && \
-    curl -fsSL https://tailscale.com | sh && \
-    rm -rf /var/lib/apt/lists/*
+# Install Unbound and Tailscale
+RUN apk add --no-cache \
+    unbound \
+    tailscale \
+    ca-certificates
 
 # Low-memory Unbound configuration (~15 MB RAM footprint)
 RUN mkdir -p /etc/unbound/unbound.conf.d && \
@@ -23,7 +19,6 @@ server:
     do-ip6: no
     prefer-ip6: no
 
-    root-hints: "/usr/share/dns/root.hints"
     auto-trust-anchor-file: "/var/lib/unbound/root.key"
 
     # Tight memory limits for 256MB VM
