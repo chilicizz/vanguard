@@ -153,8 +153,28 @@ chmod 600 /etc/pihole/traefik/acme.json
 echo "Starting Traefik with debug logging"
 traefik --log.level=DEBUG --configFile=/etc/traefik/traefik.yml &
 traefik_pid=$!
-sleep 1
-kill -0 "$traefik_pid"
+traefik_ready=0
+for ((attempt = 0; attempt < 15; attempt++)); do
+    if ( : >/dev/tcp/127.0.0.1/853 ) 2>/dev/null && ( : >/dev/tcp/127.0.0.1/8080 ) 2>/dev/null; then
+        traefik_ready=1
+        break
+    fi
+    if ! kill -0 "$traefik_pid" 2>/dev/null; then
+        if wait "$traefik_pid"; then
+            traefik_status=0
+        else
+            traefik_status=$?
+        fi
+        echo "Traefik exited before opening ports 853 and 8080 (status $traefik_status)" >&2
+        exit 1
+    fi
+    sleep 1
+done
+if [ "$traefik_ready" -eq 1 ]; then
+    echo "Traefik is listening on TCP ports 853 and 8080"
+else
+    echo "Traefik process $traefik_pid is still running but has not opened ports 853 and 8080" >&2
+fi
 wait -n "$pihole_pid" "$traefik_pid"
 EOF
 
