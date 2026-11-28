@@ -26,7 +26,7 @@ Fly manages the certificate for `vanguard.cyrilng.com`; attach it once with `fly
 ## Runtime and persistent state
 
 - `Dockerfile` installs Pi-hole's supporting services: Unbound and Tailscale.
-- The entrypoint starts Tailscale in userspace mode, bootstraps Unbound's root trust anchor, and starts Pi-hole.
+- The entrypoint starts Tailscale in userspace mode, bootstraps Unbound's root trust anchor, waits for Unbound on TCP 5335, then starts Pi-hole. Unbound runs in the foreground so startup errors appear in the logs.
 - The `pihole_data` Fly volume is mounted at `/etc/pihole`. Pi-hole configuration/database and Tailscale state are kept there.
 - `TS_AUTHKEY` is optional and should be configured as a Fly secret, not committed. Without it, the container does not run `tailscale up`. Tailscale is not the public DoT path.
 - The image uses small Unbound caches and Pi-hole retains seven days of database history. `fly.toml` sets `swap_size_mb = 256`.
@@ -59,6 +59,6 @@ A DNS answer with certificate verification passing confirms the TLS connection a
 
 Deployment success is not proof that the service is listening. Check Fly deployment/runtime logs for a listener on internal port 53 and for certificate status.
 
-This configuration is a trial of Fly TLS termination without a `dot` ALPN override. The latest known direct test environment has no IPv6 route to the app, so verify from an IPv6-capable client after deployment.
+This configuration is a trial of Fly TLS termination without a `dot` ALPN override. The latest test through `vanguard.fly.dev:853` completed TLS without ALPN, but the DNS query was refused; logs also showed FTL could not connect to Unbound on 127.0.0.1:5335. The entrypoint now checks and supervises Unbound before starting Pi-hole; this change still needs deployment.
 
 Full DNS over Tailscale is also not configured. The latest logs show `/dev/net/tun` exists, but Tailscale still runs in userspace mode; its Serve TCP forwarder alone cannot provide standard DNS, which needs both UDP and TCP. Verify that kernel TUN networking is permitted before switching modes.

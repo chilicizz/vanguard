@@ -12,8 +12,10 @@ RUN mkdir -p /etc/unbound/unbound.conf.d && \
     cat <<'EOF' > /etc/unbound/unbound.conf.d/pi-hole.conf
 server:
     verbosity: 0
+    username: "unbound"
     interface: 127.0.0.1
     port: 5335
+    access-control: 127.0.0.0/8 allow
     do-ip4: yes
     do-udp: yes
     do-tcp: yes
@@ -49,6 +51,7 @@ server:
     private-address: fd00::/8
     private-address: fe80::/10
 EOF
+RUN unbound-checkconf /etc/unbound/unbound.conf.d/pi-hole.conf
 
 # Entrypoint: start Tailscale (userspace), Unbound, then Pi-hole
 RUN cat <<'EOF' > /usr/local/bin/entrypoint-all.sh
@@ -80,7 +83,30 @@ fi
 mkdir -p /var/lib/unbound
 chown -R unbound:unbound /var/lib/unbound
 su -s /bin/sh unbound -c "unbound-anchor -a /var/lib/unbound/root.key" || true
-unbound -c /etc/unbound/unbound.conf
+unbound -d -c /etc/unbound/unbound.conf.d/pi-hole.conf &
+unbound_pid=$!
+trap 'if [ -n "${pihole_pid:-}" ]; then kill -TERM "$pihole_pid" 2>/dev/null || true; fi; kill -TERM "$unbound_pid" 2>/dev/null || true' INT TERM
+echo "Waiting for Unbound TCP DNS listener on 127.0.0.1:5335"
+for ((attempt = 0; attempt < 30; attempt++)); do
+    if ( : >/dev/tcp/127.0.0.1/5335 ) 2>/dev/null; then
+        break
+    fi
+    if ! kill -0 "$unbound_pid" 2>/dev/null; then
+        if wait "$unbound_pid"; then
+            unbound_status=0
+        else
+            unbound_status=$?
+        fi
+        echo "Unbound exited before listening on TCP port 5335 (status $unbound_status)" >&2
+        exit 1
+    fi
+    sleep 1
+done
+if ! ( : >/dev/tcp/127.0.0.1/5335 ) 2>/dev/null; then
+    echo "Unbound did not listen on TCP port 5335 in time" >&2
+    exit 1
+fi
+echo "Unbound TCP DNS listener is ready"
 
 # 3. Start Pi-hole and wait for DNS before accepting DoT queries.
 /usr/bin/start.sh &
@@ -98,7 +124,7 @@ if ! ( : >/dev/tcp/127.0.0.1/53 ) 2>/dev/null; then
     exit 1
 fi
 
-wait "$pihole_pid"
+wait -n "$pihole_pid" "$unbound_pid"
 EOF
 
 RUN chmod +x /usr/local/bin/entrypoint-all.sh
