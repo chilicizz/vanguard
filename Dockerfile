@@ -2,6 +2,7 @@ FROM pihole/pihole:latest
 
 # Install Unbound and Tailscale
 RUN apk add --no-cache \
+    bash \
     unbound \
     traefik \
     tailscale \
@@ -95,7 +96,7 @@ EOF
 
 # Entrypoint: start Tailscale (userspace), Unbound, then Pi-hole
 RUN cat <<'EOF' > /usr/local/bin/entrypoint-all.sh
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # 1. Start Tailscale in userspace networking mode (state stored on persistent /etc/pihole volume)
@@ -126,12 +127,22 @@ if [ -f /etc/pihole/acme.json ] && [ ! -e /etc/pihole/traefik/acme.json ]; then
     mv /etc/pihole/acme.json /etc/pihole/traefik/acme.json
 fi
 touch /etc/pihole/traefik/acme.json
+
+ftl_log_file="$(pihole-FTL --config -q files.log.ftl)"
+/usr/bin/start.sh &
+pihole_pid=$!
+trap 'kill -TERM "$pihole_pid" 2>/dev/null || true; if [ -n "${traefik_pid:-}" ]; then kill -TERM "$traefik_pid" 2>/dev/null || true; fi' INT TERM
+if ! timeout 45 sh -c 'until grep -q "########## FTL started" "$1" 2>/dev/null; do sleep 1; done' sh "$ftl_log_file"; then
+    echo "Pi-hole did not start in time; cannot start Traefik" >&2
+    exit 1
+fi
+
 chmod 600 /etc/pihole/traefik/acme.json
 traefik --configFile=/etc/traefik/traefik.yml &
 traefik_pid=$!
 sleep 1
 kill -0 "$traefik_pid"
-exec /usr/bin/start.sh
+wait -n "$pihole_pid" "$traefik_pid"
 EOF
 
 RUN chmod +x /usr/local/bin/entrypoint-all.sh
