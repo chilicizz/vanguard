@@ -42,7 +42,7 @@ This only addresses the custom hostname's certificate. The current Fly TLS handl
 - `TS_AUTHKEY` is optional and should be configured as a Fly secret, not committed. Without it, the container does not run `tailscale up`. Tailscale is not the public DoT path.
 - Pi-hole query logging is disabled, privacy level 3 is enabled, and `maxDBdays = 0` disables FTL's long-term query database. `TAIL_FTL_LOG = 0` prevents the container image from tailing FTL's log to container output. Fly may still retain container startup/error output under its own log-retention policy.
 - These settings stop future query-history storage; they do not erase query data already present on the persistent volume.
-- The image uses small Unbound caches. `fly.toml` sets `swap_size_mb = 256`.
+- Unbound has a configured 64 MiB cache budget: 40 MiB for RRsets, 20 MiB for messages, and 2 MiB each for keys and negative answers. This is capacity, not guaranteed current usage. `fly.toml` sets `swap_size_mb = 256`.
 
 ## Deployment
 

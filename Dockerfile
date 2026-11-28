@@ -30,10 +30,10 @@ server:
     rrset-cache-slabs: 1
     infra-cache-slabs: 1
     key-cache-slabs: 1
-    rrset-cache-size: 4m
-    msg-cache-size: 2m
-    key-cache-size: 1m
-    neg-cache-size: 1m
+    rrset-cache-size: 40m
+    msg-cache-size: 20m
+    key-cache-size: 2m
+    neg-cache-size: 2m
     infra-host-ttl: 60
     so-rcvbuf: 0
 
