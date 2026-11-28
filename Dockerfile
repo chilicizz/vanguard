@@ -65,7 +65,7 @@ providers:
 certificatesResolvers:
   letsencrypt:
     acme:
-      storage: /etc/pihole/acme.json
+      storage: /etc/pihole/traefik/acme.json
       httpChallenge:
         entryPoint: web
 EOF
@@ -121,9 +121,16 @@ su -s /bin/sh unbound -c "unbound-anchor -a /var/lib/unbound/root.key" || true
 unbound -c /etc/unbound/unbound.conf
 
 # 3. Start DoT proxy and hand off to official Pi-hole entrypoint
-touch /etc/pihole/acme.json
-chmod 600 /etc/pihole/acme.json
+install -d -m 700 /etc/pihole/traefik
+if [ -f /etc/pihole/acme.json ] && [ ! -e /etc/pihole/traefik/acme.json ]; then
+    mv /etc/pihole/acme.json /etc/pihole/traefik/acme.json
+fi
+touch /etc/pihole/traefik/acme.json
+chmod 600 /etc/pihole/traefik/acme.json
 traefik --configFile=/etc/traefik/traefik.yml &
+traefik_pid=$!
+sleep 1
+kill -0 "$traefik_pid"
 exec /usr/bin/start.sh
 EOF
 
