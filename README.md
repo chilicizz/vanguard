@@ -12,6 +12,7 @@ The goal is to keep the DNS resolver and its state on one small Fly machine, wit
 DNS client -- DoT/TCP 853 --> Fly TLS handler --> Pi-hole TCP 53
                                                --> Unbound 127.0.0.1:5335
                                                --> DNS root and authoritative servers
+Tailnet client -- DNS/UDP+TCP 53 --> Tailscale TUN --> Pi-hole
 ```
 
 - Pi-hole's upstream is set to `127.0.0.1#5335`.
@@ -35,8 +36,9 @@ This only addresses the custom hostname's certificate. The current Fly TLS handl
 ## Runtime and persistent state
 
 - `Dockerfile` installs Pi-hole's supporting services: Unbound and Tailscale.
-- The entrypoint starts Tailscale in userspace mode only when an auth key or saved node state exists, bootstraps and validates Unbound's root trust anchor/config, waits for Unbound on TCP 5335, then starts Pi-hole. It stops all started services during shutdown.
+- The entrypoint starts Tailscale in kernel TUN mode only when an auth key or saved node state exists, bootstraps and validates Unbound's root trust anchor/config, waits for Unbound on TCP 5335, then starts Pi-hole. It stops all started services during shutdown.
 - The `pihole_data` Fly volume is mounted at `/etc/pihole`. Pi-hole configuration/database and Tailscale state are kept there.
+- The saved Tailscale state preserves the node identity and IP across deploys as long as this volume is retained.
 - `TS_AUTHKEY` is optional and should be configured as a Fly secret, not committed. Without it, the container does not run `tailscale up`. Tailscale is not the public DoT path.
 - Pi-hole query logging is disabled, privacy level 3 is enabled, and `maxDBdays = 0` disables FTL's long-term query database. `TAIL_FTL_LOG = 0` prevents the container image from tailing FTL's log to container output. Fly may still retain container startup/error output under its own log-retention policy.
 - These settings stop future query-history storage; they do not erase query data already present on the persistent volume.
@@ -54,8 +56,8 @@ The configured Fly app is `vanguard` in `sin`. The public DNS name should resolv
 - IPv6 is the intended public route without a dedicated IPv4. Clients and test machines need working IPv6 connectivity.
 - Fly's TLS handler can support a shared IPv4 on TLS service ports such as 853; verify current Fly IP allocation and DNS before relying on IPv4.
 - The Pi-hole admin UI is not exposed.
-- Tailscale currently runs in userspace mode. Full DNS on port 53 requires both UDP and TCP and is not configured; kernel-mode networking has not been validated.
-- Port 53 is not currently exposed to the tailnet.
+- Port 53 is not exposed as a public Fly service. Tailnet clients can reach Pi-hole on UDP and TCP port 53 through the Tailscale interface.
+- To use it as the tailnet resolver, add the node's Tailscale IP as a nameserver in the Tailscale admin DNS settings and ensure the tailnet ACL allows UDP and TCP port 53 from intended clients. Read the IP with `tailscale ip -4`.
 
 ## Verification and current status
 
@@ -70,6 +72,6 @@ This verifies the certificate and TLS handshake without offering ALPN. Then test
 
 Deployment success is not proof that the service is listening. Check Fly deployment/runtime logs for a listener on internal port 53 and for certificate status.
 
-This configuration is a trial of Fly TLS termination without a `dot` ALPN override. A live IPv4 test through `vanguard.fly.dev:853` completed TLS without ALPN and returned a DNS answer. Offering ALPN `dot` failed the TLS handshake, and the custom hostname did not present a usable certificate at last test. The privacy settings in the image still need deployment.
+This configuration is a trial of Fly TLS termination without a `dot` ALPN override. A live IPv4 test through `vanguard.fly.dev:853` completed TLS without ALPN and returned a DNS answer. Offering ALPN `dot` failed the TLS handshake, and the custom hostname did not present a usable certificate at last test.
 
-Full DNS over Tailscale is also not configured. Tailscale still runs in userspace mode; its Serve TCP forwarder alone cannot provide standard DNS, which needs both UDP and TCP.
+The deployed image uses kernel TUN mode. The `tailscale0` interface and Pi-hole UDP/TCP listeners on port 53 were verified, and a tailnet client successfully queried `example.com` over both UDP and TCP at `100.73.226.96`. To use it as the tailnet's automatic resolver, add the node IP as a nameserver in Tailscale admin DNS and allow UDP and TCP port 53 in the tailnet ACL.

@@ -68,12 +68,13 @@ shutdown() {
 }
 trap 'shutdown; exit 0' INT TERM
 
-# 1. Start Tailscale only when configured or previously enrolled
+# 1. Start Tailscale only when configured or previously enrolled.
+# Kernel TUN mode lets tailnet clients reach Pi-hole over UDP and TCP.
 tailscale_state=/etc/pihole/tailscale/tailscaled.state
 if [ -n "$TS_AUTHKEY" ] || [ -s "$tailscale_state" ]; then
     mkdir -p /etc/pihole/tailscale /var/run/tailscale
     tailscaled \
-        --tun=userspace-networking \
+        --tun=tailscale0 \
         --state="$tailscale_state" \
         --socket=/var/run/tailscale/tailscaled.sock &
     tailscaled_pid=$!
