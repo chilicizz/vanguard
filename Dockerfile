@@ -99,6 +99,18 @@ RUN cat <<'EOF' > /usr/local/bin/entrypoint-all.sh
 #!/bin/bash
 set -e
 
+# Start DoT early so Fly sees its listeners during startup checks.
+install -d -m 700 /etc/pihole/traefik
+if [ -f /etc/pihole/acme.json ] && [ ! -e /etc/pihole/traefik/acme.json ]; then
+    mv /etc/pihole/acme.json /etc/pihole/traefik/acme.json
+fi
+touch /etc/pihole/traefik/acme.json
+chmod 600 /etc/pihole/traefik/acme.json
+echo "Starting Traefik with debug logging"
+traefik --log.level=DEBUG --configFile=/etc/traefik/traefik.yml &
+traefik_pid=$!
+trap 'if [ -n "${pihole_pid:-}" ]; then kill -TERM "$pihole_pid" 2>/dev/null || true; fi; kill -TERM "$traefik_pid" 2>/dev/null || true' INT TERM
+
 # 1. Start Tailscale in userspace networking mode (state stored on persistent /etc/pihole volume)
 mkdir -p /etc/pihole/tailscale /var/run/tailscale
 if [ -c /dev/net/tun ]; then
@@ -126,16 +138,9 @@ chown -R unbound:unbound /var/lib/unbound
 su -s /bin/sh unbound -c "unbound-anchor -a /var/lib/unbound/root.key" || true
 unbound -c /etc/unbound/unbound.conf
 
-# 3. Start DoT proxy and hand off to official Pi-hole entrypoint
-install -d -m 700 /etc/pihole/traefik
-if [ -f /etc/pihole/acme.json ] && [ ! -e /etc/pihole/traefik/acme.json ]; then
-    mv /etc/pihole/acme.json /etc/pihole/traefik/acme.json
-fi
-touch /etc/pihole/traefik/acme.json
-
+# 3. Start Pi-hole and wait for DNS before accepting DoT queries.
 /usr/bin/start.sh &
 pihole_pid=$!
-trap 'kill -TERM "$pihole_pid" 2>/dev/null || true; if [ -n "${traefik_pid:-}" ]; then kill -TERM "$traefik_pid" 2>/dev/null || true; fi' INT TERM
 echo "Waiting for Pi-hole TCP DNS listener on 127.0.0.1:53"
 for ((attempt = 0; attempt < 45; attempt++)); do
     if ( : >/dev/tcp/127.0.0.1/53 ) 2>/dev/null; then
@@ -144,15 +149,10 @@ for ((attempt = 0; attempt < 45; attempt++)); do
     sleep 1
 done
 if ! ( : >/dev/tcp/127.0.0.1/53 ) 2>/dev/null; then
-    echo "Pi-hole did not listen on TCP port 53 in time; cannot start Traefik" >&2
+    echo "Pi-hole did not listen on TCP port 53 in time" >&2
     exit 1
 fi
 
-echo "Pi-hole TCP DNS listener is ready; setting ACME file permissions"
-chmod 600 /etc/pihole/traefik/acme.json
-echo "Starting Traefik with debug logging"
-traefik --log.level=DEBUG --configFile=/etc/traefik/traefik.yml &
-traefik_pid=$!
 traefik_ready=0
 for ((attempt = 0; attempt < 15; attempt++)); do
     if ( : >/dev/tcp/127.0.0.1/853 ) 2>/dev/null && ( : >/dev/tcp/127.0.0.1/8080 ) 2>/dev/null; then

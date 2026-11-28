@@ -27,9 +27,9 @@ Fly's managed TLS handler is not used for DoT: it supports HTTP ALPN protocols, 
 ## Runtime and persistent state
 
 - `Dockerfile` installs Pi-hole's supporting services: Unbound, Traefik, and Tailscale.
-- The entrypoint starts Tailscale in userspace mode, bootstraps Unbound's root trust anchor, starts Pi-hole, then starts Traefik after Pi-hole accepts TCP connections on port 53.
+- The entrypoint starts Traefik first so Fly can detect its listeners during startup, then starts Tailscale, Unbound, and Pi-hole.
 - The `pihole_data` Fly volume is mounted at `/etc/pihole`. Pi-hole configuration/database, Traefik's ACME store, and Tailscale state are kept there.
-- Traefik's ACME file must be mode `600`; the entrypoint reapplies this after Pi-hole starts.
+- Traefik's ACME file must be mode `600`; the entrypoint sets this before Traefik starts.
 - `TS_AUTHKEY` is optional and should be configured as a Fly secret, not committed. Without it, the container does not run `tailscale up`. Tailscale is not the public DoT path.
 - The image uses small Unbound caches and Pi-hole retains seven days of database history. `fly.toml` sets `swap_size_mb = 256`.
 
@@ -61,6 +61,6 @@ A DNS answer with certificate verification passing confirms the TLS connection a
 
 Deployment success is not proof that the service is listening. Check Fly deployment/runtime logs for listeners on internal ports 853 and 8080 and for Traefik/ACME errors.
 
-As of 2026-11-28, deployment run 9 completed successfully, but Fly still reported no listeners on 853 or 8080 (only Pi-hole listeners were found). Runtime logs show Tailscale connected, Pi-hole ready on TCP 53, and the entrypoint reaching “Starting Traefik with debug logging”; they contain no Traefik startup/error output. The failure is narrowed to Traefik not binding after launch, but its exact cause is still unknown. The entrypoint now checks both local ports after launch and logs whether Traefik exited or remained alive without binding; this diagnostic change still needs deployment. Do not assume a successful deploy means DoT or tailnet DNS works.
+As of 2026-11-28, deployment run 10 completed, but Fly's startup scan ran just before the entrypoint's local check confirmed TCP 853 and 8080 were listening. Fly saw only Pi-hole listeners and warned that the app would not be reachable through the proxy. The entrypoint now starts Traefik before the other services to avoid that startup race; this change still needs deployment. Public DoT is not confirmed: the current test environment has no IPv6 route to the app, so verify from an IPv6-capable client.
 
-Full DNS over Tailscale is also not configured. Tailscale is in userspace mode, and its Serve TCP forwarder alone cannot provide standard DNS, which needs both UDP and TCP. Verify whether Fly exposes `/dev/net/tun`; if not, a UDP-capable relay or different host is required.
+Full DNS over Tailscale is also not configured. The latest logs show `/dev/net/tun` exists, but Tailscale still runs in userspace mode; its Serve TCP forwarder alone cannot provide standard DNS, which needs both UDP and TCP. Verify that kernel TUN networking is permitted before switching modes.
