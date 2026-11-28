@@ -128,12 +128,17 @@ if [ -f /etc/pihole/acme.json ] && [ ! -e /etc/pihole/traefik/acme.json ]; then
 fi
 touch /etc/pihole/traefik/acme.json
 
-ftl_log_file="$(pihole-FTL --config -q files.log.ftl)"
 /usr/bin/start.sh &
 pihole_pid=$!
 trap 'kill -TERM "$pihole_pid" 2>/dev/null || true; if [ -n "${traefik_pid:-}" ]; then kill -TERM "$traefik_pid" 2>/dev/null || true; fi' INT TERM
-if ! timeout 45 sh -c 'until grep -q "########## FTL started" "$1" 2>/dev/null; do sleep 1; done' sh "$ftl_log_file"; then
-    echo "Pi-hole did not start in time; cannot start Traefik" >&2
+for ((attempt = 0; attempt < 45; attempt++)); do
+    if ( : >/dev/tcp/127.0.0.1/53 ) 2>/dev/null; then
+        break
+    fi
+    sleep 1
+done
+if ! ( : >/dev/tcp/127.0.0.1/53 ) 2>/dev/null; then
+    echo "Pi-hole did not listen on TCP port 53 in time; cannot start Traefik" >&2
     exit 1
 fi
 
