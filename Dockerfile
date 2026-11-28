@@ -52,25 +52,39 @@ server:
     private-address: fe80::/10
 EOF
 
-# Entrypoint: start Tailscale (userspace), Unbound, then Pi-hole
+# Entrypoint: optionally start Tailscale, then Unbound and Pi-hole
 RUN cat <<'EOF' > /usr/local/bin/entrypoint-all.sh
 #!/bin/bash
 set -e
 
-# 1. Start Tailscale in userspace networking mode (state stored on persistent /etc/pihole volume)
-mkdir -p /etc/pihole/tailscale /var/run/tailscale
-tailscaled \
-    --tun=userspace-networking \
-    --state=/etc/pihole/tailscale/tailscaled.state \
-    --socket=/var/run/tailscale/tailscaled.sock &
+shutdown() {
+    trap - INT TERM
+    for pid in "${tailscaled_pid:-}" "${unbound_pid:-}" "${pihole_pid:-}"; do
+        if [ -n "$pid" ]; then
+            kill -TERM "$pid" 2>/dev/null || true
+        fi
+    done
+    wait || true
+}
+trap 'shutdown; exit 0' INT TERM
 
-# Wait briefly for tailscaled socket, then bring node up if TS_AUTHKEY is provided
-sleep 2
-if [ -n "$TS_AUTHKEY" ]; then
-    tailscale up \
-        --authkey="$TS_AUTHKEY" \
-        --hostname="${TS_HOSTNAME:-pihole-fly}" \
-        --accept-dns=false
+# 1. Start Tailscale only when configured or previously enrolled
+tailscale_state=/etc/pihole/tailscale/tailscaled.state
+if [ -n "$TS_AUTHKEY" ] || [ -s "$tailscale_state" ]; then
+    mkdir -p /etc/pihole/tailscale /var/run/tailscale
+    tailscaled \
+        --tun=userspace-networking \
+        --state="$tailscale_state" \
+        --socket=/var/run/tailscale/tailscaled.sock &
+    tailscaled_pid=$!
+
+    if [ -n "$TS_AUTHKEY" ]; then
+        sleep 2
+        tailscale up \
+            --authkey="$TS_AUTHKEY" \
+            --hostname="${TS_HOSTNAME:-pihole-fly}" \
+            --accept-dns=false
+    fi
 fi
 
 # 2. Bootstrap DNSSEC root key and start Unbound
@@ -82,7 +96,6 @@ fi
 unbound-checkconf /etc/unbound/unbound.conf.d/pi-hole.conf
 unbound -d -c /etc/unbound/unbound.conf.d/pi-hole.conf &
 unbound_pid=$!
-trap 'if [ -n "${pihole_pid:-}" ]; then kill -TERM "$pihole_pid" 2>/dev/null || true; fi; kill -TERM "$unbound_pid" 2>/dev/null || true' INT TERM
 echo "Waiting for Unbound TCP DNS listener on 127.0.0.1:5335"
 for ((attempt = 0; attempt < 30; attempt++)); do
     if ( : >/dev/tcp/127.0.0.1/5335 ) 2>/dev/null; then
@@ -108,7 +121,6 @@ echo "Unbound TCP DNS listener is ready"
 # 3. Start Pi-hole and wait for DNS before accepting DoT queries.
 /usr/bin/start.sh &
 pihole_pid=$!
-trap 'kill -TERM "$pihole_pid" 2>/dev/null || true' INT TERM
 echo "Waiting for Pi-hole TCP DNS listener on 127.0.0.1:53"
 for ((attempt = 0; attempt < 45; attempt++)); do
     if ( : >/dev/tcp/127.0.0.1/53 ) 2>/dev/null; then
@@ -121,16 +133,25 @@ if ! ( : >/dev/tcp/127.0.0.1/53 ) 2>/dev/null; then
     exit 1
 fi
 
-wait -n "$pihole_pid" "$unbound_pid"
+if wait -n "$pihole_pid" "$unbound_pid"; then
+    service_status=0
+else
+    service_status=$?
+fi
+shutdown
+exit "$service_status"
 EOF
 
 RUN chmod +x /usr/local/bin/entrypoint-all.sh
 
 # Low-RAM Pi-hole v6 settings + upstream pointing to local Unbound
-ENV FTLCONF_dns_upstreams="127.0.0.1#5335" \
+ENV TAIL_FTL_LOG="0" \
+    FTLCONF_dns_upstreams="127.0.0.1#5335" \
     FTLCONF_dns_listeningMode="all" \
+    FTLCONF_dns_queryLogging="false" \
     FTLCONF_dns_cache_size="0" \
-    FTLCONF_database_maxDBdays="7"
+    FTLCONF_database_maxDBdays="0" \
+    FTLCONF_misc_privacylevel="3"
 
 EXPOSE 53/tcp 53/udp 80/tcp
 

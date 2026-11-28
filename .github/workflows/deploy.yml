@@ -16,17 +16,21 @@ jobs:
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Ensure an unattached persistent volume exists
+      - name: Ensure persistent volume is unambiguous
         run: |
           volumes="$(flyctl volumes list --config fly.toml --json)"
-          exists="$(jq '
-            any(.[]; .name == "pihole_data"
-              and .region == "sin"
-              and (.attached_machine_id == null or .attached_machine_id == "")
-              and (.attached_alloc_id == null or .attached_alloc_id == ""))
+          matching_volumes="$(jq '
+            [.[] | select(.name == "pihole_data" and .region == "sin")]
           ' <<< "$volumes")"
-          if [ "$exists" = "false" ]; then
+          volume_count="$(jq 'length' <<< "$matching_volumes")"
+          if [ "$volume_count" -eq 0 ]; then
             flyctl volumes create pihole_data --config fly.toml --region sin --size 1 --yes
+          elif [ "$volume_count" -gt 1 ]; then
+            echo "Multiple pihole_data volumes found in sin; refusing to deploy with ambiguous persistent state:" >&2
+            jq -r '.[].id' <<< "$matching_volumes" >&2
+            exit 1
+          else
+            echo "Found existing pihole_data volume; preserving it."
           fi
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
