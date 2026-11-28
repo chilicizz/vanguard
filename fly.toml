@@ -12,22 +12,13 @@ swap_size_mb = 256
   source = "pihole_data"
   destination = "/etc/pihole"
 
-# DNS-over-TLS is terminated by Traefik inside the app.
+# Fly terminates TLS and forwards plaintext DNS over TCP to Pi-hole.
 [[services]]
   protocol = "tcp"
-  internal_port = 853
+  internal_port = 53
   auto_stop_machines = "off"
   min_machines_running = 1
 
   [[services.ports]]
     port = 853
-
-[[services]]
-  protocol = "tcp"
-  internal_port = 8080
-  auto_stop_machines = "off"
-  min_machines_running = 1
-
-  [[services.ports]]
-    port = 80
-    handlers = ["http"]
+    handlers = ["tls"]

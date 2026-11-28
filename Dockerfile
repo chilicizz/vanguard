@@ -4,7 +4,6 @@ FROM pihole/pihole:latest
 RUN apk add --no-cache \
     bash \
     unbound \
-    traefik \
     tailscale \
     ca-certificates
 
@@ -51,65 +50,10 @@ server:
     private-address: fe80::/10
 EOF
 
-# Traefik terminates DoT and obtains a certificate through HTTP-01.
-RUN mkdir -p /etc/traefik && \
-    cat <<'EOF' > /etc/traefik/traefik.yml
-entryPoints:
-  web:
-    address: ":8080"
-  dot:
-    address: ":853"
-providers:
-  file:
-    filename: /etc/traefik/dynamic.yml
-    watch: false
-certificatesResolvers:
-  letsencrypt:
-    acme:
-      storage: /etc/pihole/traefik/acme.json
-      httpChallenge:
-        entryPoint: web
-EOF
-
-RUN cat <<'EOF' > /etc/traefik/dynamic.yml
-tcp:
-  routers:
-    dot:
-      entryPoints:
-        - dot
-      rule: "HostSNI(`vanguard.cyrilng.com`)"
-      service: pihole-dns
-      tls:
-        certResolver: letsencrypt
-        options: dot
-  services:
-    pihole-dns:
-      loadBalancer:
-        servers:
-          - address: "127.0.0.1:53"
-tls:
-  options:
-    dot:
-      alpnProtocols:
-        - dot
-EOF
-
 # Entrypoint: start Tailscale (userspace), Unbound, then Pi-hole
 RUN cat <<'EOF' > /usr/local/bin/entrypoint-all.sh
 #!/bin/bash
 set -e
-
-# Start DoT early so Fly sees its listeners during startup checks.
-install -d -m 700 /etc/pihole/traefik
-if [ -f /etc/pihole/acme.json ] && [ ! -e /etc/pihole/traefik/acme.json ]; then
-    mv /etc/pihole/acme.json /etc/pihole/traefik/acme.json
-fi
-touch /etc/pihole/traefik/acme.json
-chmod 600 /etc/pihole/traefik/acme.json
-echo "Starting Traefik with debug logging"
-traefik --log.level=DEBUG --configFile=/etc/traefik/traefik.yml &
-traefik_pid=$!
-trap 'if [ -n "${pihole_pid:-}" ]; then kill -TERM "$pihole_pid" 2>/dev/null || true; fi; kill -TERM "$traefik_pid" 2>/dev/null || true' INT TERM
 
 # 1. Start Tailscale in userspace networking mode (state stored on persistent /etc/pihole volume)
 mkdir -p /etc/pihole/tailscale /var/run/tailscale
@@ -141,6 +85,7 @@ unbound -c /etc/unbound/unbound.conf
 # 3. Start Pi-hole and wait for DNS before accepting DoT queries.
 /usr/bin/start.sh &
 pihole_pid=$!
+trap 'kill -TERM "$pihole_pid" 2>/dev/null || true' INT TERM
 echo "Waiting for Pi-hole TCP DNS listener on 127.0.0.1:53"
 for ((attempt = 0; attempt < 45; attempt++)); do
     if ( : >/dev/tcp/127.0.0.1/53 ) 2>/dev/null; then
@@ -153,29 +98,7 @@ if ! ( : >/dev/tcp/127.0.0.1/53 ) 2>/dev/null; then
     exit 1
 fi
 
-traefik_ready=0
-for ((attempt = 0; attempt < 15; attempt++)); do
-    if ( : >/dev/tcp/127.0.0.1/853 ) 2>/dev/null && ( : >/dev/tcp/127.0.0.1/8080 ) 2>/dev/null; then
-        traefik_ready=1
-        break
-    fi
-    if ! kill -0 "$traefik_pid" 2>/dev/null; then
-        if wait "$traefik_pid"; then
-            traefik_status=0
-        else
-            traefik_status=$?
-        fi
-        echo "Traefik exited before opening ports 853 and 8080 (status $traefik_status)" >&2
-        exit 1
-    fi
-    sleep 1
-done
-if [ "$traefik_ready" -eq 1 ]; then
-    echo "Traefik is listening on TCP ports 853 and 8080"
-else
-    echo "Traefik process $traefik_pid is still running but has not opened ports 853 and 8080" >&2
-fi
-wait -n "$pihole_pid" "$traefik_pid"
+wait "$pihole_pid"
 EOF
 
 RUN chmod +x /usr/local/bin/entrypoint-all.sh
@@ -186,6 +109,6 @@ ENV FTLCONF_dns_upstreams="127.0.0.1#5335" \
     FTLCONF_dns_cache_size="0" \
     FTLCONF_database_maxDBdays="7"
 
-EXPOSE 53/tcp 53/udp 80/tcp 853/tcp 8080/tcp
+EXPOSE 53/tcp 53/udp 80/tcp
 
 ENTRYPOINT ["/usr/local/bin/entrypoint-all.sh"]

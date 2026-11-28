@@ -9,27 +9,25 @@ The goal is to keep the DNS resolver and its state on one small Fly machine, wit
 ## Request path
 
 ```text
-DNS client -- DoT/TCP 853 --> Fly.io --> Traefik
-                                      --> Pi-hole TCP 53
-                                      --> Unbound 127.0.0.1:5335
-                                      --> DNS root and authoritative servers
+DNS client -- DoT/TCP 853 --> Fly TLS handler --> Pi-hole TCP 53
+                                               --> Unbound 127.0.0.1:5335
+                                               --> DNS root and authoritative servers
 ```
 
 - Pi-hole's upstream is set to `127.0.0.1#5335`.
 - Unbound listens only on loopback at port 5335 and performs recursive resolution.
-- Traefik terminates TLS on TCP port 853. Its TCP router matches `vanguard.cyrilng.com` and requires ALPN `dot`.
-- Let's Encrypt certificates use the HTTP-01 challenge: Fly port 80 forwards HTTP to Traefik's internal port 8080.
-- Pi-hole's web UI is not routed through Traefik or exposed by the Fly services in `fly.toml`.
+- Fly's TLS handler terminates TLS on TCP port 853 and forwards the decrypted DNS-over-TCP stream to Pi-hole on port 53.
+- No ALPN override is configured for this trial. This tests clients that do not require ALPN `dot`; stricter clients may reject the handshake.
+- Pi-hole's web UI is not exposed by the Fly services in `fly.toml`.
 - Pi-hole port 53 is for in-container traffic; it is not configured as a public Fly service.
 
-Fly's managed TLS handler is not used for DoT: it supports HTTP ALPN protocols, while this service needs the `dot` ALPN. Keep port 853 as raw TCP to Traefik.
+Fly manages the certificate for `vanguard.cyrilng.com`; attach it once with `fly certs add vanguard.cyrilng.com` if it is not already attached.
 
 ## Runtime and persistent state
 
-- `Dockerfile` installs Pi-hole's supporting services: Unbound, Traefik, and Tailscale.
-- The entrypoint starts Traefik first so Fly can detect its listeners during startup, then starts Tailscale, Unbound, and Pi-hole.
-- The `pihole_data` Fly volume is mounted at `/etc/pihole`. Pi-hole configuration/database, Traefik's ACME store, and Tailscale state are kept there.
-- Traefik's ACME file must be mode `600`; the entrypoint sets this before Traefik starts.
+- `Dockerfile` installs Pi-hole's supporting services: Unbound and Tailscale.
+- The entrypoint starts Tailscale in userspace mode, bootstraps Unbound's root trust anchor, and starts Pi-hole.
+- The `pihole_data` Fly volume is mounted at `/etc/pihole`. Pi-hole configuration/database and Tailscale state are kept there.
 - `TS_AUTHKEY` is optional and should be configured as a Fly secret, not committed. Without it, the container does not run `tailscale up`. Tailscale is not the public DoT path.
 - The image uses small Unbound caches and Pi-hole retains seven days of database history. `fly.toml` sets `swap_size_mb = 256`.
 
@@ -41,10 +39,10 @@ The configured Fly app is `vanguard` in `sin`. The public DNS name should resolv
 
 ## Network constraints
 
-- DoT requires TCP port 853 to reach Traefik.
+- DoT requires TCP port 853 to reach Fly's TLS handler; the handler forwards plaintext DNS over TCP to Pi-hole on port 53.
 - IPv6 is the intended public route without a dedicated IPv4. Clients and test machines need working IPv6 connectivity.
-- Fly shared IPv4 is not suitable for arbitrary raw TCP service ports such as 853. IPv4 DoT requires a dedicated IPv4 allocation, which may incur a charge.
-- Port 80 exists for certificate validation; it does not expose the Pi-hole admin UI.
+- Fly's TLS handler can support a shared IPv4 on TLS service ports such as 853; verify current Fly IP allocation and DNS before relying on IPv4.
+- The Pi-hole admin UI is not exposed.
 - Tailscale currently runs in userspace mode. Tailscale Serve can forward TCP, but full DNS on port 53 requires both UDP and TCP. Do not treat TCP-only forwarding as a complete DNS service; first verify TUN support on Fly or choose a UDP-capable relay. The entrypoint logs whether `/dev/net/tun` exists.
 - Port 53 is not currently exposed to the tailnet.
 
@@ -59,8 +57,8 @@ kdig -6 @vanguard.cyrilng.com -p 853 +tls +tls-ca \
 
 A DNS answer with certificate verification passing confirms the TLS connection and DNS query. If the client reports it cannot connect to the IPv6 address, it has not reached TLS; test from an IPv6-capable network. A TCP port check alone does not verify DoT.
 
-Deployment success is not proof that the service is listening. Check Fly deployment/runtime logs for listeners on internal ports 853 and 8080 and for Traefik/ACME errors.
+Deployment success is not proof that the service is listening. Check Fly deployment/runtime logs for a listener on internal port 53 and for certificate status.
 
-As of 2026-11-28, deployment run 10 completed, but Fly's startup scan ran just before the entrypoint's local check confirmed TCP 853 and 8080 were listening. Fly saw only Pi-hole listeners and warned that the app would not be reachable through the proxy. The entrypoint now starts Traefik before the other services to avoid that startup race; this change still needs deployment. Public DoT is not confirmed: the current test environment has no IPv6 route to the app, so verify from an IPv6-capable client.
+This configuration is a trial of Fly TLS termination without a `dot` ALPN override. The latest known direct test environment has no IPv6 route to the app, so verify from an IPv6-capable client after deployment.
 
 Full DNS over Tailscale is also not configured. The latest logs show `/dev/net/tun` exists, but Tailscale still runs in userspace mode; its Serve TCP forwarder alone cannot provide standard DNS, which needs both UDP and TCP. Verify that kernel TUN networking is permitted before switching modes.
