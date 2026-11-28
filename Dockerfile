@@ -51,7 +51,6 @@ server:
     private-address: fd00::/8
     private-address: fe80::/10
 EOF
-RUN unbound-checkconf /etc/unbound/unbound.conf.d/pi-hole.conf
 
 # Entrypoint: start Tailscale (userspace), Unbound, then Pi-hole
 RUN cat <<'EOF' > /usr/local/bin/entrypoint-all.sh
@@ -60,11 +59,6 @@ set -e
 
 # 1. Start Tailscale in userspace networking mode (state stored on persistent /etc/pihole volume)
 mkdir -p /etc/pihole/tailscale /var/run/tailscale
-if [ -c /dev/net/tun ]; then
-    echo "Tailscale TUN device is available"
-else
-    echo "Tailscale TUN device is unavailable; using userspace networking"
-fi
 tailscaled \
     --tun=userspace-networking \
     --state=/etc/pihole/tailscale/tailscaled.state \
@@ -82,7 +76,10 @@ fi
 # 2. Bootstrap DNSSEC root key and start Unbound
 mkdir -p /var/lib/unbound
 chown -R unbound:unbound /var/lib/unbound
-su -s /bin/sh unbound -c "unbound-anchor -a /var/lib/unbound/root.key" || true
+if ! su -s /bin/sh unbound -c "unbound-anchor -a /var/lib/unbound/root.key"; then
+    echo "unbound-anchor failed; checking whether an existing root key is usable" >&2
+fi
+unbound-checkconf /etc/unbound/unbound.conf.d/pi-hole.conf
 unbound -d -c /etc/unbound/unbound.conf.d/pi-hole.conf &
 unbound_pid=$!
 trap 'if [ -n "${pihole_pid:-}" ]; then kill -TERM "$pihole_pid" 2>/dev/null || true; fi; kill -TERM "$unbound_pid" 2>/dev/null || true' INT TERM

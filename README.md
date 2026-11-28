@@ -26,7 +26,7 @@ Fly manages the certificate for `vanguard.cyrilng.com`; attach it once with `fly
 ## Runtime and persistent state
 
 - `Dockerfile` installs Pi-hole's supporting services: Unbound and Tailscale.
-- The entrypoint starts Tailscale in userspace mode, bootstraps Unbound's root trust anchor, waits for Unbound on TCP 5335, then starts Pi-hole. Unbound runs in the foreground so startup errors appear in the logs.
+- The entrypoint starts Tailscale in userspace mode, bootstraps and validates Unbound's root trust anchor/config, waits for Unbound on TCP 5335, then starts Pi-hole. Unbound runs in the foreground so startup errors appear in the logs.
 - The `pihole_data` Fly volume is mounted at `/etc/pihole`. Pi-hole configuration/database and Tailscale state are kept there.
 - `TS_AUTHKEY` is optional and should be configured as a Fly secret, not committed. Without it, the container does not run `tailscale up`. Tailscale is not the public DoT path.
 - The image uses small Unbound caches and Pi-hole retains seven days of database history. `fly.toml` sets `swap_size_mb = 256`.
@@ -43,7 +43,7 @@ The configured Fly app is `vanguard` in `sin`. The public DNS name should resolv
 - IPv6 is the intended public route without a dedicated IPv4. Clients and test machines need working IPv6 connectivity.
 - Fly's TLS handler can support a shared IPv4 on TLS service ports such as 853; verify current Fly IP allocation and DNS before relying on IPv4.
 - The Pi-hole admin UI is not exposed.
-- Tailscale currently runs in userspace mode. Tailscale Serve can forward TCP, but full DNS on port 53 requires both UDP and TCP. Do not treat TCP-only forwarding as a complete DNS service; first verify TUN support on Fly or choose a UDP-capable relay. The entrypoint logs whether `/dev/net/tun` exists.
+- Tailscale currently runs in userspace mode. Full DNS on port 53 requires both UDP and TCP and is not configured; kernel-mode networking has not been validated.
 - Port 53 is not currently exposed to the tailnet.
 
 ## Verification and current status
@@ -61,4 +61,4 @@ Deployment success is not proof that the service is listening. Check Fly deploym
 
 This configuration is a trial of Fly TLS termination without a `dot` ALPN override. The latest test through `vanguard.fly.dev:853` completed TLS without ALPN, but the DNS query was refused; logs also showed FTL could not connect to Unbound on 127.0.0.1:5335. The entrypoint now checks and supervises Unbound before starting Pi-hole; this change still needs deployment.
 
-Full DNS over Tailscale is also not configured. The latest logs show `/dev/net/tun` exists, but Tailscale still runs in userspace mode; its Serve TCP forwarder alone cannot provide standard DNS, which needs both UDP and TCP. Verify that kernel TUN networking is permitted before switching modes.
+Full DNS over Tailscale is also not configured. Tailscale still runs in userspace mode; its Serve TCP forwarder alone cannot provide standard DNS, which needs both UDP and TCP.
