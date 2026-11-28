@@ -3,6 +3,7 @@ FROM pihole/pihole:latest
 # Install Unbound and Tailscale
 RUN apk add --no-cache \
     unbound \
+    traefik \
     tailscale \
     ca-certificates
 
@@ -49,6 +50,49 @@ server:
     private-address: fe80::/10
 EOF
 
+# Traefik terminates DoT and obtains a certificate through HTTP-01.
+RUN mkdir -p /etc/traefik && \
+    cat <<'EOF' > /etc/traefik/traefik.yml
+entryPoints:
+  web:
+    address: ":8080"
+  dot:
+    address: ":853"
+providers:
+  file:
+    filename: /etc/traefik/dynamic.yml
+    watch: false
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      storage: /etc/pihole/acme.json
+      httpChallenge:
+        entryPoint: web
+EOF
+
+RUN cat <<'EOF' > /etc/traefik/dynamic.yml
+tcp:
+  routers:
+    dot:
+      entryPoints:
+        - dot
+      rule: "HostSNI(`vanguard.cyrilng.com`)"
+      service: pihole-dns
+      tls:
+        certResolver: letsencrypt
+        options: dot
+  services:
+    pihole-dns:
+      loadBalancer:
+        servers:
+          - address: "127.0.0.1:53"
+tls:
+  options:
+    dot:
+      alpnProtocols:
+        - dot
+EOF
+
 # Entrypoint: start Tailscale (userspace), Unbound, then Pi-hole
 RUN cat <<'EOF' > /usr/local/bin/entrypoint-all.sh
 #!/bin/sh
@@ -76,7 +120,10 @@ chown -R unbound:unbound /var/lib/unbound
 su -s /bin/sh unbound -c "unbound-anchor -a /var/lib/unbound/root.key" || true
 unbound -c /etc/unbound/unbound.conf
 
-# 3. Hand off to official Pi-hole entrypoint
+# 3. Start DoT proxy and hand off to official Pi-hole entrypoint
+touch /etc/pihole/acme.json
+chmod 600 /etc/pihole/acme.json
+traefik --configFile=/etc/traefik/traefik.yml &
 exec /usr/bin/start.sh
 EOF
 
@@ -88,6 +135,6 @@ ENV FTLCONF_dns_upstreams="127.0.0.1#5335" \
     FTLCONF_dns_cache_size="0" \
     FTLCONF_database_maxDBdays="7"
 
-EXPOSE 53/tcp 53/udp 80/tcp
+EXPOSE 53/tcp 53/udp 80/tcp 853/tcp 8080/tcp
 
 ENTRYPOINT ["/usr/local/bin/entrypoint-all.sh"]

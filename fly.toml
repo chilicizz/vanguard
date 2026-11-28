@@ -12,19 +12,22 @@ swap_size_mb = 256
   source = "pihole_data"
   destination = "/etc/pihole"
 
-# Public DNS over TLS (port 853) -> decrypted DNS-over-TCP to Pi-hole (port 53)
+# DNS-over-TLS is terminated by Traefik inside the app.
 [[services]]
   protocol = "tcp"
-  internal_port = 53
+  internal_port = 853
   auto_stop_machines = "off"
   min_machines_running = 1
 
   [[services.ports]]
     port = 853
-    handlers = ["tls"]
-    tls_options = { alpn = ["dot"] }
 
-  [services.concurrency]
-    type = "connections"
-    soft_limit = 200
-    hard_limit = 500
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080
+  auto_stop_machines = "off"
+  min_machines_running = 1
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
