@@ -101,6 +101,11 @@ set -e
 
 # 1. Start Tailscale in userspace networking mode (state stored on persistent /etc/pihole volume)
 mkdir -p /etc/pihole/tailscale /var/run/tailscale
+if [ -c /dev/net/tun ]; then
+    echo "Tailscale TUN device is available"
+else
+    echo "Tailscale TUN device is unavailable; using userspace networking"
+fi
 tailscaled \
     --tun=userspace-networking \
     --state=/etc/pihole/tailscale/tailscaled.state \
@@ -131,6 +136,7 @@ touch /etc/pihole/traefik/acme.json
 /usr/bin/start.sh &
 pihole_pid=$!
 trap 'kill -TERM "$pihole_pid" 2>/dev/null || true; if [ -n "${traefik_pid:-}" ]; then kill -TERM "$traefik_pid" 2>/dev/null || true; fi' INT TERM
+echo "Waiting for Pi-hole TCP DNS listener on 127.0.0.1:53"
 for ((attempt = 0; attempt < 45; attempt++)); do
     if ( : >/dev/tcp/127.0.0.1/53 ) 2>/dev/null; then
         break
@@ -142,8 +148,10 @@ if ! ( : >/dev/tcp/127.0.0.1/53 ) 2>/dev/null; then
     exit 1
 fi
 
+echo "Pi-hole TCP DNS listener is ready; setting ACME file permissions"
 chmod 600 /etc/pihole/traefik/acme.json
-traefik --configFile=/etc/traefik/traefik.yml &
+echo "Starting Traefik with debug logging"
+traefik --log.level=DEBUG --configFile=/etc/traefik/traefik.yml &
 traefik_pid=$!
 sleep 1
 kill -0 "$traefik_pid"
